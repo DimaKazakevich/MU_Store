@@ -1,0 +1,24 @@
+﻿@using WebUI.Models
+@using WebUI.HtmlHelpers;
+
+@model  ClothesListViewModel
+
+@{
+    ViewBag.Title = "MU Store";
+}
+
+
+@foreach (var item in @Model.Clothes)
+{
+    <div class="well">
+        <h3>
+            <strong>@item.Name</strong>
+            <span class="pull-right label label-danger">@item.Price.ToString("# USD")</span>
+        </h3>
+        <span class="lead">@item.Description</span>
+    </div>
+}
+
+<div class="btn-group pull-right" style="color:lightgray">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+</div>

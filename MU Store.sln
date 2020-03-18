@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{B1FE183D-6FC9-4086-9A0E-B3820A7829E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{3786B09A-81CD-4589-B9B3-E0BAA870AEB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{86DA20EC-A149-42B3-B42D-09EE7FC5180E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1FE183D-6FC9-4086-9A0E-B3820A7829E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1FE183D-6FC9-4086-9A0E-B3820A7829E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1FE183D-6FC9-4086-9A0E-B3820A7829E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1FE183D-6FC9-4086-9A0E-B3820A7829E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3786B09A-81CD-4589-B9B3-E0BAA870AEB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3786B09A-81CD-4589-B9B3-E0BAA870AEB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3786B09A-81CD-4589-B9B3-E0BAA870AEB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3786B09A-81CD-4589-B9B3-E0BAA870AEB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86DA20EC-A149-42B3-B42D-09EE7FC5180E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86DA20EC-A149-42B3-B42D-09EE7FC5180E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86DA20EC-A149-42B3-B42D-09EE7FC5180E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86DA20EC-A149-42B3-B42D-09EE7FC5180E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B0F0098-479F-4755-80C6-9DAD2779C16F}
+	EndGlobalSection
+EndGlobal
