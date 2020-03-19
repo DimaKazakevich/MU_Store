@@ -10,34 +10,62 @@
 <body>
 	<div class="navbar navbar-inverse" role="navigation" style="margin: 0px 0px 0px 0px">
 		<div>
-			<a href="@Url.Action("List", "Clothes")"><img class="navbar brand-inverse" src="./Images/logo4.png" width="100" align="right" style="margin: 12px 7px 12px 7px"/></a>
+			<a href="@Url.Action("List", "Clothes")"><img class="navbar brand-inverse" src="./Images/logo4.png" width="60" height="50" align="right" style="margin: 17px 7px 17px 7px" /></a>
 
-			<a href="@Url.Action("List", "Clothes")"><img class="navbar brand-inverse" src="./Images/ChevroletLogo.png" width="100" height="100" align="right" style="margin: 12px 0px 12px 0px"/></a>
+			<a href="@Url.Action("List", "Clothes")"><img class="navbar brand-inverse" src="./Images/chevLog.png" width="60" height="50" align="right" style="margin: 17px 0px 17px 0px" /></a>
 		</div>
 
 		<div>
-			<a href="@Url.Action("List", "Clothes")"><img class="navbar brand-inverse" src="./Images/logoAdidas.png" width="100" align="left" style="margin:12px 7px 12px 7px"/></a>
+			<a href="@Url.Action("List", "Clothes")"><img  src="./Images/adidasLogo.png" width="60" height="50" align="left" style="margin:17px 7px 17px 7px" /></a>
+
+			<a href="@Url.Action("List", "Clothes")"><img  src="./Images/aonLogo.png" width="60" height="50" align="left" style="margin: 17px 0px 17px 0px" /></a>
+
 		</div>
 
 		<div>
-			<a href="@Url.Action("List", "Clothes")"><img class="navbar brand-inverse" src="./Images/AON.png" width="100" height="62" align="left" style="margin: 12px 0px 12px 0px"/></a>
-		
-			<a href="#"><h1 align="center" style="color:white" >MU Store - the official online megastore</h1></a>
+			<a href="#"><h1 align="center" style="color:white; margin: 23.4px 0px 23.4px 0px">MU Store - the official online megastore</h1></a>
 		</div>
 		<!--class="navbar brand-inverse"-->
 	</div>
 
-	<div class="pict">
-		<a href="@Url.Action("List", "Clothes")"><img src="./Images/bruno.jpg" align="middle" style="margin: 0px 0px 8px 0px; display:block; max-width: 100%; height:auto" /></a>
-	</div>
 
-		<div class="row panel">
-			<div id="categories" class="col-xs-3">
-				<h1>Content will be added later</h1>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="5000" style="margin: 0px 0px 20px 0px">
+
+		<!-- Indicators -->
+		<ol class="carousel-indicators">
+			<li data-target="#carousel" data-slide-to="0" class="active"></li>
+			<li data-target="#carousel" data-slide-to="1"></li>
+		</ol>
+
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner">
+			<div class="item active">
+				<img src="./Images/Carousel_Bruno.jpg">
 			</div>
-			<div class="col-xs-8">
-				@RenderBody()
+			<div class="item">
+				<img src="./Images/D_Carousel_training_promo.jpg">
 			</div>
 		</div>
+
+		<!-- Controls -->
+		<a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left"></span>
+		</a>
+		<a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right"></span>
+		</a>
+	</div> <!-- Carousel -->
+
+	<div class="row panel">
+		<div id="categories" class="col-xs-3">
+			<h1>Content will be added later</h1>
+		</div>
+		<div class="col-xs-8">
+			@RenderBody()
+		</div>
+	</div>
 </body>
 </html>
