@@ -22,12 +22,13 @@ namespace WebUI.Controllers
             _repository = repository;
         }
 
-        public ViewResult List(int page = 1)
+        public ViewResult List(string category, int page = 1)
         {
             ClothesListViewModel model = new ClothesListViewModel
             {
                 Clothes = _repository.Clothes
-                .OrderBy(wear => wear.Price)
+                .Where(p => category == null || p.Category == category)
+                .OrderBy(wear => wear.Article)
                 .Skip((page - 1) * _pageSize)
                 .Take(_pageSize),
 
@@ -36,7 +37,8 @@ namespace WebUI.Controllers
                     CurrentPage = page,
                     ItemsOnPage = _pageSize,
                     TotalItems = _repository.Clothes.Count()
-                }
+                },
+                CurrentCategory = category
             };
             return View(model);
         }

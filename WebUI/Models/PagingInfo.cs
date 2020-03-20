@@ -7,7 +7,6 @@ namespace WebUI.Models
 {
     public class PagingInfo
     {
-
         public int TotalItems { get; set; }
 
         public int ItemsOnPage { get; set; }

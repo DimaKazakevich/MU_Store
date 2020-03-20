@@ -10,5 +10,7 @@ namespace WebUI.Models
         public IEnumerable<Wear> Clothes { get; set; }
 
         public PagingInfo PagingInfo { get; set; }
+
+        public string CurrentCategory { get; set; }
     }
 }

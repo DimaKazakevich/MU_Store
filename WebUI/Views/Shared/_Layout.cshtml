@@ -3,36 +3,40 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="~/Content/styles.css" rel="stylesheet" />
 	<link href="~/Content/bootstrap.css" rel="stylesheet" />
 	<link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+
 	<title>@ViewBag.Title</title>
 </head>
 <body>
-	<div class="navbar navbar-inverse" role="navigation" style="margin: 0px 0px 0px 0px">
-		<div>
-			<a href="@Url.Action("List", "Clothes")"><img class="navbar brand-inverse" src="./Images/logo4.png" width="60" height="50" align="right" style="margin: 17px 7px 17px 7px" /></a>
-
-			<a href="@Url.Action("List", "Clothes")"><img class="navbar brand-inverse" src="./Images/chevLog.png" width="60" height="50" align="right" style="margin: 17px 0px 17px 0px" /></a>
+	<div class="header">
+		<div class="image">
+			<a href="@Url.Action("List", "Clothes")"><img src="./Images/adidasLogo.png" alt="" /></a>
+			<a href="@Url.Action("List", "Clothes")"><img src="./Images/aonLogo.png" alt="" /></a>
 		</div>
 
-		<div>
-			<a href="@Url.Action("List", "Clothes")"><img  src="./Images/adidasLogo.png" width="60" height="50" align="left" style="margin:17px 7px 17px 7px" /></a>
-
-			<a href="@Url.Action("List", "Clothes")"><img  src="./Images/aonLogo.png" width="60" height="50" align="left" style="margin: 17px 0px 17px 0px" /></a>
-
+		<div class="caption">
+			<a href="#"><h1>MU Store - the official online megastore</h1></a>
 		</div>
 
-		<div>
-			<a href="#"><h1 align="center" style="color:white; margin: 23.4px 0px 23.4px 0px">MU Store - the official online megastore</h1></a>
+		<div class="image">
+			<a href="@Url.Action("List", "Clothes")"><img src="./Images/chevroletLogo.png" alt="" /></a>
+			<a href="@Url.Action("List", "Clothes")"><img src="./Images/manutdlogo.png" alt="" /></a>
 		</div>
-		<!--class="navbar brand-inverse"-->
 	</div>
 
+	<div class="menu" style="background-color:red; height: 35px">
+		<ul class="topLevelMenu" style="display:flex; justify-content:space-around; margin: 0px 0px 0px 0px; align-items:center">
+			@Html.Action("Menu", "Navigation")
+		</ul>
+
+	</div>
 
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="5000" style="margin: 0px 0px 20px 0px">
+	<div id="carousel" class="carousel slide" data-ride="carousel" data-interval="5000" style="margin: 0px 0px 20px 0px">
 
 		<!-- Indicators -->
 		<ol class="carousel-indicators">
@@ -59,9 +63,8 @@
 		</a>
 	</div> <!-- Carousel -->
 
-	<div class="row panel">
+	<div class="row panel" style="margin-left:0; margin-right:0">
 		<div id="categories" class="col-xs-3">
-			<h1>Content will be added later</h1>
 		</div>
 		<div class="col-xs-8">
 			@RenderBody()
