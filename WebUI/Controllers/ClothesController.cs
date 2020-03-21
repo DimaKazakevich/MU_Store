@@ -8,7 +8,6 @@ namespace WebUI.Controllers
     public class ClothesController : Controller
     {
         // GET: Clothes
-
         private IClothesRepository _repository;
 
         public int _pageSize = 2; 

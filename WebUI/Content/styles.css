@@ -3,20 +3,58 @@
   border-radius: 0;
   display: flex;
   justify-content: space-between;
+  flex-wrap: nowrap;
   background-color: #333;
+}
+
+html, body {
+height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+.footer {
+  flex-shrink: 0;
 }
 
 .header .image img {
   margin: 17px 7px 17px 7px;
   width: 60px;
   height: 50px;
+
 }
 
 .header .caption h1 {
   color: white;
-  margin: 23.4px 40px 23.4px 40px;
+  margin: 23.39px 40px 23.39px 40px;
+  text-decoration: none;
+}
+
+.header .caption a {
+  text-decoration: none;
 }
 
 .topLevelMenu a {
-  color: black;
+  color: white;
+  text-decoration: none; 
+  text-decoration-color: white;
+  align-items: center;
+  margin: 10px auto;
+  /*justify-content: space-around;*/
 }
+
+.topLevelMenu a:hover {
+  text-decoration: none;
+  color: white;
+ }
