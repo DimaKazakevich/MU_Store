@@ -45,16 +45,40 @@ body {
   text-decoration: none;
 }
 
-.topLevelMenu a {
-  color: white;
-  text-decoration: none; 
-  text-decoration-color: white;
-  align-items: center;
-  margin: 10px auto;
-  /*justify-content: space-around;*/
+.topLevelMenu {
+  margin: 0px 0px 0px 0px; 
+  padding: 0px 0px 0px 0px; 
+  display:flex; 
+  justify-content:space-around; 
+  font-size: 16pt;
 }
 
 .topLevelMenu a:hover {
   text-decoration: none;
-  color: white;
+ }
+
+ .topLevelMenu .menuHeader:hover {
+  text-decoration: none;
+  background-color: black;
+ }
+
+ .topLevelMenu .menuHeader a {
+   color: white;
+   margin: 0px auto;
+ }
+ 
+ .topLevelMenu .menuHeader {
+  height: 32px;
+  margin: 4px auto;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+li {
+  list-style-type: none;
+ }
+
+ .menu {
+  background-color:#b61c1c; 
+  height: 40px
  }
