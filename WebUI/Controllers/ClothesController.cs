@@ -35,7 +35,8 @@ namespace WebUI.Controllers
                 {
                     CurrentPage = page,
                     ItemsOnPage = _pageSize,
-                    TotalItems = _repository.Clothes.Count()
+                    TotalItems = category == null ? _repository.Clothes.Count() :
+                    _repository.Clothes.Where(clothes => clothes.Category == category).Count()
                 },
                 CurrentCategory = category
             };
