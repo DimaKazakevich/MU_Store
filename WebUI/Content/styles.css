@@ -1,10 +1,11 @@
-.header {
+.header .headerContent{
   margin-bottom: 0;
   border-radius: 0;
   display: flex;
   justify-content: space-between;
   flex-wrap: nowrap;
   background-color: #333;
+  height: 69.98px;
 }
 
 html, body {
@@ -33,7 +34,7 @@ body {
 }
 
 .header .image img {
-  margin: 17px 7px 17px 7px;
+  margin: 1px 7px 17px 7px;
   width: 60px;
   height: 50px;
 
@@ -41,7 +42,7 @@ body {
 
 .header .caption h1 {
   color: white;
-  margin: 23.39px 40px 23.39px 40px;
+  margin: 7.39px 40px 23.39px 40px;
   text-decoration: none;
 }
 
@@ -123,4 +124,39 @@ li {
 
 a.btn.btn-default.btn-primary.selected {
   background-color: black;
+}
+
+#registerLink a {
+  text-decoration: none;
+  color: #b61c1c;
+}
+
+a#registerLink {
+  color: white;
+  text-decoration: none;
+}
+
+a#loginLink {
+  color: white;
+  text-decoration: none;
+}
+
+a#helloLink {
+  color: white;
+  text-decoration: none;
+}
+
+.social img:hover {
+  background-color: black;
+  border-radius: 6px;
+}
+
+.logOut {
+  color: white;
+  text-decoration: none;
+}
+
+.logOut:hover {
+  color: white;
+  text-decoration: none;
 }

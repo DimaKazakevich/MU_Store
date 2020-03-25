@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
@@ -12,25 +13,53 @@
 
 <body>
 	<header class="header">
-		<div class="image">
-			<a href="https://www.adidas.com/us" target="_blank"><img src="./Images/adidasLogo.png" alt="" /></a>
-			<a href="https://www.aon.com/home/index.html" target="_blank"><img src="./Images/aonLogo.png" alt="" /></a>
+		<div style="background-color:#333; height:16px">
+
+				@if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+						@Html.AntiForgeryToken()
+
+				<ul style="display:flex; justify-content: space-evenly; margin: 0px 0px 0px 0px; height:16px; padding-left:0">
+					<li>
+						@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "List", "Clothes", routeValues: null, htmlAttributes: new { id = "helloLink" })
+					</li>
+					<li><a class="logOut"href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
+				</ul>
+					}
+				}
+				else
+				{
+					<ul style="display:flex; justify-content:space-evenly; margin: 0px 0px 0px 0px; height:16px; padding-left:0">
+						<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+						<li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+					</ul>
+				}
+
 		</div>
 
-		<div class="caption">
-			<a href="#"><h1>MU Store - the official online megastore</h1></a>
-		</div>
+		<div class="headerContent">
+			<div class="image">
+				<a href="https://www.adidas.com/us" target="_blank"><img src=@Url.Content("~/Images/adidasLogo.png") alt="" /></a>
+				<a href="https://www.aon.com/home/index.html" target="_blank"><img src=@Url.Content("~/Images/aonLogo.png") alt="" /></a>
+			</div>
 
-		<div class="image">
-			<a href="https://www.chevrolet.com/" target="_blank"><img src="./Images/chevroletLogo.png" alt="" /></a>
-			<a href="https://www.manutd.com/" target="_blank"><img src="./Images/manutdlogo.png" alt="" /></a>
+			<div class="caption">
+				<a href="#"><h1>MU Store - the official online megastore</h1></a>
+			</div>
+
+			<div class="image">
+				<a href="https://www.chevrolet.com/" target="_blank"><img src=@Url.Content("~/Images/chevroletLogo.png") alt="" /></a>
+				<a href="https://www.manutd.com/" target="_blank"><img src=@Url.Content("~/Images/manutdlogo.png") alt="" /></a>
+			</div>
 		</div>
 	</header>
 
 	<content class="content">
 
 		<div class="menu">
-			<ul class="topLevelMenu" >
+			<ul class="topLevelMenu">
 				@Html.Action("Menu", "Navigation")
 			</ul>
 		</div>
@@ -38,7 +67,7 @@
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<div id="carousel" class="carousel slide" data-ride="carousel" data-interval="5000" >
+		<div id="carousel" class="carousel slide" data-ride="carousel" data-interval="5000">
 
 			<!-- Indicators -->
 			<ol class="carousel-indicators">
@@ -69,9 +98,11 @@
 			</a>
 		</div> <!-- Carousel -->
 
+
+
 		<div class="row panel" style="margin-left:0; margin-right:0; display:flex">
 			<div id="categories" class="col-xs-3">
-				<h2 style="">Content will be added later</h2>
+				<h1>Content will be added later</h1>
 			</div>
 			<div class="col-xs-8">
 				@RenderBody()
@@ -90,17 +121,17 @@
 		</div>
 
 		<div class="image">
-			<img src="./Images/ManU-fanatics.png" alt="" />
+			<img src=@Url.Content("~/Images/ManU-fanatics.png") alt="" />
 		</div>
 
 		<div class="social">
-			<a href="https://www.twitter.com/ManUtd" target="_blank"><img src="./Images/twitter-24.png" alt="" /></a>
-			<a href="https://www.instagram.com/manchesterunited/" target="_blank"><img src="./Images/instagram-logo.png" alt="" style="height:24px; width:24px" /></a>
-			<a href="https://www.facebook.com/manchesterunited" target="_blank"><img src="./Images/facebook-24.png" alt="" /></a>
-			<a href="https://www.youtube.com/manutd" target="_blank"><img src="./Images/youtube-24.png" alt="" /></a>
-			<a href="https://www.pinterest.com/manutd/" target="_blank"><img src="./Images/pinterest-24.png" alt="" /></a>
+			<a href="https://www.twitter.com/ManUtd/" target="_blank"><img src=@Url.Content("~/Images/twitter-24.png") alt="" /></a>
+			<a href="https://www.instagram.com/manchesterunited/" target="_blank"><img src=@Url.Content("~/Images/instagram-logo.png") alt="" style="height:24px; width:24px" /></a>
+			<a href="https://www.facebook.com/manchesterunited" target="_blank"><img src=@Url.Content("~/Images/facebook-24.png") alt="" /></a>
+			<a href="https://www.youtube.com/manutd" target="_blank"><img src=@Url.Content("~/Images/youtube.png") alt="" style="width:24px; height:24px" /></a>
+			<a href="https://www.pinterest.com/manutd/" target="_blank"><img src=@Url.Content("~/Images/pinterest-24.png") alt="" /></a>
 		</div>
 	</footer>
-		
+
 </body>
 </html>
