@@ -22,7 +22,7 @@ namespace WebUI.Controllers
 
         public ActionResult Register()
         {
-            return View();
+            return View(new RegisterModel());
         }
 
         [HttpPost]
@@ -58,7 +58,7 @@ namespace WebUI.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.returnUrl = returnUrl;
-            return View();
+            return View(new LoginModel());
         }
 
         [HttpPost]

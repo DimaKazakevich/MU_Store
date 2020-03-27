@@ -23,7 +23,7 @@
 
 				<ul style="display:flex; justify-content: space-evenly; margin: 0px 0px 0px 0px; height:16px; padding-left:0">
 					<li>
-						@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "List", "Clothes", routeValues: null, htmlAttributes: new { id = "helloLink" })
+						@Html.ActionLink(User.Identity.GetUserName(), "List", "Clothes", routeValues: null, htmlAttributes: new { id = "helloLink" })
 					</li>
 					<li><a class="logOut"href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
 				</ul>
