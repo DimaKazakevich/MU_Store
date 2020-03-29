@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Domain.Entities;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
@@ -74,14 +75,13 @@ namespace WebUI.Controllers
                 }
                 else
                 {
-                    ClaimsIdentity claim = await UserManager.CreateIdentityAsync(user,
-                                            DefaultAuthenticationTypes.ApplicationCookie);
+                    ClaimsIdentity claim = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
                     AuthenticationManager.SignOut();
                     AuthenticationManager.SignIn(new AuthenticationProperties
                     {
                         IsPersistent = true
                     }, claim);
-                    if (String.IsNullOrEmpty(returnUrl))
+                    if (string.IsNullOrEmpty(returnUrl))
                     {
                         return RedirectToAction("List", "Clothes");
                     }
@@ -91,9 +91,10 @@ namespace WebUI.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(model);
         }
-        public ActionResult Logout()
+        public ActionResult Logout(Basket basket)
         {
             AuthenticationManager.SignOut();
+            basket.Clear();
             return RedirectToAction("List", "Clothes");
         }
     }
