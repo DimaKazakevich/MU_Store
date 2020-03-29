@@ -1,7 +1,9 @@
-﻿using Ninject;
+﻿using Domain.Entities;
+using Ninject;
 using System.Web.Mvc;
 using System.Web.Routing;
 using WebUI.App_Start;
+using WebUI.Infrastructure.Binders;
 
 namespace WebUI
 {
@@ -14,6 +16,9 @@ namespace WebUI
 
             var kernel = new StandardKernel();
             NinjectWebCommon.RegisterServices(kernel);
+
+            //use class BasketModelBinder for create instanses Basket
+            ModelBinders.Binders.Add(typeof(Basket), new BasketModelBinder());
         }
     }
 }

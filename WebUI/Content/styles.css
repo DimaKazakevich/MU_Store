@@ -88,10 +88,6 @@ li {
   height: 40px
  }
 
- a.btn.btn-default.btn-primary.selected {
-  background-color: black;
-}
-
 .social img {
   margin-left: 5px;
   margin-right: 5px;
@@ -123,7 +119,8 @@ li {
 }
 
 a.btn.btn-default.btn-primary.selected {
-  background-color: black;
+  background-color: #b61c1c;
+  border-color: #b61c1c;
 }
 
 #registerLink a {
@@ -159,4 +156,8 @@ a#helloLink {
 .logOut:hover {
   color: white;
   text-decoration: none;
+}
+
+.basketImage:focus input {
+  outline: black;
 }

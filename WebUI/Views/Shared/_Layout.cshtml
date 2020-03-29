@@ -2,42 +2,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="~/Content/styles.css" rel="stylesheet" />
-	<link href="~/Content/bootstrap.css" rel="stylesheet" />
-	<link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/styles.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
 
-	<title>@ViewBag.Title</title>
+    <style>
+        #logoutForm {
+			height:16px;
+        }
+    </style>
+
+    <title>@ViewBag.Title</title>
 </head>
+
+
 
 <body>
 	<header class="header">
-		<div style="background-color:#333; height:16px">
+        <div style="background-color:#333; height:20px">
 
-				@if (Request.IsAuthenticated)
+            @if (Request.IsAuthenticated)
+            {
+                using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
                 {
-                    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                    {
-						@Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
-				<ul style="display:flex; justify-content: space-evenly; margin: 0px 0px 0px 0px; height:16px; padding-left:0">
-					<li>
-						@Html.ActionLink(User.Identity.GetUserName(), "List", "Clothes", routeValues: null, htmlAttributes: new { id = "helloLink" })
-					</li>
-					<li><a class="logOut"href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
-				</ul>
-					}
-				}
-				else
-				{
-					<ul style="display:flex; justify-content:space-evenly; margin: 0px 0px 0px 0px; height:16px; padding-left:0">
-						<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-						<li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-					</ul>
-				}
+            <ul style="display:flex; justify-content: center; margin: 0px 0px 0px 0px; height:20px; padding-left:0">
+                <li style="margin-right:15px">
+                    @Html.ActionLink(User.Identity.GetUserName(), "List", "Clothes", routeValues: null, htmlAttributes: new { id = "helloLink" })
+                </li>
+                <li style="margin-right:10px"><a class="logOut" href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
 
-		</div>
+
+
+                <il style="display:flex">
+                    @Html.Action("Summary", "Basket")
+                </il>
+            </ul>
+
+                }
+            }
+            else
+            {
+                <ul style="display:flex; justify-content:space-evenly; margin: 0px 0px 0px 0px; height:16px; padding-left:0">
+                    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                </ul>
+            }
+
+        </div>
 
 		<div class="headerContent">
 			<div class="image">
@@ -46,7 +61,8 @@
 			</div>
 
 			<div class="caption">
-				<a href="#"><h1>MU Store - the official online megastore</h1></a>
+				@*<a href="#"><h1>UnitedDirect - the official online megastore</h1></a>*@
+				<img src="@Url.Content("~/Images/ud_logo.png")">
 			</div>
 
 			<div class="image">

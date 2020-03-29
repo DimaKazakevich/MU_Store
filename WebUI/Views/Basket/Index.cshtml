@@ -1,0 +1,62 @@
+﻿@model WebUI.Models.BasketIndexViewModel
+
+
+@{
+    ViewBag.Title = "Mu Store: your basket";
+}
+
+<link href="~/Content/style.css" rel="stylesheet" />
+<style>
+    #basketTable td {
+        vertical-align:middle;
+    }
+</style>
+<h2>Your basket</h2>
+<table class="table" id="basketTable">
+    <thead>
+        <tr>
+            <th>Quantity</th>
+            <th>Product</th>
+            <th class="text-right">Item Cost</th>
+            <th class="text-right">Total cost</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.Basket.Lines)
+        {
+        <tr style="font-weight:700; font-size:12px">
+            <td class="text-left">@line.Quantity</td>
+            @{
+                var base64 = Convert.ToBase64String(line.Wear.ClothesImages.ImageFile);
+                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+            }
+            <td class="text-left"><img src="@imgSrc" style="height:90px; width:90px" /> @line.Wear.Name</td>
+            <td class="text-right">@line.Wear.Price.ToString("# $")</td>
+            <td class="text-right">
+                @((line.Quantity * line.Wear.Price).ToString("# $"))
+            </td>
+            <td>
+                @using (Html.BeginForm("RemoveFromBasket", "Basket"))
+                {
+                    @Html.Hidden("clothesID", line.Wear.Article)
+                    @Html.HiddenFor(x => x.ReturnUrl)
+                    <input class="btn btn-sm" type="submit" style="background-color:#b61c1c; border-color:#b61c1c; color:white" value="Remove" />
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr style="font-weight:700; font-size:16px">
+            <td></td>
+                <td colspan="3" class="text-right">Total:</td>
+                <td class="text-left">
+                    @Model.Basket.ComputeTotalValue().ToString("# $")
+                </td>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="text-center">
+    <a class="btn btn-primary" style="background-color:#b61c1c; border-color:#b61c1c" href="@Model.ReturnUrl">Back to clothes</a>
+</div>
