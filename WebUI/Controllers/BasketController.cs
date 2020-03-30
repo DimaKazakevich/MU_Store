@@ -15,6 +15,14 @@ namespace WebUI.Controllers
             _repository = repository;
         }
 
+        public ViewResult Index(Basket basket, string returnUrl)
+        {
+            return View(new BasketIndexViewModel
+            {
+                Basket = basket,
+                ReturnUrl = returnUrl
+            });
+        }
         public RedirectToRouteResult AddToBasket(Basket basket, int clothesID, string returnUrl)
         {
             if (Request.IsAuthenticated)
@@ -42,15 +50,6 @@ namespace WebUI.Controllers
                 basket.RemoveLine(wear);
             }
             return RedirectToAction("Index", new { returnUrl });
-        }
-
-        public ViewResult Index(Basket basket, string returnUrl)
-        {
-            return View(new BasketIndexViewModel
-            {
-                Basket = basket,
-                ReturnUrl = returnUrl
-            });
         }
 
         public PartialViewResult Summary(Basket basket)

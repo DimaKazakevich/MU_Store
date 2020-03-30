@@ -20,8 +20,7 @@
         </li>
 
         <li class="checkout" style="margin-left:10px; background-color:#b61c1c">
-            @Html.ActionLink("CHECKOUT", "Index", "Basket",
-            new { returnUrl = Request.Url.PathAndQuery })
+            @Html.ActionLink("CHECKOUT", "Index", new { returnUrl = Request.Url.PathAndQuery })
         </li>
     }
     else if (Model.Lines.Sum(x => x.Quantity) == 1)
@@ -31,8 +30,7 @@
         </li>
 
         <li class="checkout" style="margin-left:10px; background-color:#b61c1c">
-            @Html.ActionLink("CHECKOUT", "Index", "Basket",
-            new { returnUrl = Request.Url.PathAndQuery })
+            @Html.ActionLink("CHECKOUT", "Index", new { returnUrl = Request.Url.PathAndQuery })
         </li>
     }
     else
