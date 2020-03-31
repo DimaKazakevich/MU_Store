@@ -13,6 +13,7 @@ namespace WebUI.Controllers
 {
     public class AccountController : Controller
     {
+        private static string returnUrl;
         private ApplicationUserManager UserManager
         {
             get
@@ -21,8 +22,9 @@ namespace WebUI.Controllers
             }
         }
 
-        public ActionResult Register()
+        public ActionResult Register(string returnUrl)
         {
+            AccountController.returnUrl = returnUrl;
             return View(new RegisterModel());
         }
 
@@ -35,7 +37,7 @@ namespace WebUI.Controllers
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Login", "Account");
+                    return Redirect(AccountController.returnUrl);
                 }
                 else
                 {
@@ -91,10 +93,10 @@ namespace WebUI.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(model);
         }
-        public ActionResult Logout(Basket basket)
+        public ActionResult Logout()
         {
             AuthenticationManager.SignOut();
-            basket.Clear();
+            Session.Abandon();
             return RedirectToAction("List", "Clothes");
         }
     }

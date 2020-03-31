@@ -3,7 +3,7 @@
     ViewBag.Title = "Register";
 }
 <link href="~/Content/style.css" rel="stylesheet" />
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) { 
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
           @Html.AntiForgeryToken()
 <h4 style="margin-top:20px">Create a new account.</h4>
 <hr />

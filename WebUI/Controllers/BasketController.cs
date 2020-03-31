@@ -37,7 +37,7 @@ namespace WebUI.Controllers
             }
             else
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "Account", new { returnUrl });
             }
         }
 
