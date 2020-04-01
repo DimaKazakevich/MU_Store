@@ -6,6 +6,8 @@
 }
 
 <link href="~/Content/style.css" rel="stylesheet" />
+<script src="~/Scripts/IncrementClothes.js"></script>
+
 <style>
     #basketTable td {
         vertical-align: middle;
@@ -18,6 +20,7 @@
         <thead>
             <tr>
                 <th>Quantity</th>
+                <th></th>
                 <th>Product</th>
                 <th class="text-right">Item Cost</th>
                 <th class="text-right">Total cost</th>
@@ -26,32 +29,30 @@
         <tbody>
             @foreach (var line in Model.Basket.Lines)
             {
-                <tr style="font-weight:700; font-size:12px">
-                    <td class="text-left">@line.Quantity</td>
-                    @{
-                        var base64 = Convert.ToBase64String(line.Wear.ClothesImages.ImageFile);
-                        var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
-                    }
-                    <td class="text-left"><img src="@imgSrc" style="height:90px; width:90px" /> <br> @line.Wear.Name <br>Product code: @line.Wear.Article</td>
-                    <td class="text-right">@line.Wear.Price.ToString("# $")</td>
-                    <td class="text-right">
-                        @((line.Quantity * line.Wear.Price).ToString("# $"))
-                    </td>
-                    <td>
-                        @using (Html.BeginForm("RemoveFromBasket", "Basket"))
-                        {
-                            @Html.Hidden("clothesID", line.Wear.Article)
-                            @Html.HiddenFor(x => x.ReturnUrl)
-                            <input class="btn btn-sm" type="submit" style="background-color:#b61c1c; border-color:#b61c1c; color:white" value="Remove" />
-                        }
-                    </td>
-                </tr>
+            <tr style="font-weight:700; font-size:12px">
+                <td class="text-left" id="quantity@(line.Wear.Article)">@line.Quantity </td>
+                <td>
+                    <a href="#" class="incClothes" data-id="@line.Wear.Article" style="color:black; font-size:20px; text-decoration:none">+</a> <br />
+                    <a href="#" class="decClothes" data-id="@line.Wear.Article" style="color:black; font-size:20px; text-decoration:none">-</a> <br />
+                    <a href="#" class="removeClothes" data-id="@line.Wear.Article" style="color:black; text-decoration:none">Remove</a>
+                </td>
+                @{
+                    var base64 = Convert.ToBase64String(line.Wear.ClothesImages.ImageFile);
+                    var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+                }
+                <td class="text-left"><img src="@imgSrc" style="height:90px; width:90px" /> <br> @line.Wear.Name <br>Product code: @line.Wear.Article</td>
+                <td class="text-right">@line.Wear.Price.ToString("# $")</td>
+                <td class="text-right" id="cost@(line.Wear.Article)">
+                    @((line.Quantity * line.Wear.Price).ToString("# $"))
+                </td>
+            </tr>
             }
         </tbody>
         <tfoot>
             <tr style="font-weight:700; font-size:16px">
+                <td></td>
                 <td colspan="3" class="text-right">Total:</td>
-                <td class="text-left">
+                <td class="text-left" id="totalCost">
                     @Model.Basket.ComputeTotalValue().ToString("# $")
                 </td>
             </tr>

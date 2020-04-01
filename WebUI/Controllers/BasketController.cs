@@ -41,7 +41,7 @@ namespace WebUI.Controllers
             }
         }
 
-        public RedirectToRouteResult RemoveFromBasket(Basket basket, int clothesID, string returnUrl)
+        public void RemoveFromBasket(Basket basket, int clothesID)
         {
             Wear wear = _repository.Clothes.FirstOrDefault(item => item.Article == clothesID);
 
@@ -49,12 +49,46 @@ namespace WebUI.Controllers
             {
                 basket.RemoveLine(wear);
             }
-            return RedirectToAction("Index", new { returnUrl });
         }
 
         public PartialViewResult Summary(Basket basket)
         {
             return PartialView(basket);
+        }
+
+        public JsonResult IncrementClothes(Basket basket, int clothesID)
+        {
+            BasketLine line = basket.GetBasketLines
+                .Where(item => item.Wear.Article == clothesID)
+                .FirstOrDefault();
+                      
+            line.Quantity++;
+
+            var result = new { quantity = line.Quantity, price = line.Wear.Price };
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult DecrementClothes(Basket basket, int clothesID)
+        {
+            BasketLine line = basket.GetBasketLines
+                .Where(item => item.Wear.Article == clothesID)
+                .FirstOrDefault();
+
+            if(line.Quantity > 1)
+            {
+                line.Quantity--;
+            }
+            else
+            {
+                line.Quantity = 0;
+                basket.RemoveLine(line.Wear);
+            }
+
+            var result = new { quantity = line.Quantity, price = line.Wear.Price };
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

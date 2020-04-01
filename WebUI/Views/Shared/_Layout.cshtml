@@ -24,7 +24,7 @@
 
             @if (Request.IsAuthenticated)
             {
-                using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                using (Html.BeginForm("Logout", "Account", new { returnUrl = Request.Url.PathAndQuery },FormMethod.Post, new { id = "logoutForm" }))
                 {
                     @Html.AntiForgeryToken()
 
@@ -42,9 +42,9 @@
             }
             else
             {
-                <ul style="display:flex;justify-content:center; margin: 0px 0px 0px 0px; height:16px; padding-left:0">
-                    <li style="margin-right:15px">@Html.ActionLink("Register", "Register", "Account", new { returnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "registerLink" })</li>
-                    <li>@Html.ActionLink("Log in", "Login", "Account", new { returnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "loginLink" })</li>
+                <ul style="display:flex;justify-content:center; margin: 0px 0px 0px 0px; height:20px; padding-left:0">
+                    <li style="margin-right:15px; background-color:black; padding-right:10px;padding-left:10px">@Html.ActionLink("Register", "Register", "Account", new { returnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "registerLink" })</li>
+                    <li style="background-color:black; padding-left:10px; padding-right:10px">@Html.ActionLink("Log in", "Login", "Account", new { returnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "loginLink" })</li>
                 </ul>
             }
 

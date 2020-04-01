@@ -19,5 +19,7 @@ namespace WebUI.Models
         [Display(Name = "Confirm password")]
         [DataType(DataType.Password)]
         public string PasswordConfirm { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }

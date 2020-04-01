@@ -15,7 +15,7 @@
 <ul style="color:white;display:flex">
     @if (Model.Lines.Sum(x => x.Quantity) > 1)
     {
-        <li>
+        <li class="summary">
             @Model.Lines.Sum(x => x.Quantity) items / @Model.ComputeTotalValue().ToString("# $")
         </li>
 
@@ -25,7 +25,7 @@
     }
     else if (Model.Lines.Sum(x => x.Quantity) == 1)
     {
-        <li>
+        <li class="summary">
             @Model.Lines.Sum(x => x.Quantity) item / @Model.ComputeTotalValue().ToString("# $")
         </li>
 

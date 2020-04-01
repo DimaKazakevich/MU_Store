@@ -1,8 +1,6 @@
-﻿using Domain.Entities;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -13,7 +11,6 @@ namespace WebUI.Controllers
 {
     public class AccountController : Controller
     {
-        private static string returnUrl;
         private ApplicationUserManager UserManager
         {
             get
@@ -22,9 +19,8 @@ namespace WebUI.Controllers
             }
         }
 
-        public ActionResult Register(string returnUrl)
+        public ActionResult Register()
         {
-            AccountController.returnUrl = returnUrl;
             return View(new RegisterModel());
         }
 
@@ -37,7 +33,7 @@ namespace WebUI.Controllers
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    return Redirect(AccountController.returnUrl);
+                    return RedirectToAction("Login", "Account");
                 }
                 else
                 {
@@ -66,7 +62,7 @@ namespace WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
@@ -83,21 +79,21 @@ namespace WebUI.Controllers
                     {
                         IsPersistent = true
                     }, claim);
-                    if (string.IsNullOrEmpty(returnUrl))
+                    if (string.IsNullOrEmpty(model.ReturnUrl))
                     {
                         return RedirectToAction("List", "Clothes");
                     }
-                    return Redirect(returnUrl);
+                    return Redirect(model.ReturnUrl);
                 }
             }
-            ViewBag.returnUrl = returnUrl;
+            ViewBag.returnUrl = model.ReturnUrl;
             return View(model);
         }
-        public ActionResult Logout()
+        public ActionResult Logout(string returnUrl)
         {
             AuthenticationManager.SignOut();
             Session.Abandon();
-            return RedirectToAction("List", "Clothes");
+            return Redirect(returnUrl);
         }
     }
 }
