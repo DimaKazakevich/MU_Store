@@ -2,31 +2,27 @@
 
 <style>
     .checkout a {
-        color:white;
-        padding-left:10px;
-        padding-right:10px;
+        color: white;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
-    .checkout a:hover {
-        color:white;
-        text-decoration:none;
-    }
+        .checkout a:hover {
+            color: white;
+            text-decoration: none;
+        }
 </style>
 <ul style="color:white;display:flex">
-    @if (Model.Lines.Sum(x => x.Quantity) > 1)
+    @if (Model.Lines.Sum(x => x.Quantity) > 0)
     {
-        <li class="summary">
-            @Model.Lines.Sum(x => x.Quantity) items / @Model.ComputeTotalValue().ToString("# $")
+        <li class="summaryItems">
+            @Model.Lines.Sum(x => x.Quantity)
         </li>
 
-        <li class="checkout" style="margin-left:10px; background-color:#b61c1c">
-            @Html.ActionLink("CHECKOUT", "Index", new { returnUrl = Request.Url.PathAndQuery })
-        </li>
-    }
-    else if (Model.Lines.Sum(x => x.Quantity) == 1)
-    {
-        <li class="summary">
-            @Model.Lines.Sum(x => x.Quantity) item / @Model.ComputeTotalValue().ToString("# $")
+        <li> &nbsp; clothes / &nbsp;</li>
+
+        <li class="summaryCost">
+            @Model.ComputeTotalValue().ToString("# $")
         </li>
 
         <li class="checkout" style="margin-left:10px; background-color:#b61c1c">

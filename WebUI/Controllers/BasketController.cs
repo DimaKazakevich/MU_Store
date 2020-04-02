@@ -58,7 +58,7 @@ namespace WebUI.Controllers
 
         public JsonResult IncrementClothes(Basket basket, int clothesID)
         {
-            BasketLine line = basket.GetBasketLines
+            BasketLine line = basket.Lines
                 .Where(item => item.Wear.Article == clothesID)
                 .FirstOrDefault();
                       
@@ -72,11 +72,16 @@ namespace WebUI.Controllers
 
         public JsonResult DecrementClothes(Basket basket, int clothesID)
         {
-            BasketLine line = basket.GetBasketLines
+            BasketLine line = basket.Lines
                 .Where(item => item.Wear.Article == clothesID)
                 .FirstOrDefault();
 
-            if(line.Quantity > 1)
+            if (line == null)
+            {
+                return null;
+            }
+
+            if (line.Quantity > 1)
             {
                 line.Quantity--;
             }
@@ -87,8 +92,8 @@ namespace WebUI.Controllers
             }
 
             var result = new { quantity = line.Quantity, price = line.Wear.Price };
-
             return Json(result, JsonRequestBehavior.AllowGet);
+
         }
     }
 }

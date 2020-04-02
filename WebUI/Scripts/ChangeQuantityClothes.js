@@ -1,6 +1,6 @@
 ﻿$(function () {
 
-    $("a.incClothes").click(function (e) {
+    $("a#incClothes").click(function (e) {
         e.preventDefault();
 
         let Article = $(this).data("id");
@@ -14,19 +14,24 @@
 
             $("td#cost" + Article).html(priceHtml);
 
-            $("li.summary").html(data.quantity + " items(Product code: " + Article + ") / " + priceHtml);
+            let currentTotalCost = parseFloat($("td#totalCost").text())
+            let newTotalCost = currentTotalCost + data.price + " $";
+            $("td#totalCost").text(newTotalCost);
 
-            let gt = parseFloat($("td#totalCost").text())
-            let grandtotal = gt + data.price + " $";
-
-            $("td#totalCost").text(grandtotal);
+            let currentTotalCostHeader = parseFloat($("li.summaryCost").text())
+            let newTotalCostHeader = currentTotalCostHeader + data.price + " $";
+            $("li.summaryCost").text(newTotalCostHeader);
+    
+            let currentTotalItems = parseFloat($("li.summaryItems").text())
+            let newTotalItems = currentTotalItems + 1;
+            $("li.summaryItems").text(newTotalItems);
         });
     });
 });
 
 $(function () {
 
-    $("a.decClothes").click(function (e) {
+    $("a#decClothes").click(function (e) {
         e.preventDefault();
 
         let $this = $(this);
@@ -48,10 +53,16 @@ $(function () {
 
                 $("td#cost" + Article).html(priceHtml);
 
-                $("li.summary").html(data.quantity + " items(Product code: " + Article + ") / " + priceHtml);
-
                 let gt = parseFloat($("td#totalCost").text());
                 let grandtotal = (gt - data.price) + " $";
+
+                let currentTotalCostHeader = parseFloat($("li.summaryCost").text())
+                let newTotalCost = currentTotalCostHeader - data.price + " $";
+                $("li.summaryCost").text(newTotalCost);
+        
+                let currentTotalItems = parseFloat($("li.summaryItems").text())
+                let newTotalItems = currentTotalItems - 1;
+                $("li.summaryItems").text(newTotalItems);
 
                 $("td#totalCost").text(grandtotal);
             }

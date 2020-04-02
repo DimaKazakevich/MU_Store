@@ -6,7 +6,7 @@
 }
 
 <link href="~/Content/style.css" rel="stylesheet" />
-<script src="~/Scripts/IncrementClothes.js"></script>
+<script src="~/Scripts/ChangeQuantityClothes.js"></script>
 
 <style>
     #basketTable td {
@@ -32,9 +32,9 @@
             <tr style="font-weight:700; font-size:12px">
                 <td class="text-left" id="quantity@(line.Wear.Article)">@line.Quantity </td>
                 <td>
-                    <a href="#" class="incClothes" data-id="@line.Wear.Article" style="color:black; font-size:20px; text-decoration:none">+</a> <br />
-                    <a href="#" class="decClothes" data-id="@line.Wear.Article" style="color:black; font-size:20px; text-decoration:none">-</a> <br />
-                    <a href="#" class="removeClothes" data-id="@line.Wear.Article" style="color:black; text-decoration:none">Remove</a>
+                    <a href="#" class="btn btn-icon" id="incClothes" data-id="@line.Wear.Article" style="color:black; font-size:20px; text-decoration:none">+</a> <br />
+                    <a href="#" id="decClothes" class="btn btn-icon" data-id="@line.Wear.Article" style="color:black; font-size:20px; text-decoration:none">-</a> <br />
+                    <a href="#" class="removeClothes"  data-id="@line.Wear.Article" style="color:black; text-decoration:none">Remove</a>
                 </td>
                 @{
                     var base64 = Convert.ToBase64String(line.Wear.ClothesImages.ImageFile);
