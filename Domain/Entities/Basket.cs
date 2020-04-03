@@ -7,8 +7,6 @@ namespace Domain.Entities
     {
         private List<BasketLine> lineCollection = new List<BasketLine>();
 
-        public List<BasketLine> GetBasketLines { get { return lineCollection; } }
-
         public void AddItem(Wear wear, int quantity)
         {
             BasketLine line = lineCollection
