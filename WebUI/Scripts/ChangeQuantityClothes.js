@@ -30,7 +30,6 @@
 });
 
 $(function () {
-
     $("a#decClothes").click(function (e) {
         e.preventDefault();
 
@@ -85,3 +84,6 @@ $(function () {
         });
     });
 });
+
+
+

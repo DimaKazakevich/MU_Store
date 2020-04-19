@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@using System.Web.Optimization
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,8 +8,8 @@
     <link href="~/Content/styles.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
-	<link href="~/Content/Modal.html">
-
+    <link href="~/Content/Modal.html">
+    <link rel="icon" type="image/png" href="@Url.Content("~/Images/manutdlogo.png")">
     <style>
         #logoutForm {
             height: 16px;
@@ -16,27 +17,33 @@
     </style>
 
     <title>@ViewBag.Title</title>
+
+    @*@{
+        Layout = "~/Views/Shared/ClothesSummary.cshtml";
+    }*@
+
+
 </head>
 
 <body>
-	<header class="header">
+    <header class="header">
         <div style="background-color:#333; height:20px">
 
             @if (Request.IsAuthenticated)
             {
-                using (Html.BeginForm("Logout", "Account", new { returnUrl = Request.Url.PathAndQuery },FormMethod.Post, new { id = "logoutForm" }))
+                using (Html.BeginForm("Logout", "Account", new { returnUrl = Request.Url.PathAndQuery }, FormMethod.Post, new { id = "logoutForm" }))
                 {
                     @Html.AntiForgeryToken()
 
-            <ul style="display:flex; justify-content: center; margin: 0px 0px 0px 0px; height:20px; padding-left:0">
-                <li style="margin-right:15px">
-                    @Html.ActionLink(User.Identity.GetUserName(), "List", "Clothes", routeValues: null, htmlAttributes: new { id = "helloLink" })
-                </li>
-                <li style="background-color:black; padding-left:10px; padding-right:10px"><a class="logOut" href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
-                <il style="display:flex">
-                    @Html.Action("Summary", "Basket")
-                </il>
-            </ul>
+                    <ul style="display:flex; justify-content: center; margin: 0px 0px 0px 0px; height:20px; padding-left:0">
+                        <li style="margin-right:15px">
+                            @Html.ActionLink(User.Identity.GetUserName(), "List", "Clothes", routeValues: null, htmlAttributes: new { id = "helloLink" })
+                        </li>
+                        <li style="background-color:black; padding-left:10px; padding-right:10px"><a class="logOut" href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
+                        <il style="display:flex">
+                            @Html.Action("Summary", "Basket")
+                        </il>
+                    </ul>
 
                 }
             }
@@ -50,99 +57,102 @@
 
         </div>
 
-		<div class="headerContent">
-			<div class="image">
-				<a href="https://www.adidas.com/us" target="_blank"><img src=@Url.Content("~/Images/adidasLogo.png") alt="" /></a>
-				<a href="https://www.aon.com/home/index.html" target="_blank"><img src=@Url.Content("~/Images/aonLogo.png") alt="" /></a>
-			</div>
+        <div class="headerContent">
+            <div class="image">
+                <a href="https://www.adidas.com/us" target="_blank"><img src=@Url.Content("~/Images/adidasLogo.png") alt="" /></a>
+                <a href="https://www.aon.com/home/index.html" target="_blank"><img src=@Url.Content("~/Images/aonLogo.png") alt="" /></a>
+            </div>
 
-			<div class="caption">
-				<img src="@Url.Content("~/Images/ud_logo.png")">
-			</div>
+            <div class="caption">
+                <img src="@Url.Content("~/Images/ud_logo.png")">
+            </div>
 
-			<div class="image">
-				<a href="https://www.chevrolet.com/" target="_blank"><img src=@Url.Content("~/Images/chevroletLogo.png") alt="" /></a>
-				<a href="https://www.manutd.com/" target="_blank"><img src=@Url.Content("~/Images/manutdlogo.png") alt="" /></a>
-			</div>
-		</div>
-	</header>
+            <div class="image">
+                <a href="https://www.chevrolet.com/" target="_blank"><img src=@Url.Content("~/Images/chevroletLogo.png") alt="" /></a>
+                <a href="https://www.manutd.com/" target="_blank"><img src=@Url.Content("~/Images/manutdlogo.png") alt="" /></a>
+            </div>
+        </div>
+    </header>
 
-	<content class="content">
+    <content class="content">
 
-		<div class="menu">
-			<ul class="topLevelMenu">
-				@Html.Action("Menu", "Navigation")
-			</ul>
-		</div>
+        <div class="menu">
+            <ul class="topLevelMenu">
+                @Html.Action("Menu", "Navigation")
+            </ul>
+        </div>
 
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<div id="carousel" class="carousel slide" data-ride="carousel" data-interval="5000">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="5000">
 
-			<!-- Indicators -->
-			<ol class="carousel-indicators">
-				<li data-target="#carousel" data-slide-to="0" class="active"></li>
-				<li data-target="#carousel" data-slide-to="1"></li>
-				<li data-target="#carousel" data-slide-to="2"></li>
-			</ol>
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel" data-slide-to="1"></li>
+                <li data-target="#carousel" data-slide-to="2"></li>
+                <li data-target="#carousel" data-slide-to="3"></li>
+            </ol>
 
-			<!-- Wrapper for slides -->
-			<div class="carousel-inner">
-				<div class="item active">
-					<img src="./Images/Carousel_Bruno.jpg">
-				</div>
-				<div class="item">
-					<img src="./Images/D_Carousel_training_promo.jpg">
-				</div>
-				<div class="item">
-					<img src="./Images/carousel_kitR.jpg">
-				</div>
-			</div>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="./Images/Carousel_Bruno.jpg">
+                </div>
+                <div class="item">
+                    <img src="./Images/D_Carousel_training_promo.jpg">
+                </div>
+                <div class="item">
+                    <img src="./Images/carousel_kitR.jpg">
+                </div>
+                <div class="item">
+                    <img src="./Images/d_carousel_stay_home.jpg" />
+                </div>
+            </div>
 
-			<!-- Controls -->
-			<a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
-				<span class="glyphicon glyphicon-chevron-left"></span>
-			</a>
-			<a class="right carousel-control" href="#carousel" role="button" data-slide="next">
-				<span class="glyphicon glyphicon-chevron-right"></span>
-			</a>
-		</div> <!-- Carousel -->
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div> <!-- Carousel -->
 
 
 
-		<div class="row panel" style="margin-left:0; margin-right:0; display:flex">
-			<div id="categories" class="col-xs-3">
-				<h1>Content will be added later</h1>
-			</div>
-			<div class="col-xs-8">
-				@RenderBody()
-			</div>
-		</div>
+        <div class="row panel" style="margin-left:0; margin-right:0; display:flex">
+            <div id="categories" class="col-xs-3">
+                <h1>Content will be added later</h1>
+            </div>
+            <div class="col-xs-8">
+                @RenderBody()
+            </div>
+        </div>
 
-	</content>
+    </content>
 
-	<footer class="footer">
-		<div>
-			<ul class="footerText">
-				<li class="footerTextItem">
-					©2020 Manchester United FC Ltd
-				</li>
-			</ul>
-		</div>
+    <footer class="footer">
+        <div>
+            <ul class="footerText">
+                <li class="footerTextItem">
+                    ©@DateTime.Now.Year Manchester United FC Ltd
+                </li>
+            </ul>
+        </div>
 
-		<div class="image">
-			<img src=@Url.Content("~/Images/ManU-fanatics.png") alt="" />
-		</div>
+        <div class="image">
+            <img src=@Url.Content("~/Images/ManU-fanatics.png") alt="" />
+        </div>
 
-		<div class="social">
-			<a href="https://www.twitter.com/ManUtd/" target="_blank"><img src=@Url.Content("~/Images/twitter-24.png") alt="" /></a>
-			<a href="https://www.instagram.com/manchesterunited/" target="_blank"><img src=@Url.Content("~/Images/instagram-logo.png") alt="" style="height:24px; width:24px" /></a>
-			<a href="https://www.facebook.com/manchesterunited" target="_blank"><img src=@Url.Content("~/Images/facebook-24.png") alt="" /></a>
-			<a href="https://www.youtube.com/manutd" target="_blank"><img src=@Url.Content("~/Images/youtube.png") alt="" style="width:24px; height:24px" /></a>
-			<a href="https://www.pinterest.com/manutd/" target="_blank"><img src=@Url.Content("~/Images/pinterest-24.png") alt="" /></a>
-		</div>
-	</footer>
-
+        <div class="social">
+            <a href="https://www.twitter.com/ManUtd/" target="_blank"><img src=@Url.Content("~/Images/twitter-24.png") alt="" /></a>
+            <a href="https://www.instagram.com/manchesterunited/" target="_blank"><img src=@Url.Content("~/Images/instagram-logo.png") alt="" style="height:24px; width:24px" /></a>
+            <a href="https://www.facebook.com/manchesterunited" target="_blank"><img src=@Url.Content("~/Images/facebook-24.png") alt="" /></a>
+            <a href="https://www.youtube.com/manutd" target="_blank"><img src=@Url.Content("~/Images/youtube.png") alt="" style="width:24px; height:24px" /></a>
+            <a href="https://www.pinterest.com/manutd/" target="_blank"><img src=@Url.Content("~/Images/pinterest-24.png") alt="" /></a>
+        </div>
+    </footer>
 </body>
 </html>

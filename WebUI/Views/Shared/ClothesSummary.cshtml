@@ -1,30 +1,45 @@
 ﻿@model Domain.Entities.Wear
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-    <div style="width:240px; display:flex; flex-direction:column; margin-bottom:15px">
-        <div>
-            <p style="font-weight:700; font-size:12px">@Model.Name</p>
-        </div>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+
+<div style="width:240px; display:flex; flex-direction:column; margin-bottom:15px">
+    <div>
+        <p style="font-weight:700; font-size:12px">@Model.Name</p>
+    </div>
 
 
-        <div>
-            <span style="color:#b61c1c; padding-bottom:3.600px;align-self:flex-start; position:absolute; margin-top:5px; font-weight:700; font-size:14px">@Model.Price.ToString("# $")</span>
-        </div>
+    <div>
+        <span style="color:#b61c1c; padding-bottom:3.600px;align-self:flex-start; position:absolute; margin-top:5px; font-weight:700; font-size:14px">@Model.Price.ToString("# $")</span>
+    </div>
 
-        @using (Html.BeginForm("AddToBasket", "Basket", new { clothesID = Model.Article }))
+    @*@using (Html.BeginForm("AddToBasket", "Basket", new { clothesID = Model.Article }))
         {
             <div class="pull-right" style="display:flex; flex-direction:column;position:absolute; margin-top:25px">
                 @Html.HiddenFor(item => item.Article)
                 @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-                <input class="basketImage" type="image" src=@Url.Content("~/Images/shoppingBasket.png") width="24" height="24" align="top" alt="Stop sign" style="outline:none;margin-top:5px">
+                <input class="basketImage" type="image" data-toggle="tooltip" title="Add to basket" data-placement="top" src=@Url.Content("~/Images/shoppingBasket.png") width="24" height="24" align="top" alt="Stop sign" style="outline:none;margin-top:5px">
             </div>
-        }
+        }*@
 
-        <div style="max-height:250px; max-width:215px">
-                @{
-                    var base64 = Convert.ToBase64String(Model.ClothesImages.ImageFile);
-                    var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
-                }
-                <img src="@imgSrc" style="max-height:250px; max-width:215px" />
-        </div>
+    <div class="addtobasket" style="display:flex; flex-direction:column; margin-top:25px">
+        <a href="#" class="addtobasket-@Model.Article"><img data-toggle="tooltip" title="Add to basket" data-placement="top" src=@Url.Content("~/Images/shoppingBasket.png") width="24" height="24" style="outline:none;margin-top:5px" /></a>
     </div>
+
+    <div style="max-height:250px; max-width:215px">
+        @{
+            var base64 = Convert.ToBase64String(Model.ClothesImages.ImageFile);
+            var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+        }
+        <img src="@imgSrc" style="max-height:250px; max-width:215px" />
+    </div>
+</div>
+
+

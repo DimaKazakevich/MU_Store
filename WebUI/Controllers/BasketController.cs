@@ -23,6 +23,8 @@ namespace WebUI.Controllers
                 ReturnUrl = returnUrl
             });
         }
+
+        #region AddToBasketOld
         public RedirectToRouteResult AddToBasket(Basket basket, int clothesID, string returnUrl)
         {
             if (Request.IsAuthenticated)
@@ -40,6 +42,24 @@ namespace WebUI.Controllers
                 return RedirectToAction("Login", "Account", new { returnUrl });
             }
         }
+        #endregion
+
+        public ActionResult AddToBasketPartial(Basket basket, int clothesID)
+        {
+            Wear wear = _repository.Clothes.FirstOrDefault(item => item.Article == clothesID);
+
+            if (wear != null)
+            {
+                basket.AddItem(wear, 1);
+            }
+            else
+            {
+                basket.Lines.FirstOrDefault(item => item.Wear == wear).Quantity++;
+            }
+
+            return PartialView("_AddToBasketPartial", basket);
+        }
+
 
         public void RemoveFromBasket(Basket basket, int clothesID)
         {

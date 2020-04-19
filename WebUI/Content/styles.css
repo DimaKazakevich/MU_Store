@@ -70,13 +70,14 @@ body {
  .topLevelMenu .menuHeader a {
    color: white;
    margin: 0px auto;
+   height: 32px;
+   padding-left: 30px;
+   padding-right: 30px;
  }
  
  .topLevelMenu .menuHeader {
   height: 32px;
   margin: 4px auto;
-  padding-left: 30px;
-  padding-right: 30px;
 }
 
 li {

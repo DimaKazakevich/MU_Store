@@ -7,12 +7,29 @@
     ViewBag.Title = "MU Store";
 }
 
-
 @foreach (var item in @Model.Clothes)
 {
+
     @Html.Partial("ClothesSummary", item);
+
+    <script>
+    $(function () {
+    $("a.addtobasket-@item.Article").click(function (e) {
+    e.preventDefault();
+
+    //$("span.loader").addClass("ib");
+
+            var url = "/Basket/AddToBasketPartial";
+
+            $.get(url, {clothesId: @item.Article }, function (data) {
+            $(".basket").html(data);
+            })
+        });
+    });
+    </script>
 }
 
 <div class="btn-group pull-right">
     @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
 </div>
+
