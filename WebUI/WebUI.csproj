@@ -193,6 +193,7 @@
     <Content Include="Views\Basket\Index.cshtml" />
     <Content Include="Views\Basket\Summary.cshtml" />
     <Content Include="Views\Basket\_AddToBasketPartial.cshtml" />
+    <Content Include="Views\Clothes\ClothesDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />

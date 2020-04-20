@@ -29,7 +29,7 @@
             </div>
         }*@
 
-    <div class="addtobasket" style="display:flex; flex-direction:column; margin-top:25px">
+    <div class="addtobasket" style="display:flex; flex-direction:column; margin-top:50px; position:absolute">
         <a href="#" class="addtobasket-@Model.Article"><img data-toggle="tooltip" title="Add to basket" data-placement="top" src=@Url.Content("~/Images/shoppingBasket.png") width="24" height="24" style="outline:none;margin-top:5px" /></a>
     </div>
 
@@ -38,7 +38,9 @@
             var base64 = Convert.ToBase64String(Model.ClothesImages.ImageFile);
             var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
         }
-        <img src="@imgSrc" style="max-height:250px; max-width:215px" />
+        <a href="/Clothes/clothes-details?name=@Model.Name">
+            <img src="@imgSrc" style="max-height:250px; max-width:215px">
+        </a>
     </div>
 </div>
 

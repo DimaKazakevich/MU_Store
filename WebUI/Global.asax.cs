@@ -4,7 +4,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using WebUI.App_Start;
 using WebUI.Infrastructure.Binders;
-using System.Web.Optimization;
 
 namespace WebUI
 {

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using Domain.Abstract;
+using Domain.Entities;
 using WebUI.Models;
 
 namespace WebUI.Controllers
@@ -10,7 +11,7 @@ namespace WebUI.Controllers
         // GET: Clothes
         private IClothesRepository _repository;
 
-        public int _pageSize = 2; 
+        public int _pageSize = 2;
 
         public ClothesController()
         {
@@ -41,6 +42,14 @@ namespace WebUI.Controllers
                 CurrentCategory = category
             };
             return View(model);
+        }
+
+        [HttpGet]
+        [ActionName("clothes-details")]
+        public ActionResult ClothesDetails(string name)
+        {
+            Wear wear = _repository.Clothes.FirstOrDefault(item => item.Name == name);
+            return View("ClothesDetails", wear);
         }
     }
 }

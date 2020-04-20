@@ -1,0 +1,49 @@
+﻿@model Domain.Entities.Wear
+
+@{
+    ViewBag.Title = "ClothesDetails";
+}
+<link href="~/Content/style.css" rel="stylesheet" />
+
+<div style="display:flex; margin-top:30px; justify-content:space-between">
+        @{
+            var base64 = Convert.ToBase64String(Model.ClothesImages.ImageFile);
+            var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+        }
+        <img src="@imgSrc" style="max-height:465px; max-width:500px">
+
+    <div style="flex-direction:column">
+        <section style="max-width:450px; border:1px solid #d9d9d9; padding:0 20px; margin-bottom:20px">
+            <h1>@Model.Name</h1>
+
+            <p>
+                <span style="color:#c00; font-size:20px; font-weight:700">
+                    @Model.Price $
+                </span>
+            </p>
+
+            <p>
+                <span style="font-weight:400; font-family: cursive">
+                    @Model.Description
+                </span>
+            </p>
+        </section>
+
+        <button class="addtobasket btn-success" style="border-radius:0; width:450px; height:80px; text-wrap:none">Add to basket</button>
+    </div>
+
+</div>
+
+<script>
+    $(function () {
+    $("button.addtobasket").click(function (e) {
+    e.preventDefault();
+
+            var url = "/Basket/AddToBasketPartial";
+
+            $.get(url, {clothesId: @Model.Article }, function (data) {
+            $(".basket").html(data);
+            })
+        });
+    });
+</script>
