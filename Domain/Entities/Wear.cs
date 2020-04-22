@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
@@ -12,9 +13,6 @@ namespace Domain.Entities
         public string Category { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public int ImageID { get; set; }
-
-        [ForeignKey("ImageID")]
-        public virtual ClothesImages ClothesImages { get; set; }
+        public virtual ICollection<ClothesImages> Images { get; set; }
     }
 }

@@ -37,14 +37,15 @@
                     <a href="#" class="removeClothes" data-id="@line.Wear.Article" style="color:black; text-decoration:none">Remove</a>
                 </td>
                 @{
-                    var base64 = Convert.ToBase64String(line.Wear.ClothesImages.ImageFile);
+                    var str = line.Wear.Images.Where(x => x.Wear.Article == line.Wear.Article).Select(x => x.ImageFile).FirstOrDefault();
+                    var base64 = Convert.ToBase64String(str);
                     var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
                 }
-                    <td class="text-left"><a href="/Clothes/clothes-details?name=@line.Wear.Name"><img src="@imgSrc" style="height:90px; width:90px" /></a> <br> @line.Wear.Name <br>Product code: @line.Wear.Article</td>
-                    <td class="text-right">@line.Wear.Price.ToString("# $")</td>
-                    <td class="text-right" id="cost@(line.Wear.Article)">
-                        @((line.Quantity * line.Wear.Price).ToString("# $"))
-                    </td>
+                <td class="text-left"><a href="/Clothes/clothes-details?name=@line.Wear.Name"><img src="@imgSrc" style="height:90px; width:90px" /></a> <br> @line.Wear.Name <br>Product code: @line.Wear.Article</td>
+                <td class="text-right">@line.Wear.Price.ToString("# $")</td>
+                <td class="text-right" id="cost@(line.Wear.Article)">
+                    @((line.Quantity * line.Wear.Price).ToString("# $"))
+                </td>
             </tr>
             }
         </tbody>

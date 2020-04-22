@@ -1,18 +1,64 @@
 ﻿@model Domain.Entities.Wear
 
 @{
-    ViewBag.Title = "ClothesDetails";
+    ViewBag.Title = Model.Name;
 }
 <link href="~/Content/style.css" rel="stylesheet" />
 
-<div style="display:flex; margin-top:30px; justify-content:space-between">
-        @{
-            var base64 = Convert.ToBase64String(Model.ClothesImages.ImageFile);
-            var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
-        }
-        <img src="@imgSrc" style="max-height:465px; max-width:500px">
+<style>
+    #image {
+        border: 1px solid #d9d9d9;
+        height: 550px;
+        width: 550px;
+    }
 
-    <div style="flex-direction:column">
+    .row.panel {
+        justify-content:center;
+    }
+    .thumb:visited {
+        border: 1px solid red;
+    }
+    .addtobasket:focus {
+        outline:none;
+    }
+    .col-xs-8 {
+        width: max-content;
+    }
+
+</style>
+
+
+<div style="display:flex; margin-top:30px">
+
+    <div style="margin-right:20px">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <style>
+            .fotorama__thumb-border {
+                border-color: #ccc;
+            }
+        </style>
+        <div class="fotorama" data-width="500"
+                                 data-maxwidth="100%"
+                                 @*data-ratio="16/9"*@
+                                 data-allowfullscreen="true"
+                                 data-nav="thumbs">
+            @foreach (var item in Model.Images.Where(x => x.ClothesId == Model.Article).Select(x => x.ImageFile))
+            {
+
+                var base64 = Convert.ToBase64String(item);
+                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+                <img src="@imgSrc"/>
+            }
+        </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column">
         <section style="max-width:450px; border:1px solid #d9d9d9; padding:0 20px; margin-bottom:20px">
             <h1>@Model.Name</h1>
 
@@ -31,7 +77,6 @@
 
         <button class="addtobasket btn-success" style="border-radius:0; width:450px; height:80px; text-wrap:none">Add to basket</button>
     </div>
-
 </div>
 
 <script>

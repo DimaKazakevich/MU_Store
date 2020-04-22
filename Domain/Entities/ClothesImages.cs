@@ -9,5 +9,10 @@ namespace Domain.Entities
         [Key]
         public int ClothesImagesID { get; set; }
         public byte[] ImageFile { get; set; }
+
+        public int ClothesId { get; set; }
+
+        [ForeignKey("ClothesId")]
+        public virtual Wear Wear { get; set; }
     }
 }
