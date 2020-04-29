@@ -7,29 +7,67 @@
     ViewBag.Title = "MU Store";
 }
 
-@foreach (var item in @Model.Clothes)
+@if (Model.Clothes.Count() > 0)
 {
+    foreach (var item in Model.Clothes)
+    {
 
-    @Html.Partial("ClothesSummary", item);
+        @Html.Partial("ClothesSummary", item);
 
     <script>
-    $(function () {
+        $(function () {
     $("a.addtobasket-@item.Article").click(function (e) {
-    e.preventDefault();
+        e.preventDefault();
 
-    //$("span.loader").addClass("ib");
+        var url = "/Basket/AddToBasketPartial";
 
-            var url = "/Basket/AddToBasketPartial";
-
-            $.get(url, {clothesId: @item.Article }, function (data) {
+        $.get(url, { clothesId: @item.Article }, function (data) {
+            var pre = document.referrer;
             $(".basket").html(data);
+                //debugger;
+                console.log('ss');
+                //window.history.back();
             })
         });
     });
-    </script>
+        </script>
+    }
+    if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() != "Navigation")
+    {
+        <div class="btn-group pull-right" style="align-self:flex-end">
+            @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", "Clothes", new { page = x, category = Model.CurrentCategory }))
+        </div>
+    }
+}
+else
+{
+    <style>
+        #categories {
+            display: none;
+        }
+
+        .row.panel {
+            justify-content: flex-end;
+        }
+    </style>
+    <div style="display:flex">
+        <div>
+            <img src="@Url.Content("~/Images/sad.png")" width="222" height="162" />
+        </div>
+
+        <section id="browseResults">
+            <div class="emptySearch" style="">
+                <h4 style="font-weight:600; font-size:16px">We're sorry but no matches have been found</h4>
+                <h5>0 products found</h5>
+                <p>Your search for "<b>@ViewData["searchString"]</b>" did not match any products. Please review our suggestions and try searching again:</p>
+                <ul>
+                    <li style="list-style-type:disc">Check for typos or spelling errors</li>
+                    <li style="list-style-type:disc">Try different words</li>
+                    <li style="list-style-type:disc">Broaden your search by using fewer words</li>
+                </ul>
+            </div>
+        </section>
+    </div>
 }
 
-<div class="btn-group pull-right">
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
-</div>
 

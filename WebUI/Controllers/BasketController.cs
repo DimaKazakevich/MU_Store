@@ -25,7 +25,7 @@ namespace WebUI.Controllers
         }
 
         #region AddToBasketOld
-        public RedirectToRouteResult AddToBasket(Basket basket, int clothesID, string returnUrl)
+        /*public RedirectToRouteResult AddToBasket(Basket basket, int clothesID, string returnUrl)
         {
             if (Request.IsAuthenticated)
             {
@@ -41,7 +41,7 @@ namespace WebUI.Controllers
             {
                 return RedirectToAction("Login", "Account", new { returnUrl });
             }
-        }
+        }*/
         #endregion
 
         public ActionResult AddToBasketPartial(Basket basket, int clothesID)

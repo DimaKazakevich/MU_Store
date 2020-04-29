@@ -19,11 +19,11 @@
 
 </head>
 
-<body>
+<body class="body">
     <header class="header">
         <div style="background-color:#333; height:20px">
 
-            @if (Request.IsAuthenticated)
+            @if (User.Identity.IsAuthenticated)
             {
                 using (Html.BeginForm("Logout", "Account", new { returnUrl = Request.Url.PathAndQuery }, FormMethod.Post, new { id = "logoutForm" }))
                 {
@@ -44,14 +44,15 @@
             else
             {
                 <ul style="display:flex;justify-content:center; margin: 0px 0px 0px 0px; height:20px; padding-left:0">
-                    <li style="margin-right:15px; background-color:black; padding-right:10px;padding-left:10px">@Html.ActionLink("Register", "Register", "Account", new { returnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "registerLink" })</li>
+                    <li style="background-color:black; padding-right:10px;padding-left:10px">@Html.ActionLink("Register", "Register", "Account", new { returnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "registerLink" })</li>
+                    <li style="background-color:black; color:white">/</li>
                     <li style="background-color:black; padding-left:10px; padding-right:10px">@Html.ActionLink("Log in", "Login", "Account", new { returnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "loginLink" })</li>
                 </ul>
             }
 
         </div>
 
-        <div class="headerContent">
+        <div class="headerContent" style="display:flex">
             <div class="image">
                 <a href="https://www.adidas.com/us" target="_blank"><img src=@Url.Content("~/Images/adidasLogo.png") alt="" /></a>
                 <a href="https://www.aon.com/home/index.html" target="_blank"><img src=@Url.Content("~/Images/aonLogo.png") alt="" /></a>
@@ -59,6 +60,10 @@
 
             <div class="caption">
                 <img src="@Url.Content("~/Images/ud_logo.png")">
+            </div>
+
+            <div style="margin-top:20px; height:31px; display:flex">
+                @Html.Partial("~/Views/Navigation/Search.cshtml")
             </div>
 
             <div class="image">
@@ -90,32 +95,32 @@
 
                 <div class="carousel-inner">
                     <div class="item active">
-                        <img src="./Images/Carousel_Bruno.jpg">
+                        <img src="@Url.Content("~/Images/Carousel_Bruno.jpg")">
                     </div>
                     <div class="item">
-                        <img src="./Images/D_Carousel_training_promo.jpg">
+                        <img src="@Url.Content("~/Images/D_Carousel_training_promo.jpg")">
                     </div>
                     <div class="item">
-                        <img src="./Images/carousel_kitR.jpg">
+                        <img src="@Url.Content("~/Images/carousel_kitR.jpg")">
                     </div>
                     <div class="item">
-                        <img src="./Images/d_carousel_stay_home.jpg" />
+                        <img src="@Url.Content("~/Images/d_carousel_stay_home.jpg")"/>
                     </div>
                 </div>
 
-                <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
+                <a class="left carousel-control" href="#carousel" role="button" data-co data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" style="color:#333"></span>
                 </a>
                 <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="glyphicon glyphicon-chevron-right" style="color:#333"></span>
                 </a>
             </div>
 
-            <div class="row panel" style="margin-left:0; margin-right:0; display:flex">
+            <div class="row panel" style="margin-left:0; margin-right:0; display:flex; margin-top:40px">
                 <div id="categories" class="col-xs-3">
                     <h1>Content will be added later</h1>
                 </div>
-                <div class="col-xs-8">
+                <div class="col-xs-8" style="display:flex">
                     @RenderBody()
                 </div>
             </div>

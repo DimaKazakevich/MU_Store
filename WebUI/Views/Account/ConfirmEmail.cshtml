@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Email Confirmed.";
+}
+
+<link href="~/Content/style.css" rel="stylesheet" />
+
+<style>
+    .content {
+        background-color: #f1f1f1;
+    }
+
+    .row.panel {
+        background-color: #f1f1f1;
+        justify-content: center;
+    }
+
+    .col-xs-8 {
+        flex-direction: column;
+    }
+
+    #textLoginLink {
+        color: red;
+    }
+</style>
+
+
+<div>
+    <img src="@Url.Content("~/Images/United-Direct-Logo.png")" style="width:395px" />
+</div>
+<h1>@ViewBag.Title</h1>
+<h2>Thank you for confirming your email!</h2>
+<h3>Please @Html.ActionLink("click here to Log in.", "Login", "Account", routeValues: null, htmlAttributes: new { id = "textLoginLink" })</h3>
+

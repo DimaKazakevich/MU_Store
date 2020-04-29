@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
-using Domain.Abstract;using Domain.Entities;
+using Domain.Abstract;
+using Domain.Entities;
 using WebUI.Models;
 
 namespace WebUI.Controllers
@@ -10,7 +11,7 @@ namespace WebUI.Controllers
         // GET: Clothes
         private IClothesRepository _repository;
 
-        public int _pageSize = 2;
+        public int _pageSize = 4;
 
         public ClothesController()
         {

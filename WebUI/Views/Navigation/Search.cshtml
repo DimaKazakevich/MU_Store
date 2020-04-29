@@ -1,0 +1,47 @@
+﻿
+<input id="searchString" name="searchString" type="text" placeholder="Search" style="outline:none; width:250px; height:31px">
+<button id="searchBtn" type="submit" style="background-image: url('/Images/white.png'); width:31px; height:31px; outline:none; border:none; background-repeat:no-repeat; background-size:100%; transform:scale(-1,1)" />
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#searchBtn").click(function () {
+            if ($("#searchString").val() != null && $("#searchString").val() != '') {
+                $.ajax({
+                    url: '@Url.Action("Search","Navigation")',
+                    data: {
+                        "searchString": $("#searchString").val(),
+                    },
+                    success: function (data) {
+                        $(".body").html(data);
+                    }
+                });
+            }
+        })
+    });
+
+    $(document).on('keypress', function (e) {
+        if ($("#searchString").val() != null && $("#searchString").val() != '') {
+            if (e.which == 13) { 
+                $.ajax({
+                    url: '@Url.Action("Search","Navigation")',
+                    data: {
+                        "searchString": $("#searchString").val(),
+                    },
+                    success: function (data) {
+                        $(".body").html(data);
+                    }
+                });
+            }
+        }
+    });
+
+
+
+</script>
+
+<style>
+    #searchForm {
+        display: flex;
+    }
+</style>

@@ -194,10 +194,16 @@
     <Content Include="Views\Basket\Summary.cshtml" />
     <Content Include="Views\Basket\_AddToBasketPartial.cshtml" />
     <Content Include="Views\Clothes\ClothesDetails.cshtml" />
+    <Content Include="Views\Navigation\Search.cshtml" />
+    <Content Include="Views\Account\_Register.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SmsService.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BasketController.cs" />
@@ -215,6 +221,7 @@
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\BasketIndexViewModel.cs" />
     <Compile Include="Models\ClothesListViewModel.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\RegisterModel.cs" />

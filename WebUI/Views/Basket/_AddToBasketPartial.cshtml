@@ -22,12 +22,12 @@
 
         <li class="itemsText"> &nbsp; item(s) / </li>
 
-        <li class="summaryCost">
+        <li class="price">
             @Model.ComputeTotalValue().ToString("# $")
         </li>
 
         <li class="checkout" style="margin-left:10px; background-color:#b61c1c">
-            @Html.ActionLink("CHECKOUT", "Index", new { returnUrl = Request.Url.PathAndQuery })
+            @Html.ActionLink("CHECKOUT", "Index", new { returnUrl = Request.Headers.Get("Referer") })
         </li>
     }
     else

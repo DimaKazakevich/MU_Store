@@ -24,26 +24,53 @@ namespace WebUI.Controllers
             return View(new RegisterModel());
         }
 
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Login", "Account");
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action(
+                       "ConfirmEmail", "Account",
+                       new { userId = user.Id, code = code },
+                       protocol: Request.Url.Scheme);
+
+                    await UserManager.SendEmailAsync(user.Id,
+                       "Confirm your account",
+                       "Hi, " + user.UserName + "! Please confirm your account by clicking this <a href=\""
+                                                       + callbackUrl + "\">link.</a>");
+                    // ViewBag.Link = callbackUrl;   // Used only for initial demo.
+                    return View("_Register");
                 }
-                else
-                {
-                    foreach (string error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-                    }
-                }
+                AddErrors(result);
             }
+
+            // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return View("Error");
+            }
+            var result = await UserManager.ConfirmEmailAsync(userId, code);
+            AuthenticationManager.SignOut();
+            return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
         private IAuthenticationManager AuthenticationManager
@@ -69,21 +96,28 @@ namespace WebUI.Controllers
                 ApplicationUser user = await UserManager.FindAsync(model.Email, model.Password);
                 if (user == null)
                 {
-                    ModelState.AddModelError("", "Wrong login of password.");
+                    ModelState.AddModelError("", "Wrong login or password.");
                 }
                 else
                 {
-                    ClaimsIdentity claim = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-                    AuthenticationManager.SignOut();
-                    AuthenticationManager.SignIn(new AuthenticationProperties
+                    if (user.EmailConfirmed == true)
                     {
-                        IsPersistent = true
-                    }, claim);
-                    if (string.IsNullOrEmpty(model.ReturnUrl))
-                    {
-                        return RedirectToAction("List", "Clothes");
+                        ClaimsIdentity claim = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                        AuthenticationManager.SignOut();
+                        AuthenticationManager.SignIn(new AuthenticationProperties
+                        {
+                            IsPersistent = true
+                        }, claim);
+                        if (string.IsNullOrEmpty(model.ReturnUrl))
+                        {
+                            return RedirectToAction("List", "Clothes");
+                        }
+                        return Redirect(model.ReturnUrl);
                     }
-                    return Redirect(model.ReturnUrl);
+                    else
+                    {
+                        ModelState.AddModelError("", "Email not confirmed.");
+                    }
                 }
             }
             ViewBag.returnUrl = model.ReturnUrl;

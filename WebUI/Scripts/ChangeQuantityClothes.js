@@ -18,9 +18,13 @@
             let newTotalCost = currentTotalCost + data.price + " $";
             $("td#totalCost").text(newTotalCost);
 
-            let currentTotalCostHeader = parseFloat($("li.summaryCost").text())
+            let currentTotalCostSide = parseFloat($("span.price").text())
+            let newTotalCostSide = currentTotalCostSide + data.price + " $";
+            $("span.price").text(newTotalCostSide);
+
+            let currentTotalCostHeader = parseFloat($("li.price").text())
             let newTotalCostHeader = currentTotalCostHeader + data.price + " $";
-            $("li.summaryCost").text(newTotalCostHeader);
+            $("li.price").text(newTotalCostHeader);
     
             let currentTotalItems = parseFloat($("li.summaryItems").text())
             let newTotalItems = currentTotalItems + 1;
@@ -55,9 +59,13 @@ $(function () {
                 let gt = parseFloat($("td#totalCost").text());
                 let grandtotal = (gt - data.price) + " $";
 
-                let currentTotalCostHeader = parseFloat($("li.summaryCost").text())
+                let currentTotalCostHeader = parseFloat($("span.price").text())
                 let newTotalCost = currentTotalCostHeader - data.price + " $";
-                $("li.summaryCost").text(newTotalCost);
+                $("span.price").text(newTotalCost);
+
+                let currentTotalCostSide = parseFloat($("li.price").text())
+                let newTotalCostSide = currentTotalCostSide - data.price + " $";
+                $("li.price").text(newTotalCostSide);
         
                 let currentTotalItems = parseFloat($("li.summaryItems").text())
                 let newTotalItems = currentTotalItems - 1;
