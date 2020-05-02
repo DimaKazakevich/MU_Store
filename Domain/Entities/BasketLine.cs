@@ -11,5 +11,7 @@ namespace Domain.Entities
         public Wear Wear { get; set; }
 
         public int Quantity { get; set; }
+
+        public string Size { get; set; }
     }
 }

@@ -84,6 +84,7 @@
     <Compile Include="Entities\Basket.cs" />
     <Compile Include="Entities\BasketLine.cs" />
     <Compile Include="Entities\ClothesImages.cs" />
+    <Compile Include="Entities\Sizes.cs" />
     <Compile Include="Entities\Wear.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

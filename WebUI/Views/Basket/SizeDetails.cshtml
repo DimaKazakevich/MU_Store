@@ -1,0 +1,8 @@
+﻿@model WebUI.Models.WearSizesViewModel
+
+
+@foreach (var size in Model.Sizes)
+{
+    <label class="sizeItem" data-id="@Model.ClothesID" style="background-color:whitesmoke"><span>@size</span><input class="size" name="size" type="radio"></label>
+}
+

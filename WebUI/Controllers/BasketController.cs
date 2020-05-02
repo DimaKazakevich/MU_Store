@@ -24,37 +24,26 @@ namespace WebUI.Controllers
             });
         }
 
-        #region AddToBasketOld
-        /*public RedirectToRouteResult AddToBasket(Basket basket, int clothesID, string returnUrl)
+        public ActionResult AddToBasketWithSize(Basket basket, int clothesID, string size)
         {
-            if (Request.IsAuthenticated)
-            {
-                Wear wear = _repository.Clothes.FirstOrDefault(item => item.Article == clothesID);
+            Wear wear = _repository.Clothes.Where(item => item.Article == clothesID).FirstOrDefault();
+            Size sizeName = wear.Sizes.First(x => x.SizeName == size);
 
-                if (wear != null)
-                {
-                    basket.AddItem(wear, 1);
-                }
-                return RedirectToAction("Index", new { returnUrl });
-            }
-            else
+            if (wear != null)
             {
-                return RedirectToAction("Login", "Account", new { returnUrl });
+                basket.AddItem(wear, 1, size);
             }
-        }*/
-        #endregion
 
-        public ActionResult AddToBasketPartial(Basket basket, int clothesID)
+            return PartialView("_AddToBasketPartial", basket);
+        }
+
+        public ActionResult AddToBasketWithoutSize(Basket basket, int clothesID)
         {
-            Wear wear = _repository.Clothes.FirstOrDefault(item => item.Article == clothesID);
+            Wear wear = _repository.Clothes.Where(item => item.Article == clothesID).FirstOrDefault();
 
             if (wear != null)
             {
                 basket.AddItem(wear, 1);
-            }
-            else
-            {
-                basket.Lines.FirstOrDefault(item => item.Wear == wear).Quantity++;
             }
 
             return PartialView("_AddToBasketPartial", basket);
@@ -68,6 +57,17 @@ namespace WebUI.Controllers
             if (wear != null)
             {
                 basket.RemoveLine(wear);
+            }
+        }
+
+        public void RemoveFromBasketWithSize(Basket basket, int clothesID, string size)
+        {
+            Wear wear = _repository.Clothes.FirstOrDefault(item => item.Article == clothesID);
+            Size sizes = wear.Sizes.First(x => x.SizeName == size);
+
+            if (wear != null)
+            {
+                basket.RemoveLine(wear, size);
             }
         }
 
@@ -88,7 +88,6 @@ namespace WebUI.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
 
         public JsonResult DecrementClothes(Basket basket, int clothesID)
         {
@@ -113,7 +112,21 @@ namespace WebUI.Controllers
 
             var result = new { quantity = line.Quantity, price = line.Wear.Price };
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
+        public ActionResult SizeDetails(int id)
+        {
+            WearSizesViewModel wearSizes = new WearSizesViewModel
+            {
+                Sizes = _repository.Clothes.Where(x => x.Article == id).FirstOrDefault().Sizes.Select(x => x.SizeName),
+                ClothesID = id
+            };
+            if(wearSizes.Sizes.Count() > 0)
+            {
+                return PartialView(wearSizes);
+            }
+
+            return null;
         }
     }
 }

@@ -24,15 +24,104 @@
     .col-xs-8 {
         width: max-content;
     }
+    .controlDescription {
+        flex: 0 0 auto;
+        width: 150px;
+        font-weight: 700;
+        font-size: 16px;
+        display: block;
+    }
+    .donate-now li {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-right: 20px;
+        text-align: center;
+        font-size: 12px;
+        height: 40px;
+        width: 44px;
+        border: 1px solid #000;
+        font-size:14px;
+    }
 
+    #addtobasket {
+        border-radius: 0;
+        width: 450px;
+        border: 0;
+        cursor: pointer;
+        height: 80px;
+        text-wrap: none;
+        font-size: 28px;
+        background-color: #00a92c;
+        color: white;
+    }
+    #addToBasketWithoutSize {
+        border-radius: 0;
+        width: 450px;
+        border: 0;
+        cursor: pointer;
+        height: 80px;
+        text-wrap: none;
+        font-size: 28px;
+        background-color: #00a92c;
+        color: white;
+    }
+    #gotobasket {
+        border-radius: 0;
+        width: 450px;
+        border: 0;
+        cursor: pointer;
+        height: 80px;
+        text-wrap: none;
+        font-size: 28px;
+        background-color: mediumpurple;
+        color: white;
+    }
+
+    .donate-now li {
+        position: relative;
+    }
+
+    .donate-now label,
+    .donate-now input {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin-bottom:0;
+        padding:0;
+    }
+
+    .donate-now input[type="radio"] {
+        opacity: 0.01;
+        z-index: 100;
+    }
+
+    .donate-now input[type="radio"]:checked + label,
+    .Checked + label {
+        background: black;
+        color:white;
+        border:1px solid white;
+    }
+
+    .donate-now label {
+        cursor: pointer;
+        z-index: 90;
+    }
+
+    .donate-now label:hover {
+        background: black;
+        color:white;
+    }
 </style>
 
 
-<div style="display:flex; margin-top:30px">
+<div style="display: flex; margin-top: 30px">
 
     <div style="margin-right:20px">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
         <link href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -68,26 +157,93 @@
                 </span>
             </p>
 
-            <p>
+            @if (Model.Sizes.Where(x => x.ClothesId == Model.Article).Select(x => x.SizeName).Count() > 0)
+            {
+                <section id="productDetailsSize" class="productDetailsInformationSections structuredControlSection" style="border-top:1px solid #d9d9d9; border-bottom:1px solid #d9d9d9;display:flex">
+                    <span class="controlDescription ng-scope" style="align-self:center">Size</span>
+
+                    <div class="controlContainer" style="display:flex">
+
+                        <ul class="donate-now" style="display:flex; margin-top:10px; padding-left:0; margin-bottom:10px">
+                            @foreach (var item in Model.Sizes.Where(x => x.ClothesId == Model.Article).Select(x => x.SizeName))
+                            {
+                                <li class="productSize">
+                                    <input type="radio" id="@item.GetHashCode()" value="@item" name="size" />
+                                    <label style="display:flex;justify-content:center; align-items:center;" for="@item.GetHashCode()">@item</label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </section>
+            }
+
+            <p style="margin-top:10px">
                 <span style="font-weight:400; font-family: cursive">
                     @Model.Description
                 </span>
             </p>
         </section>
-
-        <button class="addtobasket btn-success" style="border-radius:0; width:450px; height:80px; text-wrap:none; font-size:22px;font-family:montserratsemibold">Add To Basket</button>
+        @if (Model.Sizes.Where(x => x.ClothesId == Model.Article).Select(x => x.SizeName).Count() > 0)
+        {
+            <button data-id="@Model.Article" id="addtobasket" style="background-color:#999">Add To Basket</button>
+        }
+        else
+        {
+            <button data-id="@Model.Article" id="addToBasketWithoutSize">Add To Basket</button>
+        }
     </div>
 </div>
 
 <script>
     $(function () {
-    $("button.addtobasket").click(function (e) {
-    e.preventDefault();
+        $('body').on('click', 'button#addtobasket', function (e) {
+            var selectedSize = $("input[name='size']:checked").val();
+            if (selectedSize == undefined) {
+                var text = $(this).html("Select Your Size"); 
+                setTimeout(function () { $(text).html("Add To Basket") }, 2000);
+            }
+            else {
+                var url = "/Basket/AddToBasketWithSize";
+                var Article = $(this).data("id");
+                $.get(url, { clothesId: Article, size: selectedSize }, function (data) {
+                    $(".basket").html(data);
+                }).done(function () {
+                    $("button#addtobasket").html("Go To Basket"); 
+                    $("button#addtobasket").css('background-color', "mediumpurple");
+                    $("button#addtobasket").attr("id", "gotobasket");
+            })
+            }
+        })
+    });
 
-            var url = "/Basket/AddToBasketPartial";
+    $(function () {
+        $('body').on('click', 'button#gotobasket', function (e) {
+            e.preventDefault();
+            $("input[name='size']:checked").prop("checked", false);
+            window.location.href = "/Basket/Index";
+        })
+    });
 
-            $.get(url, {clothesId: @Model.Article }, function (data) {
-            $(".basket").html(data);
+    $(function () {
+        $("li.productSize").click(function (e) {
+            $("button#addtobasket").css('background-color', "#00a92c");
+            $("button#addtobasket").html("Add To Basket");
+        });
+    });
+
+    $(function () {
+        $("button#addToBasketWithoutSize").click(function (e) {
+            e.preventDefault();
+
+            var url = "/Basket/AddToBasketWithoutSize";
+            let Article = $(this).data("id");
+
+            $.get(url, { clothesId: Article }, function (data) {
+                $(".basket").html(data);
+            }).done(function () {
+                var color = $("button#addToBasketWithoutSize").css('background-color', "mediumpurple");
+                var text = $("button#addToBasketWithoutSize").html("Item has been added to basket");
+                setTimeout(function () { $(text).html("Add To Basket"), $(color).css('background-color', "#00a92c") }, 3000);
             })
         });
     });

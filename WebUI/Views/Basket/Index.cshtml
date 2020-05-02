@@ -1,12 +1,38 @@
 ﻿@model WebUI.Models.BasketIndexViewModel
 
-
 @{
-    ViewBag.Title = "Mu Store: your basket";
+    ViewBag.Title = "Basket";
 }
-
-<link href="~/Content/style.css" rel="stylesheet" />
 <script src="~/Scripts/ChangeQuantityClothes.js"></script>
+<link href="~/Content/style.css" rel="stylesheet" />
+<script>
+    $(function () {
+        $("a.removeClothesWithSize").click(function (e) {
+            e.preventDefault();
+
+            let article = $(this).data("id");
+            let size = $(this).data("content");
+            let url = "/Basket/RemoveFromBasketWithSize";
+
+            $.get(url, { clothesId: article, size: size }, function () {
+                location.reload();
+            });
+        });
+    });
+
+    $(function () {
+        $("a.removeClothesWithoutSize").click(function (e) {
+            e.preventDefault();
+
+            let article = $(this).data("id");
+            let url = "/Basket/RemoveFromBasket";
+
+            $.get(url, { clothesId: article }, function () {
+                location.reload();
+            });
+        });
+    });
+</script>
 
 <style>
     #basketTable td {
@@ -15,21 +41,8 @@
 
     .col-xs-8 {
         /*flex-direction: column;*/
-        width:max-content;
+        width: max-content;
     }
-
-    /*.btn.btn-primary {
-        background-color: #b61c1c;
-        border-color: #b61c1c;
-        font-family: montserratsemibold;
-        width: 300px;
-        height: 50px;
-        border-radius: 0;
-        text-align: center;
-        vertical-align: middle;
-        text-transform: uppercase;
-        font-size: 22px;
-    }*/
     .orderSummaryHeader {
         border-bottom: 1px solid #d9d9d9;
         padding: 20px 10px;
@@ -53,6 +66,7 @@
         margin-bottom:15px;
     }
 </style>
+
 @if (Model.Basket.Lines.Count() > 0)
 {
 <div style="display:flex; flex-direction:column">
@@ -70,24 +84,55 @@
             <tbody>
                 @foreach (var line in Model.Basket.Lines)
                 {
-                    <tr style="font-weight:700; font-size:12px">
-                        <td class="text-left" style="font-size:14px" id="quantity@(line.Wear.Article)">@line.Quantity </td>
-                        <td>
-                            <a href="#" class="btn btn-icon" id="incClothes" data-id="@line.Wear.Article" style="color:black; font-size:20px; text-decoration:none">+</a> <br />
-                            <a href="#" id="decClothes" class="btn btn-icon" data-id="@line.Wear.Article" style="color:black; font-size:20px; padding-left:14.5px; padding-right:14.5px; text-decoration:none">-</a> <br />
-                            <a href="#" class="removeClothes" data-id="@line.Wear.Article" style="color:black; text-decoration:none">Remove</a>
-                        </td>
-                        @{
-                            var str = line.Wear.Images.Where(x => x.Wear.Article == line.Wear.Article).Select(x => x.ImageFile).FirstOrDefault();
-                            var base64 = Convert.ToBase64String(str);
-                            var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
-                        }
-                        <td class="text-left"><a href="/Clothes/clothes-details?name=@line.Wear.Name"><img src="@imgSrc" style="height:90px; width:90px" /></a> <br> @line.Wear.Name <br>Product code: @line.Wear.Article</td>
-                        <td class="text-right" style="font-size:14px">@line.Wear.Price.ToString("# $")</td>
-                        <td class="text-right" id="cost@(line.Wear.Article)" style="font-size:14px">
-                            @((line.Quantity * line.Wear.Price).ToString("# $"))
-                        </td>
-                    </tr>
+                    if (line.Size != null)
+                    {
+                        <tr style="font-weight:700; font-size:12px">
+                            <td class="text-left" style="font-size:14px" id="quantity@(line.Wear.Article)">@line.Quantity </td>
+                            <td>
+                                <a href="#" class="btn btn-icon" id="incClothes" data-id="@line.Wear.Article" style="color:black; font-size:20px; text-decoration:none">+</a> <br />
+                                <a href="#" id="decClothes" class="btn btn-icon" data-id="@line.Wear.Article" style="color:black; font-size:20px; padding-left:14.5px; padding-right:14.5px; text-decoration:none">-</a> <br />
+                                <a href="#" class="removeClothesWithSize" data-id="@line.Wear.Article" data-content="@line.Size" style="color:black; text-decoration:none">Remove</a>
+                            </td>
+                            @{
+                                var str = line.Wear.Images.Where(x => x.Wear.Article == line.Wear.Article).Select(x => x.ImageFile).FirstOrDefault();
+                                var base64 = Convert.ToBase64String(str);
+                                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+                            }
+                            <td class="text-left">
+                                <a href="/Clothes/clothes-details?name=@line.Wear.Name">
+                                    <img src="@imgSrc" style="height:90px; width:90px" />
+                                </a> 
+                                <br> @line.Wear.Name 
+                                <br>Product code: @line.Wear.Article 
+                                <br>Size: @line.Size 
+                            </td>
+                            <td class="text-right" style="font-size:14px">@line.Wear.Price.ToString("# $")</td>
+                            <td class="text-right" id="cost@(line.Wear.Article)" style="font-size:14px">
+                                @((line.Quantity * line.Wear.Price).ToString("# $"))
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr style="font-weight:700; font-size:12px">
+                            <td class="text-left" style="font-size:14px" id="quantity@(line.Wear.Article)">@line.Quantity </td>
+                            <td>
+                                <a href="#" class="btn btn-icon" id="incClothes" data-id="@line.Wear.Article" style="color:black; font-size:20px; text-decoration:none">+</a> <br />
+                                <a href="#" id="decClothes" class="btn btn-icon" data-id="@line.Wear.Article" style="color:black; font-size:20px; padding-left:14.5px; padding-right:14.5px; text-decoration:none">-</a> <br />
+                                <a href="#" class="removeClothesWithoutSize" data-id="@line.Wear.Article" style="color:black; text-decoration:none">Remove</a>
+                            </td>
+                            @{
+                                var str = line.Wear.Images.Where(x => x.Wear.Article == line.Wear.Article).Select(x => x.ImageFile).FirstOrDefault();
+                                var base64 = Convert.ToBase64String(str);
+                                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+                            }
+                            <td class="text-left"><a href="/Clothes/clothes-details?name=@line.Wear.Name"><img src="@imgSrc" style="height:90px; width:90px" /></a> <br> @line.Wear.Name <br>Product code: @line.Wear.Article </td>
+                            <td class="text-right" style="font-size:14px">@line.Wear.Price.ToString("# $")</td>
+                            <td class="text-right" id="cost@(line.Wear.Article)" style="font-size:14px">
+                                @((line.Quantity * line.Wear.Price).ToString("# $"))
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
@@ -114,20 +159,20 @@
         <a class="btn btn-primary" style="background-color: #b61c1c; border-color: #b61c1c; width: 300px; height: 50px;border-radius: 0;text-align: center;vertical-align: middle;text-transform: uppercase;font-size: 22px; justify-content:flex-start; font-weight:600;" href="@Model.ReturnUrl">Continue Shopping</a>
     </div>
 </div>
-    }
-    else
-    {
-    <h2>Nothing in your basket yet.</h2>
-    <h3>The basket is waiting to be filled.</h3>
-    <h4>Have a nice shopping!</h4>
+}
+else
+{
+<h2>Nothing in your basket yet.</h2>
+<h3>The basket is waiting to be filled.</h3>
+<h4>Have a nice shopping!</h4>
 
-    <div class="text-left">
-        <a class="btn btn-primary" style="background-color: #b61c1c; border-color: #b61c1c; width: 300px; height: 50px;border-radius: 0;text-align: center;vertical-align: middle;text-transform: uppercase;font-size: 22px;font-weight:600;" href="@Model.ReturnUrl">Continue Shopping</a>
-    </div>
+<div class="text-left">
+    <a class="btn btn-primary" style="background-color: #b61c1c; border-color: #b61c1c; width: 300px; height: 50px;border-radius: 0;text-align: center;vertical-align: middle;text-transform: uppercase;font-size: 22px;font-weight:600;" href="@Model.ReturnUrl">Continue Shopping</a>
+</div>
 
-    <style>
-        .col-xs-8 {
-            flex-direction:column;
-        }
-    </style>
+<style>
+    .col-xs-8 {
+        flex-direction:column;
     }
+</style>
+}

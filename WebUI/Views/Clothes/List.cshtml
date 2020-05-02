@@ -6,32 +6,24 @@
 @{
     ViewBag.Title = "MU Store";
 }
+<link href="~/Content/styles.css" rel="stylesheet" />
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
 
 @if (Model.Clothes.Count() > 0)
 {
-    foreach (var item in Model.Clothes)
-    {
+    <div style="display:flex; flex-wrap:wrap">
+        @foreach (var item in Model.Clothes)
+        {
 
-        @Html.Partial("ClothesSummary", item);
+            @Html.Partial("ClothesSummary", item);
 
-    <script>
-        $(function () {
-    $("a.addtobasket-@item.Article").click(function (e) {
-        e.preventDefault();
-
-        var url = "/Basket/AddToBasketPartial";
-
-        $.get(url, { clothesId: @item.Article }, function (data) {
-            var pre = document.referrer;
-            $(".basket").html(data);
-                //debugger;
-                console.log('ss');
-                //window.history.back();
-            })
-        });
-    });
-        </script>
-    }
+        }
+    </div>
     if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() != "Navigation")
     {
         <div class="btn-group pull-right" style="align-self:flex-end">
@@ -70,4 +62,86 @@ else
     </div>
 }
 
+<div id="sizeModal" class="modal">
+    <div class="modal-content" style="width:400px">
+        <div class="modal-header">
+            <span id="close" class="close">&times;</span>
+            <h2>Choose size</h2>
+        </div>
+        <div class="modal-body" style="display:flex; justify-content:center; align-items:center">
+        </div>
+        <div class="modal-footer" style="display:flex; justify-content:center; align-items:center">
+            <img src=@Url.Content("~/Images/ManU-fanatics.png") width="50" height="50" />
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("img.addtobasket").click(function (e) {
+            e.preventDefault();
+
+            var modal = document.getElementById("sizeModal");
+            modal.style.display = "block";
+
+            $.get($(this).data("targeturl"), function (data) {
+                $(".modal-body").html(data);
+            });
+        })
+    });
+
+    $(function () {
+        $('body').on('click', 'label.sizeItem', function (e) {
+            e.preventDefault();
+
+            var selectedSize = e.target.innerText;
+            var url = "/Basket/AddToBasketWithSize";
+            var Article = $(this).data("id");
+            $.get(url, { clothesId: Article, size: selectedSize }, function (data) {
+                $(".basket").html(data);
+                var modal = document.getElementById("sizeModal");
+                modal.style.display = "none";
+            })
+        })
+    });
+
+    $(function () {
+        $("span.close").click(function (e) {
+            e.preventDefault();
+            var modal = document.getElementById("sizeModal");
+            modal.style.display = "none";
+        })
+    });
+
+    $(window).click(function (event) {
+        var modal = document.getElementById("sizeModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+        }
+    });
+
+    $(function () {
+        $("img.addToBasketWithoutSize").click(function (e) {
+            e.preventDefault();
+
+            var url = "/Basket/AddToBasketWithoutSize";
+            let Article = $(this).data("id");
+
+            $.get(url, { clothesId: Article }, function (data) {
+                $(".basket").html(data);
+            }).done(function () {
+
+                setTimeout(function () {
+                    $("div#itemAddedMessage-" + Article).fadeIn("fast");
+                }, 300);
+
+                setTimeout(function () {
+                    $("div#itemAddedMessage-" + Article).fadeOut("fast");
+                }, 3000);
+            })
+        });
+    });
+
+
+</script>
 

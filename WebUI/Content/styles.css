@@ -162,3 +162,96 @@ a#helloLink {
 .basketImage:focus input {
   outline: black;
 }
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+@-webkit-keyframes animatetop {
+  from {top:-100px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-100px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+#close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#close:hover,
+#close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: #333c;
+    color: white;
+}
+
+.modal-body {
+    padding: 2px 16px;
+    height:70px;
+}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #333c;
+    color: white;
+}
+.sizeItem {
+    position: relative;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    line-height: 10px;
+    border: 1px solid #d5d5d5;
+    margin: 0 0 0 10px;
+    padding: 9px;
+    min-width: 42px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0 0 0 1px #fff;
+    box-shadow: inset 0 0 0 1px #fff;
+}
+
+.size {
+    position: absolute;
+    top: 0;
+    left: -9999px;
+}

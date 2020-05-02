@@ -14,5 +14,6 @@ namespace Domain.Entities
         public string Description { get; set; }
         public decimal Price { get; set; }
         public virtual ICollection<ClothesImages> Images { get; set; }
+        public virtual ICollection<Size> Sizes { get; set; }
     }
 }

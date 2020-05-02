@@ -78,20 +78,6 @@ $(function () {
 });
 
 
-$(function () {
-
-    $("a.removeClothes").click(function (e) {
-        e.preventDefault();
-
-        let $this = $(this);
-        let Article = $(this).data("id");
-        let url = "/Basket/RemoveFromBasket";
-
-        $.get(url, { clothesId: Article }, function () {
-            location.reload();
-        });
-    });
-});
 
 
 

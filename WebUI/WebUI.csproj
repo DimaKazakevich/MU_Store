@@ -198,6 +198,7 @@
     <Content Include="Views\Account\_Register.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Basket\SizeDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\WearSizesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

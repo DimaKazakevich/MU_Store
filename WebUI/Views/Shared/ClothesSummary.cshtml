@@ -3,12 +3,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-<script>
-    $(function () {
-        $('[data-toggle="tooltiptoo"]').tooltip();
-    })
-</script>
+<script src="~/Scripts/ChangeQuantityClothes.js"></script>
 
 <div class="clothesViewStyle" style="width:240px; display:flex; flex-direction:column; margin-bottom:15px; margin-right:15px">
     <div>
@@ -20,20 +15,33 @@
     </div>
 
     <div style="max-height:250px; max-width:215px">
-
-        <div class="addtobasket" style="display:flex; flex-direction:column; margin-top:25px; position:absolute">
-            <a href="#" class="addtobasket-@Model.Article"><img data-toggle="tooltip" title="Add to basket" data-placement="left" src=@Url.Content("~/Images/shoppingBasket.png") width="24" height="24" style="outline:none;margin-top:5px" /></a>
-        </div>
-
+        @if (Model.Sizes.Where(x => x.ClothesId == Model.Article).Count() != 0)
+        {
+            <div data-toggle="tooltip" title="Add to basket" data-placement="bottom" class="addtobasket" style="display:flex; flex-direction:column; margin-top:25px; position:absolute">
+                <img class="addtobasket" data-id="@Model.Article" data-targeturl="@Url.Action("SizeDetails", "Basket", new { id = Model.Article })" src=@Url.Content("~/Images/shoppingBasket.png") width="24" height="24" style="outline:none;margin-top:5px; cursor:pointer" />
+            </div>
+        }
+        else
+        {
+            <div data-toggle="tooltip" title="Add to basket" data-placement="bottom" style="display:flex; flex-direction:column; margin-top:25px; position:absolute">
+                <img class="addToBasketWithoutSize" data-id="@Model.Article" src=@Url.Content("~/Images/shoppingBasket.png") width="24" height="24" style="outline:none;margin-top:5px; cursor:pointer" />
+            </div>
+        }
         @{
             var str = Model.Images.Where(x => x.Wear.Article == Model.Article).Select(x => x.ImageFile).FirstOrDefault();
             var base64 = Convert.ToBase64String(str);
             var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
         }
+
         <a href="/Clothes/clothes-details?name=@Model.Name">
             <img src="@imgSrc" style="max-height:250px; max-width:215px" />
+
         </a>
+        @if (Model.Sizes.Where(x => x.ClothesId == Model.Article).Count() == 0)
+        {
+        <div id="itemAddedMessage-@Model.Article" style="display:none; position:absolute; margin-top:-5px">
+            <span style="color:red; font-weight:700">Item has been added to basket.</span>
+        </div>
+        }
     </div>
 </div>
-
-
