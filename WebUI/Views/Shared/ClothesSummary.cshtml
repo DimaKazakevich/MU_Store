@@ -33,7 +33,7 @@
             var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
         }
 
-        <a href="/Clothes/clothes-details?name=@Model.Name">
+        <a href="@Url.Action("clothes-details","Clothes", new { name = Model.Name})">
             <img src="@imgSrc" style="max-height:250px; max-width:215px" />
 
         </a>

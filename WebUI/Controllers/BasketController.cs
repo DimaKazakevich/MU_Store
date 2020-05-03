@@ -29,7 +29,7 @@ namespace WebUI.Controllers
             Wear wear = _repository.Clothes.Where(item => item.Article == clothesID).FirstOrDefault();
             Size sizeName = wear.Sizes.First(x => x.SizeName == size);
 
-            if (wear != null)
+            if (wear != null && sizeName != null)
             {
                 basket.AddItem(wear, 1, size);
             }
@@ -63,9 +63,9 @@ namespace WebUI.Controllers
         public void RemoveFromBasketWithSize(Basket basket, int clothesID, string size)
         {
             Wear wear = _repository.Clothes.FirstOrDefault(item => item.Article == clothesID);
-            Size sizes = wear.Sizes.First(x => x.SizeName == size);
+            Size sizeName = wear.Sizes.First(x => x.SizeName == size);
 
-            if (wear != null)
+            if (wear != null && sizeName != null)
             {
                 basket.RemoveLine(wear, size);
             }
@@ -76,11 +76,61 @@ namespace WebUI.Controllers
             return PartialView(basket);
         }
 
+        public JsonResult IncrementClothesWithSize(Basket basket, int clothesID, string size)
+        {
+            BasketLine line = basket.Lines
+                .Where(item => item.Wear.Article == clothesID)
+                .Where(item=>item.Size == size)
+                .FirstOrDefault();
+
+            if (line == null)
+            {
+                return null;
+            }
+
+            line.Quantity++;
+
+            var result = new { quantity = line.Quantity, price = line.Wear.Price };
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DecrementClothesWithSize(Basket basket, int clothesID, string size)
+        {
+            BasketLine line = basket.Lines
+                .Where(item => item.Wear.Article == clothesID)
+                .Where(item => item.Size == size)
+                .FirstOrDefault();
+
+            if (line == null)
+            {
+                return null;
+            }
+
+            if (line.Quantity > 1)
+            {
+                line.Quantity--;
+            }
+            else
+            {
+                line.Quantity = 0;
+                basket.RemoveLine(line.Wear);
+            }
+
+            var result = new { quantity = line.Quantity, price = line.Wear.Price };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult IncrementClothes(Basket basket, int clothesID)
         {
             BasketLine line = basket.Lines
                 .Where(item => item.Wear.Article == clothesID)
                 .FirstOrDefault();
+            
+            if(line == null)
+            {
+                return null;
+            }
                       
             line.Quantity++;
 

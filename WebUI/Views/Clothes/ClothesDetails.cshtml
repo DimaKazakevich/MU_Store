@@ -4,7 +4,7 @@
     ViewBag.Title = Model.Name;
 }
 <link href="~/Content/style.css" rel="stylesheet" />
-
+<script src="~/Scripts/ClothesDatails.js"></script>
 <style>
     #image {
         border: 1px solid #d9d9d9;
@@ -52,7 +52,6 @@
         height: 80px;
         text-wrap: none;
         font-size: 28px;
-        background-color: #00a92c;
         color: white;
     }
     #addToBasketWithoutSize {
@@ -185,66 +184,21 @@
         </section>
         @if (Model.Sizes.Where(x => x.ClothesId == Model.Article).Select(x => x.SizeName).Count() > 0)
         {
-            <button data-id="@Model.Article" id="addtobasket" style="background-color:#999">Add To Basket</button>
+            <button data-id="@Model.Article" id="addtobasket" style="background-color:#999;outline:none">Add To Basket</button>
         }
         else
         {
-            <button data-id="@Model.Article" id="addToBasketWithoutSize">Add To Basket</button>
+            <button data-id="@Model.Article" id="addToBasketWithoutSize" style="outline:none">Add To Basket</button>
         }
     </div>
 </div>
 
 <script>
-    $(function () {
-        $('body').on('click', 'button#addtobasket', function (e) {
-            var selectedSize = $("input[name='size']:checked").val();
-            if (selectedSize == undefined) {
-                var text = $(this).html("Select Your Size"); 
-                setTimeout(function () { $(text).html("Add To Basket") }, 2000);
-            }
-            else {
-                var url = "/Basket/AddToBasketWithSize";
-                var Article = $(this).data("id");
-                $.get(url, { clothesId: Article, size: selectedSize }, function (data) {
-                    $(".basket").html(data);
-                }).done(function () {
-                    $("button#addtobasket").html("Go To Basket"); 
-                    $("button#addtobasket").css('background-color', "mediumpurple");
-                    $("button#addtobasket").attr("id", "gotobasket");
-            })
-            }
-        })
-    });
-
-    $(function () {
-        $('body').on('click', 'button#gotobasket', function (e) {
-            e.preventDefault();
-            $("input[name='size']:checked").prop("checked", false);
-            window.location.href = "/Basket/Index";
-        })
-    });
-
-    $(function () {
-        $("li.productSize").click(function (e) {
-            $("button#addtobasket").css('background-color', "#00a92c");
-            $("button#addtobasket").html("Add To Basket");
-        });
-    });
-
-    $(function () {
-        $("button#addToBasketWithoutSize").click(function (e) {
-            e.preventDefault();
-
-            var url = "/Basket/AddToBasketWithoutSize";
-            let Article = $(this).data("id");
-
-            $.get(url, { clothesId: Article }, function (data) {
-                $(".basket").html(data);
-            }).done(function () {
-                var color = $("button#addToBasketWithoutSize").css('background-color', "mediumpurple");
-                var text = $("button#addToBasketWithoutSize").html("Item has been added to basket");
-                setTimeout(function () { $(text).html("Add To Basket"), $(color).css('background-color', "#00a92c") }, 3000);
-            })
-        });
-    });
+$(function () {
+    $('body').on('click', 'button#gotobasket', function (e) {
+        e.preventDefault();
+        var url = '@Url.Action("Index", "Basket", new { returnUrl = Request.Url})';
+        window.location.href = url.replace();
+    })
+});
 </script>

@@ -7,7 +7,8 @@
     ViewBag.Title = "MU Store";
 }
 <link href="~/Content/styles.css" rel="stylesheet" />
-
+<script src="~/Scripts/ChangeQuantityClothes.js"></script>
+<script src="~/Scripts/ModalWindow.js"></script>
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
@@ -76,72 +77,4 @@ else
     </div>
 </div>
 
-<script>
-    $(function () {
-        $("img.addtobasket").click(function (e) {
-            e.preventDefault();
-
-            var modal = document.getElementById("sizeModal");
-            modal.style.display = "block";
-
-            $.get($(this).data("targeturl"), function (data) {
-                $(".modal-body").html(data);
-            });
-        })
-    });
-
-    $(function () {
-        $('body').on('click', 'label.sizeItem', function (e) {
-            e.preventDefault();
-
-            var selectedSize = e.target.innerText;
-            var url = "/Basket/AddToBasketWithSize";
-            var Article = $(this).data("id");
-            $.get(url, { clothesId: Article, size: selectedSize }, function (data) {
-                $(".basket").html(data);
-                var modal = document.getElementById("sizeModal");
-                modal.style.display = "none";
-            })
-        })
-    });
-
-    $(function () {
-        $("span.close").click(function (e) {
-            e.preventDefault();
-            var modal = document.getElementById("sizeModal");
-            modal.style.display = "none";
-        })
-    });
-
-    $(window).click(function (event) {
-        var modal = document.getElementById("sizeModal");
-            if (event.target == modal) {
-                modal.style.display = "none";
-        }
-    });
-
-    $(function () {
-        $("img.addToBasketWithoutSize").click(function (e) {
-            e.preventDefault();
-
-            var url = "/Basket/AddToBasketWithoutSize";
-            let Article = $(this).data("id");
-
-            $.get(url, { clothesId: Article }, function (data) {
-                $(".basket").html(data);
-            }).done(function () {
-
-                setTimeout(function () {
-                    $("div#itemAddedMessage-" + Article).fadeIn("fast");
-                }, 300);
-
-                setTimeout(function () {
-                    $("div#itemAddedMessage-" + Article).fadeOut("fast");
-                }, 3000);
-            })
-        });
-    });
-
-
-</script>
 
