@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{3786B09A-81CD-4589-B9B3-E0BAA870AEB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{86DA20EC-A149-42B3-B42D-09EE7FC5180E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{3786B09A-81CD-4589-B9B3-E0BAA870AEB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3786B09A-81CD-4589-B9B3-E0BAA870AEB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3786B09A-81CD-4589-B9B3-E0BAA870AEB3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{86DA20EC-A149-42B3-B42D-09EE7FC5180E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86DA20EC-A149-42B3-B42D-09EE7FC5180E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86DA20EC-A149-42B3-B42D-09EE7FC5180E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86DA20EC-A149-42B3-B42D-09EE7FC5180E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
