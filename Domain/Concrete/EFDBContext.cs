@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 
 namespace Domain.Concrete
@@ -9,5 +8,13 @@ namespace Domain.Concrete
         public DbSet<Wear> Clothes { get; set; }
 
         public DbSet<ClothesImages> ClothesImages { get; set; }
+
+        public DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
+
+        public DbSet<IdentityUser> IdentityUser { get; set; }
+
+        public DbSet<AspNetRoles> AspNetRoles { get; set; }
+
+        public DbSet<Size> Sizes { get; set; }
     }
 }

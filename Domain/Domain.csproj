@@ -81,10 +81,13 @@
     <Compile Include="Abstract\IClothesRepository.cs" />
     <Compile Include="Concrete\EFClothesRepository.cs" />
     <Compile Include="Concrete\EFDBContext.cs" />
+    <Compile Include="Entities\AspNetRoles.cs" />
+    <Compile Include="Entities\AspNetUserRoles.cs" />
+    <Compile Include="Entities\AspNetUsers.cs" />
     <Compile Include="Entities\Basket.cs" />
     <Compile Include="Entities\BasketLine.cs" />
     <Compile Include="Entities\ClothesImages.cs" />
-    <Compile Include="Entities\Sizes.cs" />
+    <Compile Include="Entities\Size.cs" />
     <Compile Include="Entities\Wear.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
