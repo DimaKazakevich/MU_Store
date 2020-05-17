@@ -15,7 +15,7 @@
     <DataGrid   Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" x:Name="MenuGrid" ItemsSource="{Binding Sizes}" Background="White"
                   Foreground="Black" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" 
                   FontSize="16" FontWeight="DemiBold" HeadersVisibility="Column" IsReadOnly="True" CanUserResizeColumns="False" 
-                  CanUserSortColumns="False" CanUserResizeRows="False" BorderBrush="#f2f3f4" BorderThickness="7" 
+                  CanUserSortColumns="False" CanUserResizeRows="False" BorderBrush="LightGray" BorderThickness="7 7 7 30" 
                   CanUserAddRows="False" CanUserReorderColumns="False" VerticalContentAlignment="Center" 
                   HorizontalContentAlignment="Center" ScrollViewer.CanContentScroll="True" ScrollViewer.PanningMode="VerticalFirst">
         <DataGrid.Resources>

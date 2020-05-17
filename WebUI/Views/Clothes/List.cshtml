@@ -20,9 +20,10 @@
     <div style="display:flex; flex-wrap:wrap">
         @foreach (var item in Model.Clothes)
         {
-
+            if (item.Images.Any(x => x.ClothesId == item.Article))
+            {
             @Html.Partial("ClothesSummary", item);
-
+            }
         }
     </div>
     if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() != "Navigation")

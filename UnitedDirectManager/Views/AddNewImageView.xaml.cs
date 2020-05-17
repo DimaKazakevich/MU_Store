@@ -3,9 +3,9 @@ using UnitedDirectManager.ViewModels;
 
 namespace UnitedDirectManager.Views
 {
-    public partial class BasicAddView : UserControl, IRightSideView
+    public partial class AddNewImageView : UserControl, IRightSideView
     {
-        public BasicAddView(MainViewModel viewModel)
+        public AddNewImageView(AddNewImageViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;

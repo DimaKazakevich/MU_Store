@@ -7,14 +7,15 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
+using System.Data.Entity;
 
 namespace UnitedDirectManager.ViewModels
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
-        private IClothesRepository _repository;
+        private IItemsRepository _repository;
 
-        public LoginViewModel(IClothesRepository repository)
+        public LoginViewModel(IItemsRepository repository)
         {
             _repository = repository;
             AspNetUserRoles = _repository.AspNetUserRoles.ToList();
@@ -22,7 +23,7 @@ namespace UnitedDirectManager.ViewModels
             AspNetRoles = _repository.AspNetRoles.ToList();
             CloseWindowCommand = new RelayCommand(x => CloseWindow((ICloseable)x));
         }
-
+        
         public IEnumerable<AspNetRoles> AspNetRoles { get; set; }
         public IEnumerable<IdentityUser> IdentityUser { get; set; }
         public IEnumerable<AspNetUserRoles> AspNetUserRoles { get; set; }
@@ -135,26 +136,26 @@ namespace UnitedDirectManager.ViewModels
             if(manager == null)
             {
                 WrongLoginOrPswVisibility = true;
-                MessageBox.Show("Wrong logim or password.", "Login error", MessageBoxButton.OK, MessageBoxImage.Error,MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+                MessageBox.Show("Wrong login or password.", "Login error", MessageBoxButton.OK, MessageBoxImage.Error,MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 return;
             }
 
-            var isex = AspNetUserRoles.Where(userRole => userRole.UserId == manager.UserId).FirstOrDefault();
-            if(isex == null)
+            var isRoleExist = AspNetUserRoles.Where(userRole => userRole.UserId == manager.UserId).FirstOrDefault();
+            if(isRoleExist == null)
             {
                 WrongLoginOrPswVisibility = true;
                 return;
             }
 
-            var lol = AspNetRoles.Where(role => role.UserId == isex.RoleId).FirstOrDefault();
-            if(lol == null)
+            var concreteRole = AspNetRoles.Where(role => role.UserId == isRoleExist.RoleId).FirstOrDefault();
+            if(concreteRole == null)
             {
                 WrongLoginOrPswVisibility = true;
                 return;
             }
 
-            UnitedDirectManager.MainWindow mainWindow = new MainWindow(new MainWindowViewModel(_repository));
-            mainWindow.Show();
+            //UnitedDirectManager.MainView mainWindow = new MainView(new MainViewModel(_repository));
+            //mainWindow.Show();
             Application.Current.MainWindow.Close();
         }
 

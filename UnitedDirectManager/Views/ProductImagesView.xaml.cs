@@ -2,9 +2,9 @@
 
 namespace UnitedDirectManager.Views
 {
-    public partial class SizesView : UserControl
+    public partial class ProductImagesView : UserControl
     {
-        public SizesView()
+        public ProductImagesView()
         {
             InitializeComponent();
         }

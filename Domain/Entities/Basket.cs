@@ -7,7 +7,7 @@ namespace Domain.Entities
     {
         private List<BasketLine> lineCollection = new List<BasketLine>();
 
-        public void AddItem(Wear wear, int quantity, string size)
+        public void AddItem(Product wear, int quantity, string size)
         {
             BasketLine line = lineCollection
                 .Where(item => item.Wear.Article == wear.Article)
@@ -40,7 +40,7 @@ namespace Domain.Entities
             }
         }
 
-        public void AddItem(Wear wear, int quantity)
+        public void AddItem(Product wear, int quantity)
         {
             BasketLine line = lineCollection
                 .Where(item => item.Wear.Article == wear.Article)
@@ -60,12 +60,12 @@ namespace Domain.Entities
             }
         }
 
-        public void RemoveLine(Wear wear)
+        public void RemoveLine(Product wear)
         {
             lineCollection.RemoveAll(line => line.Wear.Article == wear.Article);
         }
 
-        public void RemoveLine(Wear wear, string size)
+        public void RemoveLine(Product wear, string size)
         {
             lineCollection.RemoveAll(line => line.Wear.Article == wear.Article && line.Size == size);
         }

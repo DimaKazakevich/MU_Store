@@ -7,7 +7,7 @@ namespace WebUI.Models
 {
     public class ClothesListViewModel
     {
-        public IEnumerable<Wear> Clothes { get; set; }
+        public IEnumerable<Product> Clothes { get; set; }
 
         public PagingInfo PagingInfo { get; set; }
 

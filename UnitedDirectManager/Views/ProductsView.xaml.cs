@@ -1,10 +1,11 @@
 ﻿using System.Windows.Controls;
+using UnitedDirectManager.ViewModels;
 
 namespace UnitedDirectManager.Views
 {
-    public partial class SizesView : UserControl
+    public partial class ProductsView : UserControl, IRightSideView
     {
-        public SizesView()
+        public ProductsView()
         {
             InitializeComponent();
         }

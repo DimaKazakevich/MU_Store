@@ -8,9 +8,9 @@ namespace WebUI.Controllers
 {
     public class BasketController : Controller
     {
-        private IClothesRepository _repository;
+        private IItemsRepository _repository;
 
-        public BasketController(IClothesRepository repository)
+        public BasketController(IItemsRepository repository)
         {
             _repository = repository;
         }
@@ -26,7 +26,7 @@ namespace WebUI.Controllers
 
         public ActionResult AddToBasketWithSize(Basket basket, int clothesID, string size)
         {
-            Wear wear = _repository.Clothes.Where(item => item.Article == clothesID).FirstOrDefault();
+            Product wear = _repository.Clothes.Where(item => item.Article == clothesID).FirstOrDefault();
             Size sizeName = wear.Sizes.First(x => x.SizeName == size);
 
             if (wear != null && sizeName != null)
@@ -39,7 +39,7 @@ namespace WebUI.Controllers
 
         public ActionResult AddToBasketWithoutSize(Basket basket, int clothesID)
         {
-            Wear wear = _repository.Clothes.Where(item => item.Article == clothesID).FirstOrDefault();
+            Product wear = _repository.Clothes.Where(item => item.Article == clothesID).FirstOrDefault();
 
             if (wear != null)
             {
@@ -52,7 +52,7 @@ namespace WebUI.Controllers
 
         public void RemoveFromBasket(Basket basket, int clothesID)
         {
-            Wear wear = _repository.Clothes.FirstOrDefault(item => item.Article == clothesID);
+            Product wear = _repository.Clothes.FirstOrDefault(item => item.Article == clothesID);
 
             if (wear != null)
             {
@@ -62,7 +62,7 @@ namespace WebUI.Controllers
 
         public void RemoveFromBasketWithSize(Basket basket, int clothesID, string size)
         {
-            Wear wear = _repository.Clothes.FirstOrDefault(item => item.Article == clothesID);
+            Product wear = _repository.Clothes.FirstOrDefault(item => item.Article == clothesID);
             Size sizeName = wear.Sizes.First(x => x.SizeName == size);
 
             if (wear != null && sizeName != null)

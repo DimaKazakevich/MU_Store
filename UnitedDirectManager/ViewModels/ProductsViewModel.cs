@@ -1,4 +1,5 @@
 ﻿using Domain.Abstract;
+using Domain.Concrete;
 using Domain.Entities;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,15 +7,18 @@ using System.Linq;
 
 namespace UnitedDirectManager.ViewModels
 {
-    class ClothesViewModel : IPageViewModel, INotifyPropertyChanged
+    public class ProductsViewModel : IPageViewModel, INotifyPropertyChanged
     {
-        private IClothesRepository _repository;
-        public IEnumerable<Wear> Wears { get; }
+        public ProductsViewModel() { }
 
-        public ClothesViewModel(IClothesRepository repository)
+        public IEnumerable<Product> Products { get; }
+
+        private GenericRepository<Product> _repository;
+
+        public ProductsViewModel(GenericRepository<Product> repository)
         {
             _repository = repository;
-            Wears = _repository.Clothes.ToList();
+            Products = _repository.GetAll().ToList();
         }
         
         #region INPC

@@ -9,7 +9,7 @@ namespace WebUI.Controllers
     public class ClothesController : Controller
     {
         // GET: Clothes
-        private IClothesRepository _repository;
+        private IItemsRepository _repository;
 
         public int _pageSize = 4;
 
@@ -17,7 +17,7 @@ namespace WebUI.Controllers
         {
         }
 
-        public ClothesController(IClothesRepository repository)
+        public ClothesController(IItemsRepository repository)
         {
             _repository = repository;
         }
@@ -48,7 +48,7 @@ namespace WebUI.Controllers
         [ActionName("clothes-details")]
         public ActionResult ClothesDetails(string name)
         {
-            Wear wear = _repository.Clothes.FirstOrDefault(item => item.Name == name);
+            Product wear = _repository.Clothes.FirstOrDefault(item => item.Name == name);
             return View("ClothesDetails", wear);
         }
     }

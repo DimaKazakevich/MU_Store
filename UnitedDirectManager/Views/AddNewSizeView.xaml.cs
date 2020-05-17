@@ -3,12 +3,9 @@ using UnitedDirectManager.ViewModels;
 
 namespace UnitedDirectManager.Views
 {
-    /// <summary>
-    /// Interaction logic for AddNewSizeView.xaml
-    /// </summary>
     public partial class AddNewSizeView : UserControl, IRightSideView
     {
-        public AddNewSizeView(MainWindowViewModel viewModel)
+        public AddNewSizeView(MainViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;

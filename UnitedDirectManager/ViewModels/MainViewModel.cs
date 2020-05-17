@@ -1,4 +1,7 @@
 ﻿using Domain.Abstract;
+using Domain.Concrete;
+using Domain.Entities;
+using Ninject;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -6,25 +9,27 @@ using UnitedDirectManager.Views;
 
 namespace UnitedDirectManager.ViewModels
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
-        public MainWindowViewModel()
-        {
-        }
+        public MainViewModel() { }
 
-        public MainWindowViewModel(IClothesRepository repository)
+        public MainViewModel([Named("Products")] GenericRepository<Product> productsRepo, 
+                                [Named("Images")] GenericRepository<Image> ImagesRepo,
+                                [Named("Sizes")] GenericRepository<Size> SizesRepo)
         {
-            PageViewModels.Add(new ClothesImagesViewModel(repository));
-            PageViewModels.Add(new ClothesViewModel(repository));
-            PageViewModels.Add(new SizesViewModel(repository));
+            PageViewModels.Add(new ProductImagesViewModel(ImagesRepo));
+            PageViewModels.Add(new ProductsViewModel(productsRepo));
+            PageViewModels.Add(new ProductSizesViewModel(SizesRepo));
             CurrentPageViewModel = PageViewModels[0];
-            CloseWindowCommand = new RelayCommand(x => CloseWindow((ICloseable)x));
-
+            
             AddViews.Add(new BasicAddView(this));
-            AddViews.Add(new SendEmailView());
-            AddViews.Add(new AddClothesView(this));
+            AddViews.Add(new SendEmailView(this));
+            AddViews.Add(new AddNewImageView(new AddNewImageViewModel(ImagesRepo,productsRepo.GetAll().Select(x=>x.Article) ,this)));
             AddViews.Add(new AddNewSizeView(this));
+            AddViews.Add(new AddNewItemView(new AddProductViewModel(productsRepo, this)));
             CurrentAddView = AddViews[0];
+
+            CloseWindowCommand = new RelayCommand(x => CloseWindow((ICloseable)x));
         }
 
         #region INPC
@@ -90,16 +95,19 @@ namespace UnitedDirectManager.ViewModels
                 PageViewModels.Add(viewModel);
             }
 
-            if (viewModel is ClothesViewModel)
+            if (viewModel is ProductsViewModel)
             {
-
-                CurrentAddView = AddViews.FirstOrDefault(vm => vm == AddViews[0]);
+                CurrentAddView = AddViews[0];
             }
 
-            if (viewModel is SizesViewModel)
+            if (viewModel is ProductSizesViewModel)
             {
+                CurrentAddView = AddViews[0];
+            }
 
-                CurrentAddView = AddViews.FirstOrDefault(vm => vm == AddViews[0]);
+            if (viewModel is ProductImagesViewModel)
+            {
+                CurrentAddView = AddViews[0];
             }
 
             CurrentPageViewModel = PageViewModels.FirstOrDefault(vm => vm == viewModel);
@@ -109,31 +117,11 @@ namespace UnitedDirectManager.ViewModels
         private RelayCommand _changeAddViewCommad;
         private IRightSideView _currentAddView;
         private List<IRightSideView> _addViews;
-        private RelayCommand _cancelAddViewCommand;
-
-        public RelayCommand CancelAddViewCommand
-        {
-            get
-            {
-                if (_cancelAddViewCommand == null)
-                {
-                    _cancelAddViewCommand = new RelayCommand(
-                            p => CancelAddView());
-                }
-
-                return _cancelAddViewCommand;
-            }
-        }
-
-        private void CancelAddView()
-        {
-            CurrentAddView = AddViews.FirstOrDefault(vm => vm == AddViews[0]);
-        }
 
         public RelayCommand ChangeAddViewCommand
         {
             get
-            {
+           {
                 if (_changeAddViewCommad == null)
                 {
                     _changeAddViewCommad = new RelayCommand(p => ChangeView((IPageViewModel)p));
@@ -174,13 +162,17 @@ namespace UnitedDirectManager.ViewModels
 
         private void ChangeView(IPageViewModel viewModel)
         {
-            if (viewModel is ClothesViewModel)
+            if (viewModel is ProductsViewModel)
             {
-                CurrentAddView = AddViews.FirstOrDefault(vm => vm == AddViews[2]);
+                CurrentAddView = AddViews[4];
             }
-            if (viewModel is SizesViewModel)
+            if (viewModel is ProductSizesViewModel)
             {
-                CurrentAddView = AddViews.FirstOrDefault(vm => vm == AddViews[3]);
+                CurrentAddView = AddViews[3];
+            }
+            if (viewModel is ProductImagesViewModel)
+            {
+                CurrentAddView = AddViews[2];
             }
         }
         #endregion

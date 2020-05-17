@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("ClothesImages")]
-    public class ClothesImages
+    public class Image
     {
         [Key]
         public int ClothesImagesID { get; set; }
@@ -13,6 +13,6 @@ namespace Domain.Entities
         public int ClothesId { get; set; }
 
         [ForeignKey("ClothesId")]
-        public virtual Wear Wear { get; set; }
+        public virtual Product Wear { get; set; }
     }
 }

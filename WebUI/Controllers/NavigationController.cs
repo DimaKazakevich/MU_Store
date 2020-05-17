@@ -9,18 +9,18 @@ namespace WebUI.Controllers
 {
     public class NavigationController : Controller
     {
-        private IClothesRepository _repository;
-        public NavigationController(IClothesRepository repository)
+        private IItemsRepository _repository;
+        public NavigationController(IItemsRepository repository)
         {
             _repository = repository;
         }
         // GET: Navigation
         public PartialViewResult Menu()
-        {
+        {            
             IEnumerable<string> categories = _repository.Clothes
-                .Select(wear => wear.Category)
-                .Distinct()
-                .OrderBy(x => x);
+            .Select(wear => wear.Category)
+            .Distinct()
+            .OrderBy(x => x).ToList();
             return PartialView(categories);
         }
 

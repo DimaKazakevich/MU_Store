@@ -5,13 +5,16 @@ using System.Linq;
 
 namespace UnitedDirectManager.ViewModels
 {
-    public class SizesViewModel : IPageViewModel
+    public class ProductSizesViewModel : IPageViewModel
     {
-        private IClothesRepository _repository;
-        public SizesViewModel(IClothesRepository repository)
+        public ProductSizesViewModel() { }
+
+        private GenericRepository<Size> _repository;
+
+        public ProductSizesViewModel(GenericRepository<Size> repository)
         {
             _repository = repository;
-            Sizes = _repository.Sizes.ToList();
+            Sizes = _repository.GetAll().ToList();
         }
 
         public IEnumerable<Size> Sizes { get; }

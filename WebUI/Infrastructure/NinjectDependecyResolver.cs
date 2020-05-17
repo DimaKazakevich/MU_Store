@@ -40,7 +40,7 @@ namespace WebUI.Infrastructure
 
             //_kernel.Bind<IClothesRepository>().ToConstant(mock.Object);
 
-            _kernel.Bind<IClothesRepository>().To<EFClothesRepository>();
+            //_kernel.Bind<IItemsRepository>().To<ItemsRepository>();
         }
     }
 }

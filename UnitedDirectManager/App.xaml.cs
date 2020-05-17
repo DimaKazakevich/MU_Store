@@ -1,7 +1,10 @@
 ﻿using Domain.Abstract;
 using Domain.Concrete;
 using Ninject;
+using System.Data.Entity;
 using System.Windows;
+using UnitedDirectManager.Interfeces;
+using UnitedDirectManager.Views;
 
 namespace UnitedDirectManager
 {
@@ -10,7 +13,7 @@ namespace UnitedDirectManager
     /// </summary>
     public partial class App : Application
     {
-        private IKernel container;
+        private IKernel _container;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -22,13 +25,17 @@ namespace UnitedDirectManager
 
         private void ConfigureContainer()
         {
-            container = new StandardKernel();
-            container.Bind<IClothesRepository>().To<EFClothesRepository>().InTransientScope();
+            _container = new StandardKernel();
+            _container.Bind<DbContext>().To<EFDBContext>();
+            _container.Bind(typeof(GenericRepository<>)).To(typeof(ProductRepository)).Named("Products");
+            _container.Bind(typeof(GenericRepository<>)).To(typeof(ProductImagesRepository)).Named("Images");
+            _container.Bind(typeof(GenericRepository<>)).To(typeof(ProductSizesRepository)).Named("Sizes");
+            _container.Bind(typeof(IDialogService)).To(typeof(DefaultDialogService));
         }
 
         private void ComposeObjects()
         {
-            Current.MainWindow = container.Get<MainWindow>();
+            Current.MainWindow = _container.Get<MainView>();
         }
     }
 }

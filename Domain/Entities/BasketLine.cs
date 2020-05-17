@@ -2,7 +2,7 @@
 {
     public class BasketLine
     {
-        public Wear Wear { get; set; }
+        public Product Wear { get; set; }
 
         public int Quantity { get; set; }
 

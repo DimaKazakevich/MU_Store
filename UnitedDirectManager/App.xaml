@@ -4,9 +4,6 @@
              xmlns:local="clr-namespace:UnitedDirectManager"
              >
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>
-
-
-<!--StartupUri="MainWindow.xaml"-->

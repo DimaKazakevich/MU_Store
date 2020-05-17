@@ -15,7 +15,7 @@
     </div>
 
     <div style="max-height:250px; max-width:215px">
-        @if (Model.Sizes.Where(x => x.ClothesId == Model.Article).Count() != 0)
+        @if (Model.Sizes.Any(x => x.ClothesId == Model.Article))
         {
             <div data-toggle="tooltip" title="Add to basket" data-placement="bottom" class="addtobasket" style="display:flex; flex-direction:column; margin-top:25px; position:absolute">
                 <img class="addtobasket" data-id="@Model.Article" data-targeturl="@Url.Action("SizeDetails", "Basket", new { id = Model.Article })" src=@Url.Content("~/Images/shoppingBasket.png") width="24" height="24" style="outline:none;margin-top:5px; cursor:pointer" />
@@ -31,17 +31,18 @@
             var str = Model.Images.Where(x => x.Wear.Article == Model.Article).Select(x => x.ImageFile).FirstOrDefault();
             var base64 = Convert.ToBase64String(str);
             var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+            <a href="@Url.Action("clothes-details", "Clothes", new { name = Model.Name })">
+                <img src="@imgSrc" style="max-height:250px; max-width:215px" />
+
+            </a>
         }
 
-        <a href="@Url.Action("clothes-details","Clothes", new { name = Model.Name})">
-            <img src="@imgSrc" style="max-height:250px; max-width:215px" />
-
-        </a>
         @if (Model.Sizes.Where(x => x.ClothesId == Model.Article).Count() == 0)
         {
-        <div id="itemAddedMessage-@Model.Article" style="display:none; position:absolute; margin-top:-5px">
-            <span style="color:red; font-weight:700">Item has been added to basket.</span>
-        </div>
+            <div id="itemAddedMessage-@Model.Article" style="display:none; position:absolute; margin-top:-5px">
+                <span style="color:red; font-weight:700">Item has been added to basket.</span>
+            </div>
         }
     </div>
 </div>
