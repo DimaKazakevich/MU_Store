@@ -4,6 +4,15 @@
              xmlns:local="clr-namespace:UnitedDirectManager"
              >
     <Application.Resources>
-
-    </Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/TextBoxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ScrollStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ComboboxStyle.xaml"/>
+                <ResourceDictionary Source="Styles/LeftMenuButtonTemplate.xaml"/>
+                <ResourceDictionary Source="Styles/AddButtonTemplate.xaml"/>
+                <ResourceDictionary Source="Styles/CancelButtonTemplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Application.Resources>
 </Application>

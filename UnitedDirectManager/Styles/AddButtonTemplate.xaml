@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:UnitedDirectManager.Styles">
+
+    <ControlTemplate TargetType="Button" x:Key="btnTemplate">
+        <Border x:Name="brdrBtn" BorderThickness="1" BorderBrush="Green" Background="{TemplateBinding Background}" CornerRadius="5" Margin="{TemplateBinding Margin}">
+            <ContentControl x:Name="cntntBtn" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Content="{TemplateBinding Content}" Foreground="Green" FontWeight="DemiBold"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="brdrBtn" Property="BorderThickness" Value="2" />
+                <Setter TargetName="brdrBtn" Property="BorderBrush" Value="Green" />
+                <Setter TargetName="brdrBtn" Property="Cursor" Value="Hand" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate >
+</ResourceDictionary>

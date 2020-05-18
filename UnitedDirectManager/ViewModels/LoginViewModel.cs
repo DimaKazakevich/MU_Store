@@ -7,7 +7,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
-using System.Data.Entity;
 
 namespace UnitedDirectManager.ViewModels
 {
@@ -124,39 +123,39 @@ namespace UnitedDirectManager.ViewModels
 
         private void SingIn(object param)
         {
-            var passwordBox = param as PasswordBox;
+            //var passwordBox = param as PasswordBox;
 
-            if (passwordBox == null)
-            {
-                return;
-            }
-            var password = passwordBox.Password;
+            //if (passwordBox == null)
+            //{
+            //    return;
+            //}
+            //var password = passwordBox.Password;
 
-            var manager = IdentityUser.Where(user => user.Email == _login && VerifyHashedPassword(user.PasswordHash, password)).FirstOrDefault();
-            if(manager == null)
-            {
-                WrongLoginOrPswVisibility = true;
-                MessageBox.Show("Wrong login or password.", "Login error", MessageBoxButton.OK, MessageBoxImage.Error,MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
-                return;
-            }
+            //var manager = IdentityUser.Where(user => user.Email == _login && VerifyHashedPassword(user.PasswordHash, password)).FirstOrDefault();
+            //if(manager == null)
+            //{
+            //    WrongLoginOrPswVisibility = true;
+            //    MessageBox.Show("Wrong login or password.", "Login error", MessageBoxButton.OK, MessageBoxImage.Error,MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
+            //    return;
+            //}
 
-            var isRoleExist = AspNetUserRoles.Where(userRole => userRole.UserId == manager.UserId).FirstOrDefault();
-            if(isRoleExist == null)
-            {
-                WrongLoginOrPswVisibility = true;
-                return;
-            }
+            //var isRoleExist = AspNetUserRoles.Where(userRole => userRole.UserId == manager.UserId).FirstOrDefault();
+            //if(isRoleExist == null)
+            //{
+            //    WrongLoginOrPswVisibility = true;
+            //    return;
+            //}
 
-            var concreteRole = AspNetRoles.Where(role => role.UserId == isRoleExist.RoleId).FirstOrDefault();
-            if(concreteRole == null)
-            {
-                WrongLoginOrPswVisibility = true;
-                return;
-            }
+            //var concreteRole = AspNetRoles.Where(role => role.UserId == isRoleExist.RoleId).FirstOrDefault();
+            //if(concreteRole == null)
+            //{
+            //    WrongLoginOrPswVisibility = true;
+            //    return;
+            //}
 
             //UnitedDirectManager.MainView mainWindow = new MainView(new MainViewModel(_repository));
             //mainWindow.Show();
-            Application.Current.MainWindow.Close();
+            //Application.Current.MainWindow.Close();
         }
 
         public RelayCommand _closeWindowCommand;

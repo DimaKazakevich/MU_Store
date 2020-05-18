@@ -1,9 +1,10 @@
 ﻿using Domain.Abstract;
 using Domain.Entities;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
+using UnitedDirectManager.ObservableCollections;
 
 namespace UnitedDirectManager.ViewModels
 {
@@ -17,31 +18,31 @@ namespace UnitedDirectManager.ViewModels
         }
         #endregion
 
-        private GenericRepository<Image> _repository;
+        private GenericRepository<Image> _productRepository;
         private MainViewModel _viewModel;
-        public IEnumerable<int> Articles { get; set; }
+        private readonly ObservableCollection<Product> _products;
 
-        public AddNewImageViewModel(GenericRepository<Image> repo,IEnumerable<int> articles, MainViewModel vm)
+        public ObservableCollection<Product> Articles
         {
-            _repository = repo;
-            Articles = articles;
+            get => _products;
+        }
+
+        public AddNewImageViewModel(GenericRepository<Image> repo, MainViewModel vm)
+        {
+            _products = ProductsObservableCollection.GetInstance()?.Products;
+            _productRepository = repo;
             Image = new Image();
             _viewModel = vm;
         }
 
+        #region CancelAddViewCommand
         private RelayCommand _cancelAddViewCommand;
 
         public RelayCommand CancelAddViewCommand
         {
             get
             {
-                if (_cancelAddViewCommand == null)
-                {
-                    _cancelAddViewCommand = new RelayCommand(
-                            p => CancelAddView());
-                }
-
-                return _cancelAddViewCommand;
+                return _cancelAddViewCommand ??  (_cancelAddViewCommand = new RelayCommand(p => CancelAddView()));
             }
         }
 
@@ -49,39 +50,44 @@ namespace UnitedDirectManager.ViewModels
         {
             _viewModel.CurrentAddView = _viewModel.AddViews[0];
         }
+        #endregion
 
+        #region AddImageCommand
         private RelayCommand _addImageCommand;
         public RelayCommand AddImageCommand
         {
             get
             {
-                if (_addImageCommand == null)
-                {
-                    _addImageCommand = new RelayCommand(p => AddImage(), x => ClothesId != 0);
-                }
-
-                return _addImageCommand;
+                return _addImageCommand ?? (_addImageCommand = new RelayCommand(p => AddImage(), x => ClothesId != 0));
             }
         }
 
+        private List<byte[]> _files = new List<byte[]>();
+
         private List<byte[]> ImageToByteArray(List<string> filePath)
         {
-            List<byte[]> files = new List<byte[]>();
+            _files.Clear();
             try
             {
                 foreach (var file in filePath)
                 {
-                    files.Add(File.ReadAllBytes(file));
+                    _files.Add(File.ReadAllBytes(file));
                 }
 
-                return files;
+                return _files;
             }
             catch (IOException)
             {
+                /// <summary>
+                /// check null in AddImage method
+                /// </summary>
                 return null;
             }
         }
 
+        /// <summary>
+        /// Check null ImageToByteArray
+        /// </summary>
         private void AddImage()
         {
             DefaultDialogService defaultDialog = new DefaultDialogService();
@@ -95,13 +101,15 @@ namespace UnitedDirectManager.ViewModels
                         ImageFile = file
                     };
 
-                    _repository.Add(newImage);
-                    _repository.Save();
-                    ObservableCollectionSingleton.GetInstance()?.ClothesImages.Add(newImage);
+                    _productRepository.Add(newImage);
+                    _productRepository.Save();
+                    ImagesObservableCollection.GetInstance()?.ProductImages.Add(newImage);
                 }
             }
         }
+        #endregion
 
+        #region binding
         public Image Image { get; set; }
 
         public int ClothesId
@@ -113,5 +121,6 @@ namespace UnitedDirectManager.ViewModels
                 OnPropertyChanged("ClothesId");
             }
         }
+        #endregion
     }
 }

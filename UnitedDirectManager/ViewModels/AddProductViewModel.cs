@@ -1,8 +1,7 @@
 ﻿using Domain.Abstract;
 using Domain.Entities;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
+using UnitedDirectManager.ObservableCollections;
 
 namespace UnitedDirectManager.ViewModels
 {
@@ -18,15 +17,16 @@ namespace UnitedDirectManager.ViewModels
         }
         #endregion
 
-        private GenericRepository<Product> _repository;
+        private GenericRepository<Product> _productRepository;
         private MainViewModel _viewModel;
+
         public AddProductViewModel(GenericRepository<Product> repository, MainViewModel vm)
         {
-            _repository = repository;
-            Clothes = _repository.GetAll().ToList();
+            _productRepository = repository;
             _viewModel = vm;
         }
 
+        #region CancelAddViewCommand
         private RelayCommand _cancelAddViewCommand;
 
         public RelayCommand CancelAddViewCommand
@@ -47,54 +47,74 @@ namespace UnitedDirectManager.ViewModels
         {
             _viewModel.CurrentAddView = _viewModel.AddViews[0];
         }
+        #endregion
 
-        public IEnumerable<Product> Clothes { get; set; }
-
-        public Product Product { get; set; } = new Product();
-
+        #region SaveItemCommand
         private RelayCommand _saveItemCommand;
         public RelayCommand SaveItemCommand
         {
             get
             {
-                if (_saveItemCommand == null)
-                {
-                    _saveItemCommand = new RelayCommand(
-                        p => SaveItem());
-                }
-
-                return _saveItemCommand;
+                return _saveItemCommand ?? (_saveItemCommand = new RelayCommand(p => SaveItem(), x => CheckTextBoxes()));
             }
+        }
+
+        private bool CheckTextBoxes()
+        {
+            if(Name != null && Description != null && Category != null && Price != 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void SaveItem()
         {
-            //_repository.Add(Product);
-            //_repository.SaveChanges();
+            Product newProduct = new Product()
+            {
+                Name = Name,
+                Description = Description,
+                Category = Category,
+                Price = Price
+            };
+
+            _productRepository.Add(newProduct);
+            _productRepository.Save();
+            ProductsObservableCollection.GetInstance()?.Products.Add(newProduct);
+            Name = string.Empty;
+            Description = string.Empty;
+            Category = string.Empty;
+            Price = 0;
         }
+        #endregion
+
+        #region bindings
+        public Product Product { get; set; } = new Product();
 
         public string Name
         {
             get { return Product.Name; }
-            set { Product.Name = value; }
+            set { Product.Name = value; OnPropertyChanged("Name"); }
         }
 
         public string Description
         {
             get { return Product.Description; }
-            set { Product.Description = value; }
+            set { Product.Description = value; OnPropertyChanged("Description"); }
         }
 
         public string Category
         {
             get { return Product.Category; }
-            set { Product.Category = value; }
+            set { Product.Category = value; OnPropertyChanged("Category"); }
         }
 
         public decimal Price
         {
             get { return Product.Price; }
-            set { Product.Price = value; }
+            set { Product.Price = value; OnPropertyChanged("Price"); }
         }
+        #endregion
     }
 }

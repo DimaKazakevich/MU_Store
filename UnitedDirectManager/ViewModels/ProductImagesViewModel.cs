@@ -1,42 +1,49 @@
 ﻿using Domain.Abstract;
 using Domain.Entities;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 
 
 namespace UnitedDirectManager.ViewModels
 {
     public class ProductImagesViewModel : IPageViewModel, INotifyPropertyChanged
     {
-        private ObservableCollectionSingleton observable;
+        #region INPC
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+        #endregion
 
         public ProductImagesViewModel() { }
 
+        private ImagesObservableCollection _productImages;
+
         public ProductImagesViewModel(GenericRepository<Image> repository)
         {
-             observable = ObservableCollectionSingleton.GetInstance(repository);
+             _productImages = ImagesObservableCollection.GetInstance(repository);
         }
 
-        public ObservableCollection<Image> ClothesImages
+        public ObservableCollection<Image> ProductImages
         {
             get
             {
-                return observable.ClothesImages;
+                return _productImages.ProductImages;
             }
             set
             {
-                if (value != observable.ClothesImages)
+                if (value != _productImages.ProductImages)
                 {
-                    observable.ClothesImages = value;
-                    OnPropertyChanged("ClothesImages");
+                    _productImages.ProductImages = value;
+                    OnPropertyChanged("ProductImages");
                 }
             }
         }
 
         public string NavButtonName { get; } = "Images";
 
+        #region DeleteItemCommand
         private RelayCommand _deleteItemCommand;
         public RelayCommand DeleteItemCommand
         {
@@ -57,13 +64,6 @@ namespace UnitedDirectManager.ViewModels
             //_repository.Add(newImage);
             //_repository.SaveChanges();
             //ObservableCollectionSingleton.GetInstance()?.ClothesImages.Add(newImage);
-        }
-
-        #region INPC
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
         #endregion
     }

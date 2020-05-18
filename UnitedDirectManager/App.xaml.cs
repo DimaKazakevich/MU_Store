@@ -4,6 +4,7 @@ using Ninject;
 using System.Data.Entity;
 using System.Windows;
 using UnitedDirectManager.Interfeces;
+using UnitedDirectManager.ViewModels;
 using UnitedDirectManager.Views;
 
 namespace UnitedDirectManager
@@ -39,3 +40,26 @@ namespace UnitedDirectManager
         }
     }
 }
+#region
+//    // Run startup code first
+//    base.OnStartup(e);
+
+//// Create Login Window and Show it
+//var login = new LoginDialog();
+//var loginVm = new LoginViewModel();
+
+//login.DataContext = loginVm;
+//    login.ShowDialog();
+
+//    // If login window didn't return true (login failed), exit application
+//    if (!login.DialogResult.GetValueOrDefault())
+//    {
+//        Environment.Exit(0);
+//    }
+
+//    // Providing we have a successful login, start main application window
+//    var app = new ShellView();
+//var context = new ShellViewModel(loginVm.CurrentUser);
+//app.DataContext = context;
+//    app.Show();
+#endregion

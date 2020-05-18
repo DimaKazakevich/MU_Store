@@ -5,7 +5,7 @@ namespace UnitedDirectManager.Views
 {
     public partial class AddNewSizeView : UserControl, IRightSideView
     {
-        public AddNewSizeView(MainViewModel viewModel)
+        public AddNewSizeView(AddNewSizeViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;

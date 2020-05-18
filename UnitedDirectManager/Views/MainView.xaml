@@ -18,25 +18,6 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
 
-        <ControlTemplate TargetType="Button" x:Key="btTemplate">
-            <Border x:Name="brdrBtn" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="#333">
-                <ContentControl x:Name="cntntBtn" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="{TemplateBinding Content}" Foreground="White"/>
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter TargetName="brdrBtn" Property="BorderThickness" Value="5,0,0,0" />
-                    <Setter TargetName="brdrBtn" Property="BorderBrush" Value="black" />
-                    <Setter Property="Opacity" Value="0.5" />
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="brdrBtn" Property="BorderThickness" Value="5,0,0,0" />
-                    <Setter TargetName="brdrBtn" Property="BorderBrush" Value="black" />
-                    <Setter Property="Opacity" Value="0.7"/>
-                    <Setter TargetName="brdrBtn" Property="Cursor" Value="Hand" />
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-
         <DataTemplate DataType="{x:Type vm:ProductImagesViewModel}">
             <view:ProductImagesView/>
         </DataTemplate>
@@ -57,6 +38,7 @@
             </Setter>
         </Style>
     </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.11*"/>

@@ -1,26 +1,13 @@
 ﻿using Domain.Abstract;
-using Domain.Concrete;
 using Domain.Entities;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
+using UnitedDirectManager.ObservableCollections;
 
 namespace UnitedDirectManager.ViewModels
 {
     public class ProductsViewModel : IPageViewModel, INotifyPropertyChanged
     {
-        public ProductsViewModel() { }
-
-        public IEnumerable<Product> Products { get; }
-
-        private GenericRepository<Product> _repository;
-
-        public ProductsViewModel(GenericRepository<Product> repository)
-        {
-            _repository = repository;
-            Products = _repository.GetAll().ToList();
-        }
-        
         #region INPC
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propName)
@@ -29,6 +16,31 @@ namespace UnitedDirectManager.ViewModels
         }
         #endregion
 
-        public string NavButtonName { get; } = "Clothes";
+        public ProductsViewModel() { }
+
+        public ProductsObservableCollection _products;
+
+        public ProductsViewModel(GenericRepository<Product> repo)
+        {
+            _products = ProductsObservableCollection.GetInstance(repo);
+        }
+       
+        public ObservableCollection<Product> Products
+        {
+            get
+            {
+                return _products.Products;
+            }
+            set
+            {
+                if (value != _products.Products)
+                {
+                    _products.Products = value;
+                    OnPropertyChanged("Products");
+                }
+            }
+        }
+
+        public string NavButtonName { get; } = "Products";
     }
 }

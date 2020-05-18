@@ -12,7 +12,7 @@
             <Setter Property="FontSize" Value="18"></Setter>
         </Style>
     </UserControl.Resources>
-    <DataGrid   Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" x:Name="MenuGrid" ItemsSource="{Binding Sizes}" Background="White"
+    <DataGrid   Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" x:Name="MenuGrid" ItemsSource="{Binding ProductSizes}" Background="White"
                   Foreground="Black" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" 
                   FontSize="16" FontWeight="DemiBold" HeadersVisibility="Column" IsReadOnly="True" CanUserResizeColumns="False" 
                   CanUserSortColumns="False" CanUserResizeRows="False" BorderBrush="LightGray" BorderThickness="7 7 7 30" 

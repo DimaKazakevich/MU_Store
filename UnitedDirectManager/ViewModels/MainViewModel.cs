@@ -1,5 +1,4 @@
 ﻿using Domain.Abstract;
-using Domain.Concrete;
 using Domain.Entities;
 using Ninject;
 using System.Collections.Generic;
@@ -11,27 +10,6 @@ namespace UnitedDirectManager.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        public MainViewModel() { }
-
-        public MainViewModel([Named("Products")] GenericRepository<Product> productsRepo, 
-                                [Named("Images")] GenericRepository<Image> ImagesRepo,
-                                [Named("Sizes")] GenericRepository<Size> SizesRepo)
-        {
-            PageViewModels.Add(new ProductImagesViewModel(ImagesRepo));
-            PageViewModels.Add(new ProductsViewModel(productsRepo));
-            PageViewModels.Add(new ProductSizesViewModel(SizesRepo));
-            CurrentPageViewModel = PageViewModels[0];
-            
-            AddViews.Add(new BasicAddView(this));
-            AddViews.Add(new SendEmailView(this));
-            AddViews.Add(new AddNewImageView(new AddNewImageViewModel(ImagesRepo,productsRepo.GetAll().Select(x=>x.Article) ,this)));
-            AddViews.Add(new AddNewSizeView(this));
-            AddViews.Add(new AddNewItemView(new AddProductViewModel(productsRepo, this)));
-            CurrentAddView = AddViews[0];
-
-            CloseWindowCommand = new RelayCommand(x => CloseWindow((ICloseable)x));
-        }
-
         #region INPC
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propName)
@@ -40,6 +18,28 @@ namespace UnitedDirectManager.ViewModels
         }
         #endregion
 
+        public MainViewModel() { }
+
+        public MainViewModel([Named("Products")] GenericRepository<Product> productsRepo, 
+                                [Named("Images")] GenericRepository<Image> imagesRepo,
+                                [Named("Sizes")] GenericRepository<Size> sizesRepo)
+        {
+            PageViewModels.Add(new ProductImagesViewModel(imagesRepo));
+            PageViewModels.Add(new ProductsViewModel(productsRepo));
+            PageViewModels.Add(new ProductSizesViewModel(sizesRepo));
+            CurrentPageViewModel = PageViewModels[0];
+            
+            AddViews.Add(new BasicAddView(this));
+            AddViews.Add(new SendEmailView(this));
+            AddViews.Add(new AddNewImageView(new AddNewImageViewModel(imagesRepo, this)));
+            AddViews.Add(new AddNewSizeView(new AddNewSizeViewModel(sizesRepo, this)));
+            AddViews.Add(new AddNewItemView(new AddProductViewModel(productsRepo, this)));
+            CurrentAddView = AddViews[0];
+
+            CloseWindowCommand = new RelayCommand(x => CloseWindow((ICloseable)x));
+        }
+
+        #region ChangePageCommand
         private RelayCommand _changePageCommand;
         private IPageViewModel _currentPageViewModel;
         private List<IPageViewModel> _pageViewModels;
@@ -112,6 +112,7 @@ namespace UnitedDirectManager.ViewModels
 
             CurrentPageViewModel = PageViewModels.FirstOrDefault(vm => vm == viewModel);
         }
+        #endregion
 
         #region Right Side Bar
         private RelayCommand _changeAddViewCommad;
@@ -177,6 +178,7 @@ namespace UnitedDirectManager.ViewModels
         }
         #endregion
 
+        #region CloseWindowCommand
         public RelayCommand _closeWindowCommand;
 
         public RelayCommand CloseWindowCommand { get; private set; }
@@ -188,5 +190,6 @@ namespace UnitedDirectManager.ViewModels
                 window.Close();
             }
         }
+        #endregion
     }
 }
