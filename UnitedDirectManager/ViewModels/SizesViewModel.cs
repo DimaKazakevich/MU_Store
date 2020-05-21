@@ -20,9 +20,12 @@ namespace UnitedDirectManager.ViewModels
 
         private SizesObservableCollection _productSizes;
 
-        public ProductSizesViewModel(GenericRepository<Size> repo)
+        public int Row { get; set; }
+
+        public ProductSizesViewModel(IProductUnitOfWork repo, int row)
         {
             _productSizes = SizesObservableCollection.GetInstance(repo);
+            Row = row;
         }
 
         public ObservableCollection<Size> ProductSizes

@@ -70,9 +70,27 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Animation\AnimatableContentPresenter.cs" />
+    <Compile Include="Interfeces\IWindowService.cs" />
+    <Compile Include="Login\VerifyPassword.cs" />
     <Compile Include="ObservableCollections\ProductsObservableCollection.cs" />
     <Compile Include="ObservableCollections\SizesObservableCollection.cs" />
+    <Compile Include="ViewManager.cs" />
     <Compile Include="ViewModels\AddNewSizeViewModel.cs" />
+    <Compile Include="ViewModels\OrdersViewModel.cs" />
+    <Compile Include="ViewModels\SendEmailViewModel.cs" />
+    <Compile Include="ViewModels\StatisticViewModel.cs" />
+    <Compile Include="Views\AppView.xaml.cs">
+      <DependentUpon>AppView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginUserControl.xaml.cs">
+      <DependentUpon>LoginUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainUserControl.xaml.cs">
+      <DependentUpon>MainUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrdersView.xaml.cs">
+      <DependentUpon>OrdersView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProductsView.xaml.cs">
       <DependentUpon>ProductsView.xaml</DependentUpon>
     </Compile>
@@ -114,6 +132,10 @@
     <Compile Include="Views\SizesView.xaml.cs">
       <DependentUpon>SizesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\StatisticView.xaml.cs">
+      <DependentUpon>StatisticView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowService.cs" />
     <Page Include="Styles\AddButtonTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -141,6 +163,22 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AppView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OrdersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProductsView.xaml">
       <SubType>Designer</SubType>
@@ -187,6 +225,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SizesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatisticView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

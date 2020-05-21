@@ -1,7 +1,5 @@
 ﻿
 namespace UnitedDirectManager.ViewModels
 {
-    public interface IPageViewModel
-    {
-    }
+    public interface IPageViewModel { }
 }

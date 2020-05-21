@@ -16,14 +16,14 @@ namespace UnitedDirectManager
         }
         #endregion
 
-        private ImagesObservableCollection(GenericRepository<Image> repository)
+        private ImagesObservableCollection(IProductUnitOfWork repository)
         {
-            _productImages = new ObservableCollection<Image>(repository.GetAll().ToList());
+            _productImages = new ObservableCollection<Image>(repository.Images.GetAll().ToList());
         }
 
         private static ImagesObservableCollection _instance;
 
-        public static ImagesObservableCollection GetInstance(GenericRepository<Image> repository)
+        public static ImagesObservableCollection GetInstance(IProductUnitOfWork repository)
         {
             return _instance ?? (_instance = new ImagesObservableCollection(repository));       
         }

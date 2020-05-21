@@ -3,11 +3,11 @@
 namespace UnitedDirectManager.Views
 {
     /// <summary>
-    /// Interaction logic for SendEmailView.xaml
+    /// Interaction logic for OrdersView.xaml
     /// </summary>
-    public partial class SendEmailView : UserControl, IRightSideView
+    public partial class OrdersView : UserControl
     {
-        public SendEmailView()
+        public OrdersView()
         {
             InitializeComponent();
         }

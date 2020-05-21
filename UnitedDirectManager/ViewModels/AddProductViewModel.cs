@@ -2,10 +2,11 @@
 using Domain.Entities;
 using System.ComponentModel;
 using UnitedDirectManager.ObservableCollections;
+using UnitedDirectManager.Views;
 
 namespace UnitedDirectManager.ViewModels
 {
-    public class AddProductViewModel : IPageViewModel, INotifyPropertyChanged
+    public class AddProductViewModel : IPageViewModel, INotifyPropertyChanged, IRightSideView
     {
         public AddProductViewModel() { }
 
@@ -17,10 +18,10 @@ namespace UnitedDirectManager.ViewModels
         }
         #endregion
 
-        private GenericRepository<Product> _productRepository;
+        private IProductUnitOfWork _productRepository;
         private MainViewModel _viewModel;
 
-        public AddProductViewModel(GenericRepository<Product> repository, MainViewModel vm)
+        public AddProductViewModel(IProductUnitOfWork repository, MainViewModel vm)
         {
             _productRepository = repository;
             _viewModel = vm;
@@ -61,14 +62,15 @@ namespace UnitedDirectManager.ViewModels
 
         private bool CheckTextBoxes()
         {
-            if(Name != null && Description != null && Category != null && Price != 0)
+            if(!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Description) && 
+                !string.IsNullOrEmpty(Category) && Price != 0)
             {
                 return true;
             }
 
             return false;
         }
-
+        
         private void SaveItem()
         {
             Product newProduct = new Product()
@@ -76,11 +78,11 @@ namespace UnitedDirectManager.ViewModels
                 Name = Name,
                 Description = Description,
                 Category = Category,
-                Price = Price
+                //Price = Price
             };
 
-            _productRepository.Add(newProduct);
-            _productRepository.Save();
+            _productRepository.Products.Add(newProduct);
+            _productRepository.Products.Save();
             ProductsObservableCollection.GetInstance()?.Products.Add(newProduct);
             Name = string.Empty;
             Description = string.Empty;
@@ -110,10 +112,11 @@ namespace UnitedDirectManager.ViewModels
             set { Product.Category = value; OnPropertyChanged("Category"); }
         }
 
-        public decimal Price
+        private decimal? lol;
+        public decimal? Price
         {
-            get { return Product.Price; }
-            set { Product.Price = value; OnPropertyChanged("Price"); }
+            get { return lol; }
+            set { lol = value; OnPropertyChanged("Price"); }
         }
         #endregion
     }

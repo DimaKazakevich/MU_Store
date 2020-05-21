@@ -4,7 +4,6 @@ using Ninject;
 using System.Data.Entity;
 using System.Windows;
 using UnitedDirectManager.Interfeces;
-using UnitedDirectManager.ViewModels;
 using UnitedDirectManager.Views;
 
 namespace UnitedDirectManager
@@ -31,35 +30,15 @@ namespace UnitedDirectManager
             _container.Bind(typeof(GenericRepository<>)).To(typeof(ProductRepository)).Named("Products");
             _container.Bind(typeof(GenericRepository<>)).To(typeof(ProductImagesRepository)).Named("Images");
             _container.Bind(typeof(GenericRepository<>)).To(typeof(ProductSizesRepository)).Named("Sizes");
+            _container.Bind(typeof(GenericRepository<>)).To(typeof(UserRepository)).Named("Users");
+            _container.Bind(typeof(ILoginUnitOfWork)).To(typeof(LoginUnitOfWork));
+            _container.Bind(typeof(IProductUnitOfWork)).To(typeof(ProductUnitOfWork));
             _container.Bind(typeof(IDialogService)).To(typeof(DefaultDialogService));
         }
 
         private void ComposeObjects()
         {
-            Current.MainWindow = _container.Get<MainView>();
+            Current.MainWindow = _container.Get<AppView>();
         }
     }
 }
-#region
-//    // Run startup code first
-//    base.OnStartup(e);
-
-//// Create Login Window and Show it
-//var login = new LoginDialog();
-//var loginVm = new LoginViewModel();
-
-//login.DataContext = loginVm;
-//    login.ShowDialog();
-
-//    // If login window didn't return true (login failed), exit application
-//    if (!login.DialogResult.GetValueOrDefault())
-//    {
-//        Environment.Exit(0);
-//    }
-
-//    // Providing we have a successful login, start main application window
-//    var app = new ShellView();
-//var context = new ShellViewModel(loginVm.CurrentUser);
-//app.DataContext = context;
-//    app.Show();
-#endregion

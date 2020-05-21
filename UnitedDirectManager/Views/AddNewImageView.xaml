@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnitedDirectManager.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="650" d:DesignWidth="250">
+             d:DesignHeight="650" d:DesignWidth="250"
+             Background="LightGray" >
 
     <Grid Background="LightGray" Name="addStck" VerticalAlignment="Stretch" Margin="0, 0, 0 ,0" >
         <Grid.RowDefinitions>
@@ -26,8 +27,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Clothes Id" FontSize="22" Foreground="#3ABB7A" />
-        <ComboBox Name="types" Grid.Row="1" DisplayMemberPath="Article" SelectedItem="{Binding ClothesId}" ItemsSource="{Binding Articles}" FontSize="20" Margin="20 0 20 0" Foreground="Black" BorderThickness="0" />
+        <TextBlock  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Product Id" FontSize="22" Foreground="#3ABB7A" />
+        <ComboBox Name="types" Grid.Row="1" SelectedValue="{Binding ClothesId}" SelectedValuePath="Article" ItemsSource="{Binding Articles}" DisplayMemberPath="Article" FontSize="20" Margin="20 0 20 0" Foreground="Black" BorderThickness="0" />
         <TextBlock Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Image File" FontSize="22" Foreground="#3ABB7A" />
         <Button Command="{Binding AddImageCommand}" Grid.Row="3" Content="+" Template="{DynamicResource btnTemplate}" Background="Transparent" Margin="10 0 10 0"/>
         <Button Command="{Binding CancelAddViewCommand}" Name="Cancel" Grid.Row="11" Content="Cancel" Template="{DynamicResource btnTemplateRed}" Background="Transparent" Margin="7 0 7 0"/>

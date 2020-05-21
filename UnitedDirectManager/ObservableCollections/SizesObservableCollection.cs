@@ -16,14 +16,14 @@ namespace UnitedDirectManager.ObservableCollections
         }
         #endregion
 
-        private SizesObservableCollection(GenericRepository<Size> repository)
+        private SizesObservableCollection(IProductUnitOfWork repository)
         {
-            _productSizes = new ObservableCollection<Size>(repository.GetAll().ToList());
+            _productSizes = new ObservableCollection<Size>(repository.Sizes.GetAll().ToList());
         }
 
         private static SizesObservableCollection _instance;
 
-        public static SizesObservableCollection GetInstance(GenericRepository<Size> repository)
+        public static SizesObservableCollection GetInstance(IProductUnitOfWork repository)
         {
             return _instance ?? (_instance = new SizesObservableCollection(repository));
         }

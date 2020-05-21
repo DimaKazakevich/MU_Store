@@ -3,11 +3,11 @@
 namespace UnitedDirectManager.Views
 {
     /// <summary>
-    /// Interaction logic for SendEmailView.xaml
+    /// Interaction logic for StatisticView.xaml
     /// </summary>
-    public partial class SendEmailView : UserControl, IRightSideView
+    public partial class StatisticView : UserControl
     {
-        public SendEmailView()
+        public StatisticView()
         {
             InitializeComponent();
         }

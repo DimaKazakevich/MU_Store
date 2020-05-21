@@ -5,10 +5,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using UnitedDirectManager.ObservableCollections;
+using UnitedDirectManager.Views;
 
 namespace UnitedDirectManager.ViewModels
 {
-    public class AddNewImageViewModel : INotifyPropertyChanged
+    public class AddNewImageViewModel : INotifyPropertyChanged, IRightSideView
     {
         #region INPC
         public event PropertyChangedEventHandler PropertyChanged;
@@ -18,7 +19,7 @@ namespace UnitedDirectManager.ViewModels
         }
         #endregion
 
-        private GenericRepository<Image> _productRepository;
+        private IProductUnitOfWork _productRepository;
         private MainViewModel _viewModel;
         private readonly ObservableCollection<Product> _products;
 
@@ -27,11 +28,11 @@ namespace UnitedDirectManager.ViewModels
             get => _products;
         }
 
-        public AddNewImageViewModel(GenericRepository<Image> repo, MainViewModel vm)
+        public AddNewImageViewModel(IProductUnitOfWork repo, MainViewModel vm)
         {
             _products = ProductsObservableCollection.GetInstance()?.Products;
             _productRepository = repo;
-            Image = new Image();
+            //Image = new Image();
             _viewModel = vm;
         }
 
@@ -58,8 +59,18 @@ namespace UnitedDirectManager.ViewModels
         {
             get
             {
-                return _addImageCommand ?? (_addImageCommand = new RelayCommand(p => AddImage(), x => ClothesId != 0));
+                return _addImageCommand ?? (_addImageCommand = new RelayCommand(p => AddImage(), x => CheckSelectedItem()));
             }
+        }
+
+        public bool CheckSelectedItem()
+        {
+            if(ClothesId != 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private List<byte[]> _files = new List<byte[]>();
@@ -101,8 +112,8 @@ namespace UnitedDirectManager.ViewModels
                         ImageFile = file
                     };
 
-                    _productRepository.Add(newImage);
-                    _productRepository.Save();
+                    _productRepository.Images.Add(newImage);
+                    _productRepository.Images.Save();
                     ImagesObservableCollection.GetInstance()?.ProductImages.Add(newImage);
                 }
             }
@@ -110,14 +121,15 @@ namespace UnitedDirectManager.ViewModels
         #endregion
 
         #region binding
-        public Image Image { get; set; }
+        //public Image Image { get; set; }
+        private int _clothesId;
 
         public int ClothesId
         {
-            get { return Image.ClothesId; }
+            get { return _clothesId; }
             set
             {
-                Image.ClothesId = value;
+                _clothesId = value;
                 OnPropertyChanged("ClothesId");
             }
         }

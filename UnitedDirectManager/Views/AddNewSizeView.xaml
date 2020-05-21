@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnitedDirectManager.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="650" d:DesignWidth="250">
+             d:DesignHeight="650" d:DesignWidth="250"
+             Background="LightGray">
 
     <Grid Background="LightGray" Name="addStck">
         <Grid.RowDefinitions>
@@ -27,7 +28,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <TextBlock  Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Clothes Id" FontSize="22" Foreground="#3ABB7A" />
-        <ComboBox Name="types" Grid.Row="1" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.ScrollUnit="Pixel" ScrollViewer.VerticalScrollBarVisibility="Visible"  MaxDropDownHeight="200" DisplayMemberPath="Article" SelectedItem="{Binding ClothesId}" ItemsSource="{Binding Articles, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Margin="20 0 20 0" Foreground="Black" BorderThickness="0" />
+        <ComboBox Name="types" Grid.Row="1" VirtualizingPanel.IsVirtualizing="True" SelectedValuePath="Article" VirtualizingPanel.ScrollUnit="Pixel" ScrollViewer.VerticalScrollBarVisibility="Visible"  MaxDropDownHeight="200" DisplayMemberPath="Article" SelectedValue="{Binding ClothesId}" ItemsSource="{Binding Articles, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Margin="20 0 20 0" Foreground="Black" BorderThickness="0" />
         <TextBlock Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Size Name" FontSize="22" Foreground="#3ABB7A" />
         <TextBox Text="{Binding SizeName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Margin="20 0 20 0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Button Command="{Binding AddSizeCommand}" Name="addItem" Grid.Row="10" Content="Add" Template="{DynamicResource btnTemplate}" Background="Transparent" Margin="10 0 10 2"/>

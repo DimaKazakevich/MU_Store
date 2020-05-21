@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:UnitedDirectManager"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-
     <UserControl.Resources>
         <Style x:Key="CenterGridHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -17,7 +16,7 @@
                 EnableColumnVirtualization="True" EnableRowVirtualization="True" x:Name="MenuGrid" ItemsSource="{Binding ProductImages}"  Background="White"
                   Foreground="Black" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" 
                   FontSize="20" FontWeight="DemiBold" HeadersVisibility="Column" CanUserResizeColumns="False" 
-                  CanUserSortColumns="False" CanUserResizeRows="False" BorderBrush="LightGray" BorderThickness="7 7 7 30" RowHeight="120" 
+                  CanUserSortColumns="False" CanUserResizeRows="False" BorderBrush="LightGray" BorderThickness="7 7 0 30" RowHeight="100" 
                   CanUserAddRows="False" CanUserReorderColumns="False" VerticalContentAlignment="Center" 
                   HorizontalContentAlignment="Center" ScrollViewer.CanContentScroll="True" ScrollViewer.PanningMode="VerticalFirst">
         <!--<KeyBinding Key="Delete" Command="{Binding DeleteItemCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>-->
@@ -53,7 +52,7 @@
             <DataGridTemplateColumn Header="Image" Width="*" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <Image Source="{Binding ImageFile}" Width="100" Height="100"/>
+                        <Image Source="{Binding ImageFile}" Width="95" Height="95"/>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>

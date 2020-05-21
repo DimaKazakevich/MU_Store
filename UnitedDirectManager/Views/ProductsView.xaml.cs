@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using UnitedDirectManager.ViewModels;
 
 namespace UnitedDirectManager.Views
 {

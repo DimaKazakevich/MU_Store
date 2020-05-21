@@ -16,14 +16,14 @@ namespace UnitedDirectManager.ObservableCollections
         }
         #endregion
 
-        private ProductsObservableCollection(GenericRepository<Product> repository)
+        private ProductsObservableCollection(IProductUnitOfWork repository)
         {
-            _products = new ObservableCollection<Product>(repository.GetAll().ToList());
+            _products = new ObservableCollection<Product>(repository.Products.GetAll().ToList());
         }
 
         private static ProductsObservableCollection _instance;
 
-        public static ProductsObservableCollection GetInstance(GenericRepository<Product> repository)
+        public static ProductsObservableCollection GetInstance(IProductUnitOfWork repository)
         {
             return _instance ?? (_instance = new ProductsObservableCollection(repository));
         }

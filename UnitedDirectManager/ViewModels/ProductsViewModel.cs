@@ -20,9 +20,12 @@ namespace UnitedDirectManager.ViewModels
 
         public ProductsObservableCollection _products;
 
-        public ProductsViewModel(GenericRepository<Product> repo)
+        public int Row { get; set; }
+
+        public ProductsViewModel(IProductUnitOfWork repo, int row)
         {
             _products = ProductsObservableCollection.GetInstance(repo);
+            Row = row;
         }
        
         public ObservableCollection<Product> Products

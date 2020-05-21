@@ -3,10 +3,11 @@ using Domain.Entities;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using UnitedDirectManager.ObservableCollections;
+using UnitedDirectManager.Views;
 
 namespace UnitedDirectManager.ViewModels
 {
-    public class AddNewSizeViewModel : INotifyPropertyChanged
+    public class AddNewSizeViewModel : INotifyPropertyChanged, IRightSideView
     {
         #region INPC
         public event PropertyChangedEventHandler PropertyChanged;
@@ -16,7 +17,7 @@ namespace UnitedDirectManager.ViewModels
         }
         #endregion
 
-        private GenericRepository<Size> _sizesRepository;
+        private IProductUnitOfWork _sizesRepository;
         private MainViewModel _viewModel;
         private readonly ObservableCollection<Product> _products;
 
@@ -25,7 +26,7 @@ namespace UnitedDirectManager.ViewModels
             get => _products;
         }
 
-        public AddNewSizeViewModel(GenericRepository<Size> repo, MainViewModel vm)
+        public AddNewSizeViewModel(IProductUnitOfWork repo, MainViewModel vm)
         {
             _products = ProductsObservableCollection.GetInstance()?.Products;
             _sizesRepository = repo;
@@ -79,8 +80,8 @@ namespace UnitedDirectManager.ViewModels
                 SizeName = SizeName
             };
 
-            _sizesRepository.Add(newSize);
-            _sizesRepository.Save();
+            _sizesRepository.Sizes.Add(newSize);
+            _sizesRepository.Sizes.Save();
             SizesObservableCollection.GetInstance()?.ProductSizes.Add(newSize);
             SizeName = string.Empty;
         }

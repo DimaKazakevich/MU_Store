@@ -11,10 +11,10 @@ namespace Domain.Concrete
 
         public DbSet<Size> Sizes { get; set; }
 
-        //public DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
+        public DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
 
-        //public DbSet<IdentityUser> IdentityUser { get; set; }
+        public DbSet<IdentityUser> IdentityUser { get; set; }
 
-        //public DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public DbSet<AspNetRoles> AspNetRoles { get; set; }
     }
 }

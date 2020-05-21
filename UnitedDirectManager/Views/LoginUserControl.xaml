@@ -1,15 +1,13 @@
-﻿<Window x:Class="UnitedDirectManager.Views.LoginView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:UnitedDirectManager"
-        mc:Ignorable="d"
-        x:Name="LoginWindow"
-        Title="Login" Height="400" Width="500"
-        WindowStartupLocation="CenterScreen"
-        Background="#333">
-    <Window.Style>
+﻿<UserControl x:Class="UnitedDirectManager.Views.LoginUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UnitedDirectManager.Views"
+             mc:Ignorable="d" 
+             Height="400" Width="500"
+             Background="#333">
+    <UserControl.Resources>
         <Style TargetType="Window">
             <Style.Setters>
                 <Setter Property="WindowChrome.WindowChrome" >
@@ -32,11 +30,7 @@
                 </EventTrigger>
             </Style.Triggers>
         </Style>
-    </Window.Style>
-
-    <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="booleanToVisibiltyConverter"/>
-    </Window.Resources>
+    </UserControl.Resources>
 
     <Grid ShowGridLines="False">
         <Grid.Background>
@@ -121,4 +115,4 @@
             </TextBlock.Style>
         </TextBlock>
     </Grid>
-</Window>
+</UserControl>

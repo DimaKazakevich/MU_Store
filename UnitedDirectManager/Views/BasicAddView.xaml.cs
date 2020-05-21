@@ -1,14 +1,12 @@
 ﻿using System.Windows.Controls;
-using UnitedDirectManager.ViewModels;
 
 namespace UnitedDirectManager.Views
 {
     public partial class BasicAddView : UserControl, IRightSideView
     {
-        public BasicAddView(MainViewModel viewModel)
+        public BasicAddView()
         {
             InitializeComponent();
-            DataContext = viewModel;
         }
     }
 }

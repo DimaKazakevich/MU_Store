@@ -1,19 +1,15 @@
-﻿<Window x:Class="UnitedDirectManager.Views.MainView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:UnitedDirectManager"
-        xmlns:anim="clr-namespace:UnitedDirectManager.Animation"
-        xmlns:vm="clr-namespace:UnitedDirectManager.ViewModels" 
-        xmlns:view="clr-namespace:UnitedDirectManager.Views"
-        mc:Ignorable="d"
-        x:Name="Main"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        WindowStartupLocation="Manual"
-        Title="MainWindow" Height="700" Width="1150" MouseLeftButtonDown="Main_MouseLeftButtonDown">
-    <Window.Resources>
+﻿<UserControl x:Class="UnitedDirectManager.Views.MainUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UnitedDirectManager.Views"
+             xmlns:anim="clr-namespace:UnitedDirectManager.Animation"
+             xmlns:vm="clr-namespace:UnitedDirectManager.ViewModels" 
+             xmlns:view="clr-namespace:UnitedDirectManager.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="1150">
+    <UserControl.Resources>
         <Style x:Key="CenterGridHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
@@ -33,6 +29,21 @@
         <DataTemplate DataType="{x:Type vm:StatisticViewModel}">
             <view:StatisticView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SendEmailViewModel}">
+            <view:SendEmailView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MainViewModel}">
+            <view:BasicAddView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AddNewImageViewModel}">
+            <view:AddNewImageView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AddNewSizeViewModel}">
+            <view:AddNewSizeView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:AddProductViewModel}">
+            <view:AddNewItemView/>
+        </DataTemplate>
 
         <Style TargetType="ContentControl" x:Key="LeftToRightAnimatedContentControl">
             <Setter Property="ContentTemplate">
@@ -43,7 +54,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </Window.Resources>
+    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -57,7 +68,6 @@
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Row="0" Background="#666" Grid.ColumnSpan="3">
-            <!--<TextBlock Text="{Binding Role}" Foreground="White" VerticalAlignment="Center" Margin="10 0" FontWeight="DemiBold" FontSize="14" TextAlignment="Left"/>-->
             <Image Source="D:\Dima\.NET\MU_Store\WebUI\Images\ud_logo.png" HorizontalAlignment="Center" Height="50" Width="500" VerticalAlignment="Center" />
             <Button Grid.Row="0" x:Name="close" WindowChrome.IsHitTestVisibleInChrome="True" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=Main}" Margin="0,0,0,10">
                 <Button.Template>
@@ -103,11 +113,12 @@
                 <DataTemplate>
                     <RadioButton BorderThickness="0.5"
                                  IsTabStop="True"
-                                Style="{StaticResource {x:Type ToggleButton}}"
-                                GroupName="menuButtons"
-                                Content="{Binding NavButtonName}"
-                                Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
-                                CommandParameter="{Binding}">
+                                 Style="{StaticResource {x:Type ToggleButton}}"
+                                 GroupName="menuButtons"
+                                 IsChecked="{Binding IsChecked}"
+                                 Content="{Binding NavButtonName}"
+                                 Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                 CommandParameter="{Binding}">
                     </RadioButton>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -117,4 +128,4 @@
 
         <ContentControl Grid.Row="1" Grid.Column="3" Content="{Binding CurrentAddView}" BorderThickness="0" />
     </Grid>
-</Window>
+</UserControl>

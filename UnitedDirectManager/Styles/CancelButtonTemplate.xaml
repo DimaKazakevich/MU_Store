@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:UnitedDirectManager.Styles">
+                    xmlns:local="clr-namespace:UnitedDirectManager">
 
     <ControlTemplate TargetType="Button" x:Key="btnTemplateRed">
         <Border x:Name="brdrBtn" BorderThickness="1" BorderBrush="IndianRed" Background="Transparent" CornerRadius="5" Margin="{TemplateBinding Margin}">

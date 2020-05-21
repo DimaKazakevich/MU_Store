@@ -1,6 +1,4 @@
 ﻿using Domain.Abstract;
-using Domain.Entities;
-using Ninject;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,7 +6,7 @@ using UnitedDirectManager.Views;
 
 namespace UnitedDirectManager.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged, IPageViewModel, IRightSideView
     {
         #region INPC
         public event PropertyChangedEventHandler PropertyChanged;
@@ -18,22 +16,21 @@ namespace UnitedDirectManager.ViewModels
         }
         #endregion
 
-        public MainViewModel() { }
-
-        public MainViewModel([Named("Products")] GenericRepository<Product> productsRepo, 
-                                [Named("Images")] GenericRepository<Image> imagesRepo,
-                                [Named("Sizes")] GenericRepository<Size> sizesRepo)
+        public MainViewModel(IProductUnitOfWork productUnitOfWork)
         {
-            PageViewModels.Add(new ProductImagesViewModel(imagesRepo));
-            PageViewModels.Add(new ProductsViewModel(productsRepo));
-            PageViewModels.Add(new ProductSizesViewModel(sizesRepo));
+            PageViewModels.Add(new OrdersViewModel(0));
+            PageViewModels.Add(new ProductImagesViewModel(productUnitOfWork,1));
+            PageViewModels.Add(new ProductsViewModel(productUnitOfWork, 2));
+            PageViewModels.Add(new ProductSizesViewModel(productUnitOfWork,3));
+            PageViewModels.Add(new StatisticViewModel(4));
             CurrentPageViewModel = PageViewModels[0];
+
             
-            AddViews.Add(new BasicAddView(this));
-            AddViews.Add(new SendEmailView(this));
-            AddViews.Add(new AddNewImageView(new AddNewImageViewModel(imagesRepo, this)));
-            AddViews.Add(new AddNewSizeView(new AddNewSizeViewModel(sizesRepo, this)));
-            AddViews.Add(new AddNewItemView(new AddProductViewModel(productsRepo, this)));
+            AddViews.Add(this);
+            AddViews.Add(new SendEmailViewModel());
+            AddViews.Add(new AddNewImageViewModel(productUnitOfWork, this));
+            AddViews.Add(new AddNewSizeViewModel(productUnitOfWork, this));
+            AddViews.Add(new AddProductViewModel(productUnitOfWork, this));
             CurrentAddView = AddViews[0];
 
             CloseWindowCommand = new RelayCommand(x => CloseWindow((ICloseable)x));
@@ -108,6 +105,16 @@ namespace UnitedDirectManager.ViewModels
             if (viewModel is ProductImagesViewModel)
             {
                 CurrentAddView = AddViews[0];
+            }
+
+            if (viewModel is OrdersViewModel)
+            {
+                CurrentAddView = AddViews[1];
+            }
+
+            if (viewModel is StatisticViewModel)
+            {
+                CurrentAddView = null;
             }
 
             CurrentPageViewModel = PageViewModels.FirstOrDefault(vm => vm == viewModel);
