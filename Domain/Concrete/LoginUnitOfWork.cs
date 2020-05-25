@@ -10,9 +10,13 @@ using System.Threading.Tasks;
 
 namespace Domain.Concrete
 {
-    public class LoginUnitOfWork : IDisposable, ILoginUnitOfWork
+    public class LoginUnitOfWork : ILoginUnitOfWork
     {
         private GenericRepository<Entities.IdentityUser> _usersRepository;
+
+        //private GenericRepository<Entities.AspNetRoles> _aspNetRoles;
+
+        //private GenericRepository<Entities.AspNetUserRoles> _spNetUserRoles;
 
         public LoginUnitOfWork([Named("Users")] GenericRepository<Entities.IdentityUser> repo)
         {
@@ -25,31 +29,6 @@ namespace Domain.Concrete
             {
                 return _usersRepository;
             }
-        }
-
-        public void Save()
-        {
-            //db.SaveChanges();
-        }
-
-        private bool disposed = false;
-
-        public virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                 //   db.Dispose();
-                }
-                this.disposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

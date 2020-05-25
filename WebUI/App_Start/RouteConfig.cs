@@ -13,7 +13,7 @@ namespace WebUI
             routes.MapRoute(null, "",
                 new
                 {
-                    controller = "Clothes",
+                    controller = "Products",
                     action = "List",
                     category = (string)null,
                     page = 1
@@ -23,20 +23,20 @@ namespace WebUI
             routes.MapRoute(
                 name: null,
                 url: "Page{page}",
-                defaults: new { controller = "Clothes", action = "List", category = (string)null },
+                defaults: new { controller = "Products", action = "List", category = (string)null },
                 constraints: new { page = @"\d+" }
                             );
 
 
             routes.MapRoute(null,
                  "{category}",
-                 new { controller = "Clothes", action = "List", page = 1 }
+                 new { controller = "Products", action = "List", page = 1 }
                             );
 
 
             routes.MapRoute(null,
                     "{category}/Page{page}",
-                    new { controller = "Game", action = "List" },
+                    new { controller = "Products", action = "List" },
                     new { page = @"\d+" }
                             );
 

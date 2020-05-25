@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<string>
 
 <li class="menuHeader">
-@Html.ActionLink("Home", "List", "Clothes", null,
+@Html.ActionLink("Home", "List", "Products", null,
 	new { @class = "navItem" })
 </li>
 
@@ -11,7 +11,7 @@
 		@Html.RouteLink(link, new
 		{
 
-			controller = "Clothes",
+			controller = "Products",
 			action = "List",
 			category = link,
 			page = 1

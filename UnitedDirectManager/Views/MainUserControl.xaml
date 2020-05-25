@@ -8,7 +8,8 @@
              xmlns:vm="clr-namespace:UnitedDirectManager.ViewModels" 
              xmlns:view="clr-namespace:UnitedDirectManager.Views"
              mc:Ignorable="d"
-             d:DesignHeight="700" d:DesignWidth="1150">
+             d:DesignHeight="700" d:DesignWidth="1150"
+             Background="LightGray">
     <UserControl.Resources>
         <Style x:Key="CenterGridHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -28,6 +29,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:StatisticViewModel}">
             <view:StatisticView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:StatisticRightViewModel}">
+            <view:StatisticRightView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:SendEmailViewModel}">
             <view:SendEmailView/>
@@ -69,7 +73,7 @@
 
         <Grid Grid.Row="0" Background="#666" Grid.ColumnSpan="3">
             <Image Source="D:\Dima\.NET\MU_Store\WebUI\Images\ud_logo.png" HorizontalAlignment="Center" Height="50" Width="500" VerticalAlignment="Center" />
-            <Button Grid.Row="0" x:Name="close" WindowChrome.IsHitTestVisibleInChrome="True" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=Main}" Margin="0,0,0,10">
+            <Button Grid.Row="0" x:Name="close" WindowChrome.IsHitTestVisibleInChrome="True" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=MainUserControl}" Margin="0,0,0,10">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="brdr" BorderThickness="2" Background="Transparent" Height="40" Width="40" >
@@ -124,8 +128,8 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <ContentControl Style="{StaticResource LeftToRightAnimatedContentControl}" Grid.Row="1" BorderThickness="0" Grid.Column="1" Content="{Binding CurrentPageViewModel}" />
+        <ContentControl Background="LightGray" Style="{StaticResource LeftToRightAnimatedContentControl}" Grid.Row="1" BorderThickness="0" Grid.Column="1" Content="{Binding CurrentPageViewModel}" />
 
-        <ContentControl Grid.Row="1" Grid.Column="3" Content="{Binding CurrentAddView}" BorderThickness="0" />
+        <ContentControl Grid.Row="1" Style="{StaticResource LeftToRightAnimatedContentControl}" Grid.Column="3" Content="{Binding CurrentAddView}" BorderThickness="0" />
     </Grid>
 </UserControl>

@@ -1,5 +1,5 @@
 ﻿@model WebUI.Models.BasketIndexViewModel
-
+@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Basket";
 }
@@ -13,125 +13,141 @@
     .col-xs-8 {
         width: max-content;
     }
+
     .orderSummaryHeader {
         border-bottom: 1px solid #d9d9d9;
         padding: 20px 10px;
         margin: 0 15px;
         font-size: 20px;
-        font-weight:600;
+        font-weight: 600;
     }
+
     .content {
         background-color: #f1f1f1;
     }
+
     .row.panel {
         background-color: #f1f1f1;
-        justify-content:center;
+        justify-content: center;
     }
+
     .table {
-        background-color:white;
+        background-color: white;
     }
+
     .total.price {
         font-weight: 700;
         font-size: 16px;
-        margin-bottom:15px;
+        margin-bottom: 15px;
     }
 </style>
 
 @if (Model.Basket.Lines.Count() > 0)
 {
-<div style="display:flex; flex-direction:column">
-    <div style="display: flex">
-        <table class="table" id="basketTable" style="width:650px">
-            <thead>
-                <tr>
-                    <th>Product Description</th>
+    <div style="display:flex; flex-direction:column">
+        <div style="display: flex">
+            <table class="table" id="basketTable" style="width:650px">
+                <thead>
+                    <tr>
+                        <th>Product Description</th>
 
-                    <th>Quantity</th>
-                    <th></th>
-                    <th class="text-right">Item Cost</th>
-                    <th class="text-right">Total cost</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var line in Model.Basket.Lines)
-                {
-                <tr style="font-weight:700; font-size:12px">
-                    @{
-                        var str = line.Wear.Images.Where(x => x.Wear.Article == line.Wear.Article).Select(x => x.ImageFile).FirstOrDefault();
-                        var base64 = Convert.ToBase64String(str);
-                        var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+                        <th>Quantity</th>
+                        <th></th>
+                        <th class="text-right">Item Cost</th>
+                        <th class="text-right">Total cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var line in Model.Basket.Lines)
+                    {
+                        <tr style="font-weight:700; font-size:12px">
+                            @{
+                                var str = line.Product.Images.Where(x => x.Wear.Article == line.Product.Article).Select(x => x.ImageFile).FirstOrDefault();
+                                var base64 = Convert.ToBase64String(str);
+                                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+                            }
+                            <td class="text-left">
+                                <a href="@Url.Action("product-details","Products", new { name = line.Product.Name})">
+                                    <img src="@imgSrc" style="height:90px; width:90px" />
+                                </a>
+                                <br /> <span>@line.Product.Name</span>
+                                <br /> <span>Product code: @line.Product.Article</span>
+                                @if (line.Size != null)
+                                {
+                                    <br /><span>Size: @line.Size</span>
+                                }
+                            </td>
+                            <td class="text-left quantity" style="font-size:14px" data-id="@line.Product.Article" data-content="@line.Size">@line.Quantity </td>
+                            <td>
+                                @if (line.Size != null)
+                                {
+                                    <a href="#" class="btn btn-icon incClothesWithSize" data-id="@line.Product.Article" data-content="@line.Size" style="color:black; font-size:20px; text-decoration:none">+</a> <br />
+                                    <a href="#" class="btn btn-icon decClothesWithSize" data-id="@line.Product.Article" data-content="@line.Size" style="color:black; font-size:20px; padding-left:14.5px; padding-right:14.5px; text-decoration:none">-</a> <br />
+                                    <a href="#" class="removeClothesWithSize" data-id="@line.Product.Article" data-content="@line.Size" style="color:black; text-decoration:none">Remove</a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="btn btn-icon incClothes" data-id="@line.Product.Article" style="color:black; font-size:20px; text-decoration:none">+</a> <br />
+                                    <a href="#" class="btn btn-icon decClothes" data-id="@line.Product.Article" style="color:black; font-size:20px; padding-left:14.5px; padding-right:14.5px; text-decoration:none">-</a> <br />
+                                    <a href="#" class="removeClothesWithoutSize" data-id="@line.Product.Article" style="color:black; text-decoration:none">Remove</a>
+                                }
+                            </td>
+                            <td class="text-right" style="font-size:14px">@line.Product.Price.ToString("# $")</td>
+                            <td class="text-right cost" data-id="@line.Product.Article" data-content="@line.Size" style="font-size:14px">
+                                @((line.Quantity * line.Product.Price).ToString("# $"))
+                            </td>
+                        </tr>
                     }
-                    <td class="text-left">
-                        <a href="@Url.Action("clothes-details","Clothes", new { name = line.Wear.Name})">
-                            <img src="@imgSrc" style="height:90px; width:90px" />
-                        </a>
-                        <br /> <span>@line.Wear.Name</span>
-                        <br /> <span>Product code: @line.Wear.Article</span>
-                        @if (line.Size != null)
+                </tbody>
+            </table>
+
+            <aside id="basketSidePanel" style="position: relative; margin-left:10px; width:306px">
+                <div class="basketSummary" sticky-scroll="" style="background-color:#fff; height:180px; width:306px">
+                    <h3 class="orderSummaryHeader">Order Summary</h3>
+                    <div class="orderSummaryContent" style="padding:20px 26px">
+                        <div class="total price">
+                            <span>Total:</span>
+                            <span class="price" style="float:right">@Model.Basket.ComputeTotalValue().ToString("# $")</span>
+                        </div>
+                        @if (User.Identity.IsAuthenticated)
                         {
-                            <br /><span>Size: @line.Size</span>
-                        }
-                    </td>
-                    <td class="text-left quantity" style="font-size:14px" data-id="@line.Wear.Article" data-content="@line.Size">@line.Quantity </td>
-                    <td>
-                        @if (line.Size != null)
-                        {
-                            <a href="#" class="btn btn-icon incClothesWithSize" data-id="@line.Wear.Article" data-content="@line.Size" style="color:black; font-size:20px; text-decoration:none">+</a> <br />
-                            <a href="#" class="btn btn-icon decClothesWithSize" data-id="@line.Wear.Article" data-content="@line.Size" style="color:black; font-size:20px; padding-left:14.5px; padding-right:14.5px; text-decoration:none">-</a> <br />
-                            <a href="#" class="removeClothesWithSize" data-id="@line.Wear.Article" data-content="@line.Size" style="color:black; text-decoration:none">Remove</a>
+                            <div class="payment">
+                                <button type="submit" onclick="location.href = '@Url.Action("Index", "Checkout")'" class="btn btn-success" id="checkOutBtn" style="width:100%; border-radius:0; background-color:#00a92c; width:250px; height:50px; font-size:16px; font-weight:600;">
+                                    CHECKOUT SECURELY
+                                </button>
+                            </div>
                         }
                         else
                         {
-                            <a href="#" class="btn btn-icon incClothes" data-id="@line.Wear.Article" style="color:black; font-size:20px; text-decoration:none">+</a> <br />
-                            <a href="#" class="btn btn-icon decClothes" data-id="@line.Wear.Article" style="color:black; font-size:20px; padding-left:14.5px; padding-right:14.5px; text-decoration:none">-</a> <br />
-                            <a href="#" class="removeClothesWithoutSize" data-id="@line.Wear.Article" style="color:black; text-decoration:none">Remove</a>
+                            <div class="payment">
+                                <button type="submit" onclick="location.href = '@Url.Action("Login", "Account")'" class="btn btn-success" id="checkOutBtn" style="width:100%; border-radius:0; background-color:#00a92c; width:250px; height:50px; font-size:16px; font-weight:600;">
+                                    CHECKOUT SECURELY
+                                </button>
+                            </div>
                         }
-                    </td>
-                    <td class="text-right" style="font-size:14px">@line.Wear.Price.ToString("# $")</td>
-                    <td class="text-right cost" data-id="@line.Wear.Article" data-content="@line.Size" style="font-size:14px">
-                        @((line.Quantity * line.Wear.Price).ToString("# $"))
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
-
-        <aside id="basketSidePanel" style="position: relative; margin-left:10px; width:306px">
-            <div class="basketSummary" sticky-scroll="" style="background-color:#fff; height:180px; width:306px">
-                <h3 class="orderSummaryHeader">Order Summary</h3>
-                <div class="orderSummaryContent" style="padding:20px 26px">
-                    <div class="total price">
-                        <span>Total:</span>
-                        <span class="price" style="float:right">@Model.Basket.ComputeTotalValue().ToString("# $")</span>
-                    </div>
-                    <div class="payment">
-                        <button type="submit" class="btn btn-success" style="width:100%; border-radius:0; background-color:#00a92c; width:250px; height:50px; font-size:16px; font-weight:600;">
-                            CHECKOUT SECURELY
-                        </button>
                     </div>
                 </div>
-            </div>
-        </aside>
-    </div>
+            </aside>
+        </div>
 
-    <div class="continueShoppingBtn">
-        <a class="btn btn-primary" style="background-color: #b61c1c; border-color: #b61c1c; width: 300px; height: 50px;border-radius: 0;text-align: center;vertical-align: middle;text-transform: uppercase;font-size: 22px; justify-content:flex-start; font-weight:600;" href="@Model.ReturnUrl">Continue Shopping</a>
+        <div class="continueShoppingBtn">
+            <a class="btn btn-primary" style="background-color: #b61c1c; border-color: #b61c1c; width: 300px; height: 50px;border-radius: 0;text-align: center;vertical-align: middle;text-transform: uppercase;font-size: 22px; justify-content:flex-start; font-weight:600;" href="@Model.ReturnUrl">Continue Shopping</a>
+        </div>
     </div>
-</div>
 }
 else
 {
-<h2>Nothing in your basket yet.</h2>
-<h3>The basket is waiting to be filled.</h3>
-<h4>Have a nice shopping!</h4>
+    <h2>Nothing in your basket yet.</h2>
+    <h3>The basket is waiting to be filled.</h3>
+    <h4>Have a nice shopping!</h4>
 
-<div class="text-left">
-    <a class="btn btn-primary" style="background-color: #b61c1c; border-color: #b61c1c; width: 300px; height: 50px;border-radius: 0;text-align: center;vertical-align: middle;text-transform: uppercase;font-size: 22px;font-weight:600;" href="@Model.ReturnUrl">Continue Shopping</a>
-</div>
+    <div class="text-left">
+        <a class="btn btn-primary" style="background-color: #b61c1c; border-color: #b61c1c; width: 300px; height: 50px;border-radius: 0;text-align: center;vertical-align: middle;text-transform: uppercase;font-size: 22px;font-weight:600;" href="@Model.ReturnUrl">Continue Shopping</a>
+    </div>
 
-<style>
-    .col-xs-8 {
-        flex-direction:column;
-    }
-</style>
+    <style>
+        .col-xs-8 {
+            flex-direction: column;
+        }
+    </style>
 }

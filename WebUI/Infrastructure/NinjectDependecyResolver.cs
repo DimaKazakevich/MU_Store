@@ -3,44 +3,44 @@ using Domain.Concrete;
 using Ninject;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Web.Mvc;
 
 namespace WebUI.Infrastructure
 {
     public class NinjectDependencyResolver : IDependencyResolver
     {
-        private readonly IKernel _kernel;
+        private readonly IKernel _container;
 
         public NinjectDependencyResolver(IKernel kernelParam)
         {
-            _kernel = kernelParam;
+            _container = kernelParam;
 
             AddBindings();
         }
 
         public object GetService(Type serviceType)
         {
-            return _kernel.TryGet(serviceType);
+            return _container.TryGet(serviceType);
         }
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            return _kernel.GetAll(serviceType);
+            return _container.GetAll(serviceType);
         }
 
         private void AddBindings()
         {
-            //Mock<IClothesRepository> mock = new Mock<IClothesRepository>();
-
-            //mock.Setup(m => m.Clothes).Returns(new List<Wear>
-            //{
-            //    new Wear { Name = "T-shirt", Price = 300, },
-            //    new Wear { Name = "Baseball cap", Price = 200}
-            //});
-
-            //_kernel.Bind<IClothesRepository>().ToConstant(mock.Object);
-
-            //_kernel.Bind<IItemsRepository>().To<ItemsRepository>();
+            _container.Bind<DbContext>().To<EFDBContext>();
+            _container.Bind(typeof(GenericRepository<>)).To(typeof(ProductRepository)).Named("Products");
+            _container.Bind(typeof(GenericRepository<>)).To(typeof(ProductImagesRepository)).Named("Images");
+            _container.Bind(typeof(GenericRepository<>)).To(typeof(ProductSizesRepository)).Named("Sizes");
+            _container.Bind(typeof(GenericRepository<>)).To(typeof(UserRepository)).Named("Users");
+            _container.Bind(typeof(GenericRepository<>)).To(typeof(OrderRepositpry)).Named("Orders");
+            _container.Bind(typeof(GenericRepository<>)).To(typeof(OrderDetailsRepository)).Named("OrderDetails");
+            _container.Bind(typeof(ILoginUnitOfWork)).To(typeof(LoginUnitOfWork));
+            _container.Bind(typeof(IProductUnitOfWork)).To(typeof(ProductUnitOfWork));
+            _container.Bind(typeof(IOrderUnitOfWork)).To(typeof(OrderUnitOfWork));
         }
     }
 }

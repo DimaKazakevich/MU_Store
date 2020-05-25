@@ -27,20 +27,20 @@ namespace UnitedDirectManager
             return null;
         }
 
-        public static ViewManager GetInstance(ILoginUnitOfWork loginUnitOfWork, IProductUnitOfWork productUnitOfWork)
+        public static ViewManager GetInstance(ILoginUnitOfWork loginUnitOfWork, IProductUnitOfWork productUnitOfWork, IOrderUnitOfWork orderUnitOfWork, IOrderProcessor processor)
         {
             
             if (_instance == null)
             {
-                _instance = new ViewManager(loginUnitOfWork, productUnitOfWork);
+                _instance = new ViewManager(loginUnitOfWork, productUnitOfWork, orderUnitOfWork, processor);
             }
             return _instance;
         }
 
-        private ViewManager(ILoginUnitOfWork loginUnitOfWork, IProductUnitOfWork productUnitOfWork)
+        private ViewManager(ILoginUnitOfWork loginUnitOfWork, IProductUnitOfWork productUnitOfWork, IOrderUnitOfWork orderUnitOfWork, IOrderProcessor processor)
         {
             PageViewModels.Add(new LoginViewModel(loginUnitOfWork));
-            PageViewModels.Add(new MainViewModel(productUnitOfWork));
+            PageViewModels.Add(new MainViewModel(productUnitOfWork, orderUnitOfWork, loginUnitOfWork, processor));
             CurrentPageViewModel = PageViewModels[0];
         }
 

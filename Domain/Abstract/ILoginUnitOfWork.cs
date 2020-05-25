@@ -10,5 +10,9 @@ namespace Domain.Abstract
     public interface ILoginUnitOfWork
     {
         GenericRepository<IdentityUser> Users { get; }
+
+        //GenericRepository<AspNetUserRoles> UserRoles { get; }
+
+        //GenericRepository<AspNetRoles> Roles { get; }
     }
 }

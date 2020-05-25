@@ -29,7 +29,7 @@ namespace UnitedDirectManager.ViewModels
         {
             CloseWindowCommand = new RelayCommand(x => CloseWindow((ICloseable)x));
             _loginUnitOfWork = loginUnitOfWork;
-            IdentityUser = _loginUnitOfWork.Users.GetAll().ToList();            
+            IdentityUser = _loginUnitOfWork.Users.GetAll().ToList();
         }
 
         #region binding
@@ -86,17 +86,22 @@ namespace UnitedDirectManager.ViewModels
                 return;
             }
 
+
+            #region
             //var isRoleExist = AspNetUserRoles.Where(userRole => userRole.UserId == manager.UserId).FirstOrDefault();
             //if (isRoleExist == null)
             //{
+            //    MessageBox.Show("You do not have access to the application.", "Login error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
             //    return;
             //}
 
             //var concreteRole = AspNetRoles.Where(role => role.UserId == isRoleExist.RoleId).FirstOrDefault();
             //if (concreteRole == null)
             //{
+            //    MessageBox.Show("You do not have access to the application.", "Login error", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
             //    return;
             //}
+            #endregion
 
             ///<summary>
             ///if login is successful pass true

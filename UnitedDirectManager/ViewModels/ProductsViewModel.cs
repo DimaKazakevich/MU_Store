@@ -2,6 +2,7 @@
 using Domain.Entities;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using UnitedDirectManager.ObservableCollections;
 
 namespace UnitedDirectManager.ViewModels
@@ -18,13 +19,18 @@ namespace UnitedDirectManager.ViewModels
 
         public ProductsViewModel() { }
 
+        public string NavButtonName { get; } = "Products";
+
         public ProductsObservableCollection _products;
+
+        private IProductUnitOfWork _productUnitOfWork;
 
         public int Row { get; set; }
 
         public ProductsViewModel(IProductUnitOfWork repo, int row)
         {
             _products = ProductsObservableCollection.GetInstance(repo);
+            _productUnitOfWork = repo;
             Row = row;
         }
        
@@ -44,6 +50,58 @@ namespace UnitedDirectManager.ViewModels
             }
         }
 
-        public string NavButtonName { get; } = "Products";
+        #region DeleteItemCommand
+        private RelayCommand _deleteItemCommand;
+        public RelayCommand DeleteItemCommand
+        {
+            get
+            {
+                if (_deleteItemCommand == null)
+                {
+                    _deleteItemCommand = new RelayCommand(
+                        p => DeleteItem(), x => SelectedItem != null);
+                }
+
+                return _deleteItemCommand;
+            }
+        }
+
+        public void DeleteItem()
+        {
+            foreach(var item in _productUnitOfWork.Images.GetAll().Where(x=>x.ClothesId == _selectedItem.Article))
+            {
+                _productUnitOfWork.Images.Delete(item);
+                ImagesObservableCollection.GetInstance()?.ProductImages.Remove(item);
+            }
+
+            foreach (var item in _productUnitOfWork.Sizes.GetAll().Where(x => x.ClothesId == _selectedItem.Article))
+            {
+                _productUnitOfWork.Sizes.Delete(item);
+                SizesObservableCollection.GetInstance()?.ProductSizes.Remove(item);
+            }
+
+            _productUnitOfWork.Products.Delete(_selectedItem);
+            _productUnitOfWork.Products.Save();
+            ProductsObservableCollection.GetInstance()?.Products.Remove(_selectedItem);
+        }
+        #endregion
+
+        private Product _selectedItem;
+
+        public Product SelectedItem
+        {
+            get
+            {
+                return _selectedItem;
+            }
+            set
+            {
+                if (value != _selectedItem)
+                {
+                    _selectedItem = value;
+                    OnPropertyChanged("SelectedItem");
+                }
+            }
+        }
     }
 }

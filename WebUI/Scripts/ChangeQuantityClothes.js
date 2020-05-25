@@ -184,7 +184,7 @@ $(function () {
     $("img.addToBasketWithoutSize").click(function (e) {
         e.preventDefault();
 
-        var url = "/Basket/AddToBasketWithoutSize";
+        var url = "/Basket/AddToBasketWithoutSize/";
         let Article = $(this).data("id");
 
         $.get(url, { clothesId: Article }, function (data) {

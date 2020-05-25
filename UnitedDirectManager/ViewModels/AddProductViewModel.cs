@@ -1,5 +1,6 @@
 ﻿using Domain.Abstract;
 using Domain.Entities;
+using System;
 using System.ComponentModel;
 using UnitedDirectManager.ObservableCollections;
 using UnitedDirectManager.Views;
@@ -63,7 +64,7 @@ namespace UnitedDirectManager.ViewModels
         private bool CheckTextBoxes()
         {
             if(!string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Description) && 
-                !string.IsNullOrEmpty(Category) && Price != 0)
+                !string.IsNullOrEmpty(Category) && !string.IsNullOrEmpty(Price) && Convert.ToDecimal(Price) != 0)
             {
                 return true;
             }
@@ -78,7 +79,7 @@ namespace UnitedDirectManager.ViewModels
                 Name = Name,
                 Description = Description,
                 Category = Category,
-                //Price = Price
+                Price = Convert.ToDecimal(Price)
             };
 
             _productRepository.Products.Add(newProduct);
@@ -87,7 +88,7 @@ namespace UnitedDirectManager.ViewModels
             Name = string.Empty;
             Description = string.Empty;
             Category = string.Empty;
-            Price = 0;
+            Price = string.Empty;
         }
         #endregion
 
@@ -112,11 +113,11 @@ namespace UnitedDirectManager.ViewModels
             set { Product.Category = value; OnPropertyChanged("Category"); }
         }
 
-        private decimal? lol;
-        public decimal? Price
+        private string price;
+        public string Price
         {
-            get { return lol; }
-            set { lol = value; OnPropertyChanged("Price"); }
+            get { return price; }
+            set { price = value; OnPropertyChanged("Price"); }
         }
         #endregion
     }

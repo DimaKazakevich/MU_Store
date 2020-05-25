@@ -1,4 +1,4 @@
-﻿@model Domain.Entities.Wear
+﻿@model Domain.Entities.Product
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
@@ -32,7 +32,7 @@
             var base64 = Convert.ToBase64String(str);
             var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
 
-            <a href="@Url.Action("clothes-details", "Clothes", new { name = Model.Name })">
+            <a href="@Url.Action("product-details", "Products", new { name = Model.Name })">
                 <img src="@imgSrc" style="max-height:250px; max-width:215px" />
 
             </a>

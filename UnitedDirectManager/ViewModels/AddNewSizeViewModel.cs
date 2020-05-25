@@ -65,7 +65,7 @@ namespace UnitedDirectManager.ViewModels
            {
                 if (_addSizeCommand == null)
                 {
-                    _addSizeCommand = new RelayCommand(p => AddSize(), x => ClothesId != 0 && SizeName != null);
+                    _addSizeCommand = new RelayCommand(p => AddSize(), x => ClothesId != 0 && !string.IsNullOrEmpty(SizeName));
                 }
 
                 return _addSizeCommand;

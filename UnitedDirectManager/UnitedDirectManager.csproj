@@ -44,6 +44,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
@@ -72,12 +78,14 @@
     <Compile Include="Animation\AnimatableContentPresenter.cs" />
     <Compile Include="Interfeces\IWindowService.cs" />
     <Compile Include="Login\VerifyPassword.cs" />
+    <Compile Include="ObservableCollections\OrdersObservableCollection.cs" />
     <Compile Include="ObservableCollections\ProductsObservableCollection.cs" />
     <Compile Include="ObservableCollections\SizesObservableCollection.cs" />
     <Compile Include="ViewManager.cs" />
     <Compile Include="ViewModels\AddNewSizeViewModel.cs" />
     <Compile Include="ViewModels\OrdersViewModel.cs" />
     <Compile Include="ViewModels\SendEmailViewModel.cs" />
+    <Compile Include="ViewModels\StatisticRightViewModel.cs" />
     <Compile Include="ViewModels\StatisticViewModel.cs" />
     <Compile Include="Views\AppView.xaml.cs">
       <DependentUpon>AppView.xaml</DependentUpon>
@@ -131,6 +139,9 @@
     </Compile>
     <Compile Include="Views\SizesView.xaml.cs">
       <DependentUpon>SizesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatisticRightView.xaml.cs">
+      <DependentUpon>StatisticRightView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StatisticView.xaml.cs">
       <DependentUpon>StatisticView.xaml</DependentUpon>
@@ -228,6 +239,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\StatisticRightView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\StatisticView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -266,7 +281,9 @@
       <Name>Domain</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="OrderProccessing\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

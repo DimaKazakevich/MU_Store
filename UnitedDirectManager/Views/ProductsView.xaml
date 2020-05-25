@@ -16,9 +16,12 @@
     <DataGrid   Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" IsReadOnly="False" x:Name="MenuGrid" ItemsSource="{Binding Products}" Background="White"
                   Foreground="Black" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" 
                   FontSize="12" FontWeight="DemiBold" HeadersVisibility="Column" CanUserResizeColumns="False" 
-                  CanUserSortColumns="True" CanUserResizeRows="False" BorderBrush="LightGray" BorderThickness="7 7 7 30" 
+                  CanUserSortColumns="True" CanUserResizeRows="False" BorderBrush="LightGray" BorderThickness="7 7 0 30" 
                   CanUserAddRows="False" CanUserReorderColumns="False" VerticalContentAlignment="Center" 
-                  HorizontalContentAlignment="Center" ScrollViewer.CanContentScroll="True" ScrollViewer.PanningMode="VerticalFirst">
+                  HorizontalContentAlignment="Center" ScrollViewer.CanContentScroll="True" ScrollViewer.PanningMode="VerticalFirst" SelectedItem="{Binding SelectedItem}">
+        <DataGrid.InputBindings>
+            <KeyBinding Key = "Delete" Command = "{Binding DeleteItemCommand}" />
+        </DataGrid.InputBindings>
         <DataGrid.Resources>
             <Style TargetType="{x:Type DataGridCell}">
                 <Style.Triggers>

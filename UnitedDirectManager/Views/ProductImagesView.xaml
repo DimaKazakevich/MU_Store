@@ -11,15 +11,18 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
     </UserControl.Resources>
-    
-    <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" VirtualizingPanel.ScrollUnit="Pixel" 
+
+    <DataGrid Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" VirtualizingPanel.ScrollUnit="Pixel"  SelectedItem="{Binding SelectedItem}"
                 EnableColumnVirtualization="True" EnableRowVirtualization="True" x:Name="MenuGrid" ItemsSource="{Binding ProductImages}"  Background="White"
                   Foreground="Black" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" 
-                  FontSize="20" FontWeight="DemiBold" HeadersVisibility="Column" CanUserResizeColumns="False" 
+                  FontSize="20" FontWeight="DemiBold" HeadersVisibility="Column" CanUserResizeColumns="False"  CanUserDeleteRows="False"
                   CanUserSortColumns="False" CanUserResizeRows="False" BorderBrush="LightGray" BorderThickness="7 7 0 30" RowHeight="100" 
                   CanUserAddRows="False" CanUserReorderColumns="False" VerticalContentAlignment="Center" 
                   HorizontalContentAlignment="Center" ScrollViewer.CanContentScroll="True" ScrollViewer.PanningMode="VerticalFirst">
-        <!--<KeyBinding Key="Delete" Command="{Binding DeleteItemCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>-->
+        <DataGrid.InputBindings>
+            <KeyBinding Key = "Delete" Command = "{Binding DeleteItemCommand}" />
+        </DataGrid.InputBindings>
+        
         <DataGrid.Resources>
             <Style TargetType="{x:Type DataGridCell}">
                 <Style.Triggers>

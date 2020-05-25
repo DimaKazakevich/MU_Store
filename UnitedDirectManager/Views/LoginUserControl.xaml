@@ -37,11 +37,11 @@
             <ImageBrush ImageSource="D:\Dima\.NET\MU_Store\WebUI\Images\United-Direct-Logo.png" Stretch="Uniform" AlignmentY="Top"></ImageBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height=".6*"></RowDefinition>
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -82,7 +82,7 @@
         </Button>
 
         <Button Grid.Row="0" Grid.Column="4" x:Name="close" WindowChrome.IsHitTestVisibleInChrome="True" BorderThickness="0"
-                HorizontalAlignment="Left"  VerticalAlignment="Top" Command="{Binding CloseWindowCommand }" CommandParameter="{Binding ElementName=LoginWindow}" Margin="62.8,0,-0.4,0">
+                HorizontalAlignment="Left"  VerticalAlignment="Top" Command="{Binding CloseWindowCommand }" CommandParameter="{Binding ElementName=LoginUserControl}" Margin="62.8,0,-0.4,0">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="brdr" BorderThickness="2" Background="Transparent" Height="35" Width="35" >

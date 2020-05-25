@@ -1,0 +1,87 @@
+﻿@using WebUI.Models
+@using WebUI.HtmlHelpers;
+
+@model  ClothesListViewModel
+
+@{
+    ViewBag.Title = "MU Store";
+}
+<link href="~/Content/styles.css" rel="stylesheet" />
+<script src="~/Scripts/ChangeQuantityClothes.js"></script>
+<script src="~/Scripts/ModalWindow.js"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
+
+<style>
+    .pull-right a {
+        margin:8px;
+    }
+</style>
+
+@if (Model.Clothes.Count() > 0)
+{
+    <div style="display:flex; flex-wrap:wrap">
+        @foreach (var item in Model.Clothes)
+        {
+            if (item.Images.Any(x => x.ClothesId == item.Article))
+            {
+            @Html.Partial("ClothesSummary", item);
+            }
+        }
+    </div>
+    if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() != "Navigation")
+    {
+        <div class="btn-group pull-right" style="align-self:flex-end; display:flex">
+            @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", "Products", new { page = x, category = Model.CurrentCategory }))
+        </div>
+    }
+}
+else
+{
+    <style>
+        #categories {
+            display: none;
+        }
+
+        .row.panel {
+            justify-content: flex-end;
+        }
+    </style>
+    <div style="display:flex">
+        <div>
+            <img src="@Url.Content("~/Images/sad.png")" width="222" height="162" />
+        </div>
+
+        <section id="browseResults">
+            <div class="emptySearch" style="">
+                <h4 style="font-weight:600; font-size:16px">We're sorry but no matches have been found</h4>
+                <h5>0 products found</h5>
+                <p>Your search for "<b>@ViewData["searchString"]</b>" did not match any products. Please review our suggestions and try searching again:</p>
+                <ul>
+                    <li style="list-style-type:disc">Check for typos or spelling errors</li>
+                    <li style="list-style-type:disc">Try different words</li>
+                    <li style="list-style-type:disc">Broaden your search by using fewer words</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+}
+
+<div id="sizeModal" class="modal">
+    <div class="modal-content" style="width:400px">
+        <div class="modal-header">
+            <span id="close" class="close">&times;</span>
+            <h2>Choose size</h2>
+        </div>
+        <div class="modal-body" style="display:flex; justify-content:center; align-items:center">
+        </div>
+        <div class="modal-footer" style="display:flex; justify-content:center; align-items:center">
+            <img src=@Url.Content("~/Images/ManU-fanatics.png") width="50" height="50" />
+        </div>
+    </div>
+</div>
+
+

@@ -16,5 +16,22 @@ namespace Domain.Concrete
         public DbSet<IdentityUser> IdentityUser { get; set; }
 
         public DbSet<AspNetRoles> AspNetRoles { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderDetails> OrdesDetails { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<IdentityUser>().Ignore(c => c.AccessFailedCount)
+                                               .Ignore(c => c.Claims)
+                                               .Ignore(c => c.LockoutEnabled)
+                                               .Ignore(c => c.LockoutEndDateUtc)
+                                               .Ignore(c => c.PhoneNumber)
+                                               .Ignore(c => c.Logins)
+                                               .Ignore(c => c.PhoneNumberConfirmed)
+                                               .Ignore(c => c.TwoFactorEnabled);
+        }
     }
 }

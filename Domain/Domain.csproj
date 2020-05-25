@@ -82,11 +82,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\GenericRepository.cs" />
-    <Compile Include="Abstract\IItemsRepository.cs" />
     <Compile Include="Abstract\IGenericRepository.cs" />
     <Compile Include="Abstract\ILoginUnitOfWork.cs" />
+    <Compile Include="Abstract\IOrderProcessor.cs" />
+    <Compile Include="Abstract\IOrderUnitOfWork.cs" />
     <Compile Include="Abstract\IProductUnitOfWork.cs" />
+    <Compile Include="Concrete\EmailOrderProcessor.cs" />
     <Compile Include="Concrete\LoginUnitOfWork.cs" />
+    <Compile Include="Concrete\OrderDetailsRepository.cs" />
+    <Compile Include="Concrete\OrderRepositpry.cs" />
+    <Compile Include="Concrete\OrderUnitOfWork.cs" />
     <Compile Include="Concrete\ProductImagesRepository.cs" />
     <Compile Include="Concrete\ProductRepository.cs" />
     <Compile Include="Concrete\EFDBContext.cs" />
@@ -99,6 +104,9 @@
     <Compile Include="Entities\Basket.cs" />
     <Compile Include="Entities\BasketLine.cs" />
     <Compile Include="Entities\Image.cs" />
+    <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\OrderDetails.cs" />
+    <Compile Include="Entities\ShippingDetails.cs" />
     <Compile Include="Entities\Size.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -2,7 +2,7 @@
 using Domain.Entities;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-
+using UnitedDirectManager.ObservableCollections;
 
 namespace UnitedDirectManager.ViewModels
 {
@@ -20,11 +20,14 @@ namespace UnitedDirectManager.ViewModels
 
         private ImagesObservableCollection _productImages;
 
+        private IProductUnitOfWork _productUnitOfWork;
+
         public int Row { get; set; }
 
         public ProductImagesViewModel(IProductUnitOfWork repository, int row)
         {
              _productImages = ImagesObservableCollection.GetInstance(repository);
+            _productUnitOfWork = repository;
             Row = row;
         }
 
@@ -55,7 +58,7 @@ namespace UnitedDirectManager.ViewModels
                 if (_deleteItemCommand == null)
                 {
                     _deleteItemCommand = new RelayCommand(
-                        p => DeleteItem());
+                        p => DeleteItem(), x=> SelectedItem != null);
                 }
 
                 return _deleteItemCommand;
@@ -64,10 +67,28 @@ namespace UnitedDirectManager.ViewModels
 
         public void DeleteItem()
         {
-            //_repository.Add(newImage);
-            //_repository.SaveChanges();
-            //ObservableCollectionSingleton.GetInstance()?.ClothesImages.Add(newImage);
+            _productUnitOfWork.Images.Delete(_selectedItem);
+            _productUnitOfWork.Images.Save();
+            ImagesObservableCollection.GetInstance()?.ProductImages.Remove(_selectedItem);
         }
         #endregion
+
+        private Image _selectedItem;
+
+        public Image SelectedItem
+        {
+            get
+            {
+                return _selectedItem;
+            }
+            set
+            {
+                if (value != _selectedItem)
+                {
+                    _selectedItem = value;
+                    OnPropertyChanged("SelectedItem");
+                }
+            }
+        }
     }
 }

@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Domain.Abstract;
+using Domain.Entities;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -110,7 +113,7 @@ namespace WebUI.Controllers
                         }, claim);
                         if (string.IsNullOrEmpty(model.ReturnUrl))
                         {
-                            return RedirectToAction("List", "Clothes");
+                            return RedirectToAction("List", "Products");
                         }
                         return Redirect(model.ReturnUrl);
                     }
@@ -128,6 +131,46 @@ namespace WebUI.Controllers
             AuthenticationManager.SignOut();
             Session.Abandon();
             return Redirect(returnUrl);
+        }
+
+        private IOrderUnitOfWork _orderUnitOfWork;
+        public AccountController(IOrderUnitOfWork orderUnitOfWork)
+        {
+            _orderUnitOfWork = orderUnitOfWork;
+        }
+
+        
+        public ViewResult Account()
+        {
+            return View(new OrdersViewModel
+            {
+                Order = _orderUnitOfWork.Orders.GetAll().ToList().Where(x => x.UserId == User.Identity.GetUserId())
+            });
+        }
+
+        [HttpPost]
+        [ActionName("removeOrder")]
+        public ViewResult RemoveOrder(int orderId)
+        {
+            Order order = _orderUnitOfWork.Orders.GetAll().FirstOrDefault(item => item.Id == orderId);
+
+            if (order != null)
+            {
+                foreach (var item in _orderUnitOfWork.OrderDetails.GetAll().Where(x => x.OrderId == order.Id))
+                {
+                    _orderUnitOfWork.OrderDetails.Delete(item);
+                }
+                _orderUnitOfWork.OrderDetails.Save();
+
+
+                _orderUnitOfWork.Orders.Delete(order);
+                _orderUnitOfWork.Orders.Save();
+            }
+
+            return View(new OrdersViewModel
+            {
+                Order = _orderUnitOfWork.Orders.GetAll().ToList().Where(x => x.UserId == User.Identity.GetUserId())
+            });
         }
     }
 }

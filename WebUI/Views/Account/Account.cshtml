@@ -1,0 +1,105 @@
+﻿@model WebUI.Models.OrdersViewModel
+@using Microsoft.AspNet.Identity
+
+<style>
+    #categories {
+        display: none;
+
+    }
+    #carousel {
+        display: none;
+    }
+    #basketTable td {
+        vertical-align: middle;
+    }
+
+    .col-xs-8 {
+        width: max-content;
+    }
+
+    .orderSummaryHeader {
+        border-bottom: 1px solid #d9d9d9;
+        padding: 20px 10px;
+        margin: 0 15px;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .content {
+        background-color: #f1f1f1;
+    }
+
+    .row.panel {
+        background-color: #f1f1f1;
+        justify-content: center;
+    }
+
+    .table {
+        background-color: white;
+    }
+
+    .total.price {
+        font-weight: 700;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+</style>
+
+<div style="display:flex; flex-direction:column">
+    <h2>@User.Identity.GetUserName() account.</h2>
+    <h3>Statistic:</h3>
+    <h4>
+        Total orders – @Model.Order.Where(x => x.UserId == User.Identity.GetUserId()).Count()
+    </h4>
+    <h4>
+        Total spent – @Model.Order.Where(x => x.UserId == User.Identity.GetUserId()).Select(x => x.TotalCost).Sum()
+    </h4>
+    <h4>
+        Sent Orders – @Model.Order.Where(x => x.UserId == User.Identity.GetUserId() && x.Status == "Sent").Count()
+    </h4>
+    <h4>
+        In Processing Orders – @Model.Order.Where(x => x.UserId == User.Identity.GetUserId() && x.Status == "In processing").Count()
+    </h4>
+
+    <div class="pre-scrollable" style="display:flex; flex-direction:column">
+        <div style="display: flex">
+            <table class="table" id="basketTable" style="width:650px">
+                <thead>
+                    <tr>
+                        <th>Order Id</th>
+                        <th>Date Time</th>
+                        <th>Total Cost</th>
+                        <th class="text-right">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Order)
+                    {
+                        <tr style="font-weight:700; font-size:12px">
+                            <td class="text-left">
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.DateTime
+                            </td>
+                            <td class="text-left quantity" style="font-size:14px">@item.TotalCost </td>
+                            <td>
+                                @item.Status
+                            </td>
+                            <td>
+                                @if (item.Status == "In processing")
+                                {
+                                    using (Html.BeginForm("RemoveOrder", "Account", new { orderId = item.Id }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                    {
+                                        <button type="submit" id="confirmOrder" class="btn-danger" style="height:40px">Remove</button>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

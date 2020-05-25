@@ -16,22 +16,23 @@ namespace UnitedDirectManager.ViewModels
         }
         #endregion
 
-        public MainViewModel(IProductUnitOfWork productUnitOfWork)
+        public MainViewModel(IProductUnitOfWork productUnitOfWork, IOrderUnitOfWork orderUnitOfWork, ILoginUnitOfWork login, IOrderProcessor processor)
         {
-            PageViewModels.Add(new OrdersViewModel(0));
+            OrdersViewModel ordersVM = new OrdersViewModel(orderUnitOfWork, 0);
+            PageViewModels.Add(ordersVM);
             PageViewModels.Add(new ProductImagesViewModel(productUnitOfWork,1));
             PageViewModels.Add(new ProductsViewModel(productUnitOfWork, 2));
             PageViewModels.Add(new ProductSizesViewModel(productUnitOfWork,3));
-            PageViewModels.Add(new StatisticViewModel(4));
+            PageViewModels.Add(new StatisticViewModel(4, orderUnitOfWork));
             CurrentPageViewModel = PageViewModels[0];
 
-            
             AddViews.Add(this);
-            AddViews.Add(new SendEmailViewModel());
+            AddViews.Add(new SendEmailViewModel(login,orderUnitOfWork, ordersVM, processor));
             AddViews.Add(new AddNewImageViewModel(productUnitOfWork, this));
             AddViews.Add(new AddNewSizeViewModel(productUnitOfWork, this));
             AddViews.Add(new AddProductViewModel(productUnitOfWork, this));
-            CurrentAddView = AddViews[0];
+            AddViews.Add(new StatisticRightViewModel(orderUnitOfWork));
+            CurrentAddView = AddViews[1];
 
             CloseWindowCommand = new RelayCommand(x => CloseWindow((ICloseable)x));
         }
@@ -114,7 +115,7 @@ namespace UnitedDirectManager.ViewModels
 
             if (viewModel is StatisticViewModel)
             {
-                CurrentAddView = null;
+                CurrentAddView = AddViews[5];
             }
 
             CurrentPageViewModel = PageViewModels.FirstOrDefault(vm => vm == viewModel);

@@ -49,7 +49,6 @@ namespace UnitedDirectManager
                 OnPropertyChanged("ProductImages");
             }
         }
-
     }
 }
 

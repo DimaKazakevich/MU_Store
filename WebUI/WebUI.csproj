@@ -195,12 +195,16 @@
     <Content Include="Views\Basket\Index.cshtml" />
     <Content Include="Views\Basket\Summary.cshtml" />
     <Content Include="Views\Basket\_AddToBasketPartial.cshtml" />
-    <Content Include="Views\Clothes\ClothesDetails.cshtml" />
+    <Content Include="Views\Products\ProductDetails.cshtml" />
     <Content Include="Views\Navigation\Search.cshtml" />
     <Content Include="Views\Account\_Register.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Basket\SizeDetails.cshtml" />
+    <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Checkout\AddNewOrder.cshtml" />
+    <Content Include="Views\Account\Account.cshtml" />
+    <Content Include="Views\Account\RemoveOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -210,7 +214,8 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BasketController.cs" />
-    <Compile Include="Controllers\ClothesController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -223,12 +228,14 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\BasketIndexViewModel.cs" />
+    <Compile Include="Models\CheckoutViewModel.cs" />
     <Compile Include="Models\ClothesListViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\OrdersViewModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\RegisterModel.cs" />
-    <Compile Include="Models\WearSizesViewModel.cs" />
+    <Compile Include="Models\ProductSizesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -238,7 +245,7 @@
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Clothes\List.cshtml" />
+    <Content Include="Views\Products\List.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>

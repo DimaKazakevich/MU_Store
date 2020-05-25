@@ -1,0 +1,213 @@
+﻿@model Domain.Entities.Product
+
+@{
+    ViewBag.Title = Model.Name;
+}
+<link href="~/Content/style.css" rel="stylesheet" />
+<script src="~/Scripts/ClothesDatails.js"></script>
+<style>
+    #image {
+        border: 1px solid #d9d9d9;
+        height: 550px;
+        width: 550px;
+    }
+
+    .row.panel {
+        justify-content:center;
+    }
+    .thumb:visited {
+        border: 1px solid red;
+    }
+    .addtobasket:focus {
+        outline:none;
+    }
+    .col-xs-8 {
+        width: max-content;
+    }
+    .controlDescription {
+        flex: 0 0 auto;
+        width: 150px;
+        font-weight: 700;
+        font-size: 16px;
+        display: block;
+    }
+    .donate-now li {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-right: 20px;
+        text-align: center;
+        font-size: 12px;
+        height: 40px;
+        width: 44px;
+        border: 1px solid #000;
+        font-size:14px;
+    }
+
+    #addtobasket {
+        border-radius: 0;
+        width: 450px;
+        border: 0;
+        cursor: pointer;
+        height: 80px;
+        text-wrap: none;
+        font-size: 28px;
+        color: white;
+    }
+    #addToBasketWithoutSize {
+        border-radius: 0;
+        width: 450px;
+        border: 0;
+        cursor: pointer;
+        height: 80px;
+        text-wrap: none;
+        font-size: 28px;
+        background-color: #00a92c;
+        color: white;
+    }
+    #gotobasket {
+        border-radius: 0;
+        width: 450px;
+        border: 0;
+        cursor: pointer;
+        height: 80px;
+        text-wrap: none;
+        font-size: 28px;
+        background-color: mediumpurple;
+        color: white;
+    }
+
+    .donate-now li {
+        position: relative;
+    }
+
+    ul {
+        margin-bottom: 0px;
+    }
+
+    .donate-now label,
+    .donate-now input {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin-bottom:0;
+        padding:0;
+    }
+
+    .donate-now input[type="radio"] {
+        opacity: 0.01;
+        z-index: 100;
+    }
+
+    .donate-now input[type="radio"]:checked + label,
+    .Checked + label {
+        background: black;
+        color:white;
+        border:1px solid white;
+    }
+
+    .donate-now label {
+        cursor: pointer;
+        z-index: 90;
+    }
+
+    .donate-now label:hover {
+        background: black;
+        color:white;
+    }
+
+    h1 {
+        font-weight:600;
+        text-transform:uppercase;
+    }
+</style>
+
+
+<div style="display: flex; margin-top: 30px">
+
+    <div style="margin-right:20px">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <style>
+            .fotorama__thumb-border {
+                border-color: #ccc;
+            }
+        </style>
+        <div class="fotorama" data-width="500"
+                                 data-maxwidth="100%"
+                                 @*data-ratio="16/9"*@
+                                 data-allowfullscreen="true"
+                                 data-nav="thumbs">
+            @foreach (var item in Model.Images.Where(x => x.ClothesId == Model.Article).Select(x => x.ImageFile))
+            {
+
+                var base64 = Convert.ToBase64String(item);
+                var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+
+                <img src="@imgSrc"/>
+            }
+        </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column">
+        <section style="max-width:450px; border:1px solid #d9d9d9; padding:0 20px; margin-bottom:20px">
+            <h1>@Model.Name</h1>
+
+            <p>
+                <span style="color:#c00; font-size:20px; font-weight:700">
+                    @Model.Price $
+                </span>
+            </p>
+
+            @if (Model.Sizes.Where(x => x.ClothesId == Model.Article).Select(x => x.SizeName).Count() > 0)
+            {
+                <section id="productDetailsSize" class="productDetailsInformationSections structuredControlSection" style="border-top:1px solid #d9d9d9; border-bottom:1px solid #d9d9d9;display:flex">
+                    <span class="controlDescription ng-scope" style="align-self:center">Size</span>
+
+                    <div class="controlContainer" style="display:flex">
+
+                        <ul class="donate-now" style="display:flex; margin-top:10px; padding-left:0; flex-wrap:wrap">
+                            @foreach (var item in Model.Sizes.Where(x => x.ClothesId == Model.Article).Select(x => x.SizeName))
+                            {
+                                <li class="productSize" style="margin-bottom:10px">
+                                    <input type="radio" id="@item.GetHashCode()" value="@item" name="size" />
+                                    <label style="display:flex;justify-content:center; align-items:center;" for="@item.GetHashCode()">@item</label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </section>
+            }
+
+            <p style="margin-top:10px">
+                <span style="font-weight:400; font-family: cursive">
+                    @Model.Description
+                </span>
+            </p>
+        </section>
+        @if (Model.Sizes.Where(x => x.ClothesId == Model.Article).Select(x => x.SizeName).Count() > 0)
+        {
+            <button data-id="@Model.Article" id="addtobasket" style="background-color:#999;outline:none">Add To Basket</button>
+        }
+        else
+        {
+            <button data-id="@Model.Article" id="addToBasketWithoutSize" style="outline:none">Add To Basket</button>
+        }
+    </div>
+</div>
+
+<script>
+$(function () {
+    $('body').on('click', 'button#gotobasket', function (e) {
+        e.preventDefault();
+        var url = '@Url.Action("Index", "Basket", new { returnUrl = Request.Url})';
+        window.location.href = url.replace();
+    })
+});
+</script>

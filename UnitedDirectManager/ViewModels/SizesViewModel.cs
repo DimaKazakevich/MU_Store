@@ -20,11 +20,14 @@ namespace UnitedDirectManager.ViewModels
 
         private SizesObservableCollection _productSizes;
 
+        private IProductUnitOfWork _productUnitOfWork;
+
         public int Row { get; set; }
 
         public ProductSizesViewModel(IProductUnitOfWork repo, int row)
         {
             _productSizes = SizesObservableCollection.GetInstance(repo);
+            _productUnitOfWork = repo;
             Row = row;
         }
 
@@ -45,5 +48,48 @@ namespace UnitedDirectManager.ViewModels
         }
 
         public string NavButtonName { get; } = "Sizes";
+
+        #region DeleteItemCommand
+        private RelayCommand _deleteItemCommand;
+        public RelayCommand DeleteItemCommand
+        {
+            get
+            {
+                if (_deleteItemCommand == null)
+                {
+                    _deleteItemCommand = new RelayCommand(
+                        p => DeleteItem(), x => SelectedItem != null);
+                }
+
+                return _deleteItemCommand;
+            }
+        }
+
+        public void DeleteItem()
+        {
+            _productUnitOfWork.Sizes.Delete(_selectedItem);
+            _productUnitOfWork.Sizes.Save();
+            SizesObservableCollection.GetInstance()?.ProductSizes.Remove(_selectedItem);
+        }
+        #endregion
+
+        private Size _selectedItem;
+
+        public Size SelectedItem
+        {
+            get
+            {
+                return _selectedItem;
+            }
+            set
+            {
+                if (value != _selectedItem)
+                {
+                    _selectedItem = value;
+                    OnPropertyChanged("SelectedItem");
+                }
+            }
+        }
     }
 }
+

@@ -8,9 +8,9 @@ namespace WebUI.Controllers
 {
     public class BasketController : Controller
     {
-        private IItemsRepository _repository;
+        private IProductUnitOfWork _repository;
 
-        public BasketController(IItemsRepository repository)
+        public BasketController(IProductUnitOfWork repository)
         {
             _repository = repository;
         }
@@ -26,7 +26,7 @@ namespace WebUI.Controllers
 
         public ActionResult AddToBasketWithSize(Basket basket, int clothesID, string size)
         {
-            Product wear = _repository.Clothes.Where(item => item.Article == clothesID).FirstOrDefault();
+            Product wear = _repository.Products.GetAll().Where(item => item.Article == clothesID).FirstOrDefault();
             Size sizeName = wear.Sizes.First(x => x.SizeName == size);
 
             if (wear != null && sizeName != null)
@@ -39,7 +39,7 @@ namespace WebUI.Controllers
 
         public ActionResult AddToBasketWithoutSize(Basket basket, int clothesID)
         {
-            Product wear = _repository.Clothes.Where(item => item.Article == clothesID).FirstOrDefault();
+            Product wear = _repository.Products.GetAll().Where(item => item.Article == clothesID).FirstOrDefault();
 
             if (wear != null)
             {
@@ -52,7 +52,7 @@ namespace WebUI.Controllers
 
         public void RemoveFromBasket(Basket basket, int clothesID)
         {
-            Product wear = _repository.Clothes.FirstOrDefault(item => item.Article == clothesID);
+            Product wear = _repository.Products.GetAll().FirstOrDefault(item => item.Article == clothesID);
 
             if (wear != null)
             {
@@ -62,7 +62,7 @@ namespace WebUI.Controllers
 
         public void RemoveFromBasketWithSize(Basket basket, int clothesID, string size)
         {
-            Product wear = _repository.Clothes.FirstOrDefault(item => item.Article == clothesID);
+            Product wear = _repository.Products.GetAll().FirstOrDefault(item => item.Article == clothesID);
             Size sizeName = wear.Sizes.First(x => x.SizeName == size);
 
             if (wear != null && sizeName != null)
@@ -79,7 +79,7 @@ namespace WebUI.Controllers
         public JsonResult IncrementClothesWithSize(Basket basket, int clothesID, string size)
         {
             BasketLine line = basket.Lines
-                .Where(item => item.Wear.Article == clothesID)
+                .Where(item => item.Product.Article == clothesID)
                 .Where(item=>item.Size == size)
                 .FirstOrDefault();
 
@@ -90,7 +90,7 @@ namespace WebUI.Controllers
 
             line.Quantity++;
 
-            var result = new { quantity = line.Quantity, price = line.Wear.Price };
+            var result = new { quantity = line.Quantity, price = line.Product.Price };
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -98,7 +98,7 @@ namespace WebUI.Controllers
         public JsonResult DecrementClothesWithSize(Basket basket, int clothesID, string size)
         {
             BasketLine line = basket.Lines
-                .Where(item => item.Wear.Article == clothesID)
+                .Where(item => item.Product.Article == clothesID)
                 .Where(item => item.Size == size)
                 .FirstOrDefault();
 
@@ -114,17 +114,17 @@ namespace WebUI.Controllers
             else
             {
                 line.Quantity = 0;
-                basket.RemoveLine(line.Wear);
+                basket.RemoveLine(line.Product);
             }
 
-            var result = new { quantity = line.Quantity, price = line.Wear.Price };
+            var result = new { quantity = line.Quantity, price = line.Product.Price };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult IncrementClothes(Basket basket, int clothesID)
         {
             BasketLine line = basket.Lines
-                .Where(item => item.Wear.Article == clothesID)
+                .Where(item => item.Product.Article == clothesID)
                 .FirstOrDefault();
             
             if(line == null)
@@ -134,7 +134,7 @@ namespace WebUI.Controllers
                       
             line.Quantity++;
 
-            var result = new { quantity = line.Quantity, price = line.Wear.Price };
+            var result = new { quantity = line.Quantity, price = line.Product.Price };
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -142,7 +142,7 @@ namespace WebUI.Controllers
         public JsonResult DecrementClothes(Basket basket, int clothesID)
         {
             BasketLine line = basket.Lines
-                .Where(item => item.Wear.Article == clothesID)
+                .Where(item => item.Product.Article == clothesID)
                 .FirstOrDefault();
 
             if (line == null)
@@ -157,18 +157,18 @@ namespace WebUI.Controllers
             else
             {
                 line.Quantity = 0;
-                basket.RemoveLine(line.Wear);
+                basket.RemoveLine(line.Product);
             }
 
-            var result = new { quantity = line.Quantity, price = line.Wear.Price };
+            var result = new { quantity = line.Quantity, price = line.Product.Price };
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SizeDetails(int id)
         {
-            WearSizesViewModel wearSizes = new WearSizesViewModel
+            ProductSizesViewModel wearSizes = new ProductSizesViewModel
             {
-                Sizes = _repository.Clothes.Where(x => x.Article == id).FirstOrDefault().Sizes.Select(x => x.SizeName),
+                Sizes = _repository.Products.GetAll().Where(x => x.Article == id).FirstOrDefault().Sizes.Select(x => x.SizeName),
                 ClothesID = id
             };
             if(wearSizes.Sizes.Count() > 0)

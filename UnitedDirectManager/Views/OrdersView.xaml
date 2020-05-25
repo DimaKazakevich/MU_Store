@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnitedDirectManager.Views"
+             xmlns:vm="clr-namespace:UnitedDirectManager.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -11,12 +12,32 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="18"></Setter>
         </Style>
+
+        <DataTemplate x:Key="UserDataTemplate">
+            <Border BorderBrush="Black" Background="GhostWhite" BorderThickness="0.3" Padding="5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <StackPanel Orientation="Vertical" Margin="20 0 20 0">
+                    <TextBlock FontSize="12" Text="ProductId: " VerticalAlignment="Center" />
+                    <TextBlock FontSize="12" Foreground="Green" HorizontalAlignment="Center" Text="{Binding ProductId}" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0 0 20 0">
+                    <TextBlock FontSize="12" Text="Size: " VerticalAlignment="Center" />
+                    <TextBlock FontSize="12" Foreground="Green" HorizontalAlignment="Center" Text="{Binding Size, TargetNullValue='—'}" VerticalAlignment="Center" />
+                </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="0 0 0 0">
+                        <TextBlock FontSize="12" Text="Quantity: " VerticalAlignment="Center" />
+                        <TextBlock FontSize="12" Foreground="Green" HorizontalAlignment="Center" Text="{Binding Quantity}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
     </UserControl.Resources>
-    <DataGrid   Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" IsReadOnly="False" x:Name="MenuGrid" ItemsSource="{Binding Products}"
-                  Foreground="Black" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" 
+    <DataGrid   Grid.Row="1" Grid.Column="1" AutoGenerateColumns="False" IsReadOnly="False" x:Name="MenuGrid" ItemsSource="{Binding Orders}"
+                  Foreground="Black" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="LightGray" RowHeight="30" SelectedItem="{Binding SelectedItem}"
                   FontSize="12" FontWeight="DemiBold" HeadersVisibility="Column" CanUserResizeColumns="False" 
-                  CanUserSortColumns="True" CanUserResizeRows="False" BorderBrush="LightGray" BorderThickness="7 7 7 30" 
+                  CanUserSortColumns="True" CanUserResizeRows="False" BorderBrush="LightGray" BorderThickness="7 7 0 30"
                   CanUserAddRows="False" CanUserReorderColumns="False" VerticalContentAlignment="Center" 
+                  CanUserDeleteRows="False"
                   HorizontalContentAlignment="Center" ScrollViewer.CanContentScroll="True" ScrollViewer.PanningMode="VerticalFirst">
         <DataGrid.Resources>
             <Style TargetType="{x:Type DataGridCell}">
@@ -34,48 +55,48 @@
             </Style>
         </DataGrid.Resources>
 
-        <!--<DataGrid.RowStyle>
-            <Style TargetType="{x:Type DataGridRow}">
-                <Setter Property="Height" Value="{x:Static sys:Double.NaN}"/>
-            </Style>
-        </DataGrid.RowStyle>-->
-
         <DataGrid.Columns>
             <DataGridTemplateColumn Header="Id" Width="50" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Article}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding Id}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="Name" Width="170" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+            <DataGridTemplateColumn Header="User Id" Width="*" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding UserId}" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"/>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="Description" Width="*" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+            <DataGridTemplateColumn Header="DateTime" Width="0.7*" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Description}" TextAlignment="Justify" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding DateTime}" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Justify" TextWrapping="Wrap"/>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="Category" Width="100" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+            <DataGridTemplateColumn Header="Total Cost" Width="0.5*" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Category}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding TotalCost}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="Price" Width="70" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+            <DataGridTemplateColumn Header="Status" Width="0.5*" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Price}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Status}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
         </DataGrid.Columns>
+
+        <DataGrid.RowDetailsTemplate>
+            <DataTemplate>
+                <ItemsControl ItemsSource="{Binding OrderDetails}" x:Name="UserList" ItemTemplate="{StaticResource UserDataTemplate}" />
+            </DataTemplate>
+        </DataGrid.RowDetailsTemplate>
     </DataGrid>
 </UserControl>
