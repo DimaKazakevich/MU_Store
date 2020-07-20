@@ -10,11 +10,12 @@ namespace WebUI.Controllers
     public class NavigationController : Controller
     {
         private IProductUnitOfWork _repository;
+
         public NavigationController(IProductUnitOfWork repository)
         {
             _repository = repository;
         }
-        // GET: Navigation
+        
         public PartialViewResult Menu()
         {            
             IEnumerable<string> categories = _repository.Products.GetAll()
@@ -24,18 +25,12 @@ namespace WebUI.Controllers
             return PartialView(categories);
         }
 
-        [HttpGet]
-        public ViewResult Search(string searchString)
+        [AcceptVerbs(HttpVerbs.Post | HttpVerbs.Get)]
+        public ActionResult Search(string searchString)
         {
             ClothesListViewModel model = new ClothesListViewModel
             {
-                Clothes = _repository.Products.GetAll()
-                .Where(x =>
-            CultureInfo.CurrentCulture.CompareInfo.IndexOf
-            (x.Name,searchString ,CompareOptions.IgnoreCase) >= 0).ToList(),
-
-
-            PagingInfo = new PagingInfo
+                PagingInfo = new PagingInfo
                 {
                     CurrentPage = 1,
                     ItemsOnPage = _repository.Products.GetAll().Count(),
@@ -43,7 +38,21 @@ namespace WebUI.Controllers
                 },
             };
 
-            ViewData["searchString"] = searchString;
+            if (searchString != null)
+            {
+                System.Web.HttpContext.Current.Session["searchString"] = searchString;
+                ViewData["searchString"] = searchString;
+                model.Clothes = _repository.Products.GetAll()
+                              .Where(x => CultureInfo.CurrentCulture.CompareInfo
+                                                                    .IndexOf(x.Name, searchString, CompareOptions.IgnoreCase) >= 0)
+                              .ToList();
+            }
+
+            //model.Clothes = _repository.Products.GetAll()
+            //              .Where(x => CultureInfo.CurrentCulture.CompareInfo
+            //                                                    .IndexOf(x.Name, (string)System.Web.HttpContext.Current.Session["searchString"], CompareOptions.IgnoreCase) >= 0)
+            //              .ToList();
+            //ViewData["searchString"] = (string)System.Web.HttpContext.Current.Session["searchString"];
 
             return View(viewName: "~/Views/Products/List.cshtml", model);
         }

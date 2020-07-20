@@ -87,6 +87,7 @@
     <Compile Include="ViewModels\SendEmailViewModel.cs" />
     <Compile Include="ViewModels\StatisticRightViewModel.cs" />
     <Compile Include="ViewModels\StatisticViewModel.cs" />
+    <Compile Include="ViewModels\ValidateViewModel.cs" />
     <Compile Include="Views\AppView.xaml.cs">
       <DependentUpon>AppView.xaml</DependentUpon>
     </Compile>

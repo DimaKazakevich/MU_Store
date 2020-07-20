@@ -3,6 +3,7 @@ using Domain.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -142,9 +143,23 @@ namespace WebUI.Controllers
         
         public ViewResult Account()
         {
+            //var ss = _orderUnitOfWork.Orders.GetAll().ToList().Where(x => x.UserId == User.Identity.GetUserId());
+
+            //var model = (new OrdersViewModel
+            //{
+            //    Order = _orderUnitOfWork.Orders.GetAll().ToList().Where(x => x.UserId == User.Identity.GetUserId())
+
+            //});
+
+            //foreach(var item in ss)
+            //{
+            //    if(item.)
+            //    (model.OrderDetails as List<OrderDetails>).Add()
+            //}
             return View(new OrdersViewModel
             {
-                Order = _orderUnitOfWork.Orders.GetAll().ToList().Where(x => x.UserId == User.Identity.GetUserId())
+                Order = _orderUnitOfWork.Orders.GetAll().ToList().Where(x => x.UserId == User.Identity.GetUserId()),
+                OrderDetails = _orderUnitOfWork.OrderDetails.GetAll()
             });
         }
 
@@ -167,10 +182,7 @@ namespace WebUI.Controllers
                 _orderUnitOfWork.Orders.Save();
             }
 
-            return View(new OrdersViewModel
-            {
-                Order = _orderUnitOfWork.Orders.GetAll().ToList().Where(x => x.UserId == User.Identity.GetUserId())
-            });
+            return Account();
         }
     }
 }

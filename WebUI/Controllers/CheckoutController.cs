@@ -2,11 +2,13 @@
 using Domain.Entities;
 using Microsoft.AspNet.Identity;
 using System;
+using System.Linq;
 using System.Web.Mvc;
 using WebUI.Models;
 
 namespace WebUI.Controllers
 {
+    [Route("checkout")]
     public class CheckoutController : Controller
     {
         private IOrderUnitOfWork _orderUnitOfWork;
@@ -16,19 +18,38 @@ namespace WebUI.Controllers
             _orderUnitOfWork = orderUnitOfWork;
         }
 
-        public ViewResult Index(Basket basket)
+        [ActionName("confirmation")]
+        public ActionResult AddShippingDetails(Basket basket, CheckoutViewModel details, string returnUrl)
         {
-            return View(new CheckoutViewModel
+            details.Shipping = new ShippingDetails();
+            details.Basket = basket;
+
+            if(returnUrl != null)
             {
-                Basket = basket,
-                ShippingDetails = new ShippingDetails(),
-                Order = new Order()
-            });
+                return Redirect(returnUrl);
+            }
+
+            return View(details);
         }
 
         [HttpPost]
-        public ViewResult AddNewOrder(Basket basket)
+        [ActionName("confirmed")]
+        public ViewResult AddNewOrder(Basket basket, CheckoutViewModel details)
         {
+            ShippingDetails shippingDetails = new ShippingDetails()
+            {
+                FirstName = details.Shipping.FirstName,
+                LastName = details.Shipping.LastName,
+                Country = details.Shipping.Country,
+                Town = details.Shipping.Town,
+                AddresLine = details.Shipping.AddresLine,
+                Postcode = details.Shipping.Postcode,
+                UserId = User.Identity.GetUserId()
+            };
+
+            _orderUnitOfWork.ShippingDetails.Add(shippingDetails);
+            _orderUnitOfWork.ShippingDetails.Save();
+
             Order order = new Order()
             {
                 DateTime = DateTime.Now,

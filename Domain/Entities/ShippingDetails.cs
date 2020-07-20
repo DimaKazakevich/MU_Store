@@ -1,9 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities
 {
     public class ShippingDetails
     {
+        public int Id { get; set; }
+
         [Required]
         [Display(Name = "Country")]
         public string Country { get; set; }
@@ -12,12 +15,12 @@ namespace Domain.Entities
         [Display(Name = "Fisrt Name")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Filed is required.")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         [Required]
-        [Display(Name = "AddresLine")]
+        [Display(Name = "Addres Line")]
         public string AddresLine { get; set; }
 
         [Required]
@@ -27,5 +30,7 @@ namespace Domain.Entities
         [Required]
         [Display(Name = "Postcode")]
         public string Postcode { get; set; }
+
+        public string UserId { get; set; }
     }
 }

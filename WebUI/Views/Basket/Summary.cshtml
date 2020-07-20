@@ -19,14 +19,13 @@
         <li class="summaryItems">
             @Model.Lines.Sum(x => x.Quantity)
         </li>
-
         <li class="itemsText"> &nbsp; item(s) / </li>
 
         <li class="price">
             @Model.ComputeTotalValue().ToString("# $")
         </li>
 
-        <li class="checkout" style="margin-left:10px; background-color:#b61c1c">
+        <li class="checkout" style="margin-left:10px; background-color:black">
             @Html.ActionLink("CHECKOUT", "Index", new { returnUrl = Request.Url.PathAndQuery })
         </li>
     }

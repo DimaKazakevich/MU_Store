@@ -44,7 +44,8 @@ $(window).load(function (event) {
 });
 
 $(function () {
-    $("button#addToBasketWithoutSize").click(function (e) {
+    //$("button#addToBasketWithoutSize").click(function (e) {
+    $('body').on('click', 'button#addToBasketWithoutSize', function (e) {
         e.preventDefault();
 
         var url = "/Basket/AddToBasketWithoutSize";
@@ -58,4 +59,15 @@ $(function () {
             $("button#addToBasketWithoutSize").attr("id", "gotobasket");
         })
     });
+});
+
+
+$(function () {
+    $("li.productSize").click((function (e) {
+        if ($("button#gotobasket").text() == "Go To Basket") {
+            $("button#gotobasket").html("Add To Basket");
+            $("button#gotobasket").css('background-color', "#00a92c");
+            $("button#gotobasket").attr("id", "addtobasket");
+        }
+    }));
 });

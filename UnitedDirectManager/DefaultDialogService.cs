@@ -17,7 +17,7 @@ namespace UnitedDirectManager
         {
             FilePathes.Clear();
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.jpg, *.png) | *.jpg; *.png";
+            openFileDialog.Filter = "Image files (*.jpg, *.png, *.webp) | *.jpg; *.png; *.webp";
             openFileDialog.Multiselect = true;
             openFileDialog.InitialDirectory = Path.GetFullPath(@"D:\Dima\.NET\MU_Store\WebUI\Images\Clothes Images");
             if (openFileDialog.ShowDialog() == true)

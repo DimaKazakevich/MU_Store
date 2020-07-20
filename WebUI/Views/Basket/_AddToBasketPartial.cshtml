@@ -7,10 +7,10 @@
         padding-right: 10px;
     }
 
-        .checkout a:hover {
-            color: white;
-            text-decoration: none;
-        }
+    .checkout a:hover {
+        color: white;
+        text-decoration: none;
+    }
 </style>
 
 <ul style="color:white;display:flex; padding:0">
@@ -26,7 +26,7 @@
             @Model.ComputeTotalValue().ToString("# $")
         </li>
 
-        <li class="checkout" style="margin-left:10px; background-color:#b61c1c">
+        <li class="checkout" style="margin-left:10px; background-color:black">
             @Html.ActionLink("CHECKOUT", "Index", new { returnUrl = Request.Headers.Get("Referer") })
         </li>
     }

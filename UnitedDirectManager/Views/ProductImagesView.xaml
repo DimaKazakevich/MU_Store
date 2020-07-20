@@ -38,14 +38,14 @@
         </DataGrid.Resources>
 
         <DataGrid.Columns>
-            <DataGridTemplateColumn Header="Image ID" Width="*" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+            <DataGridTemplateColumn Header="Image Id" Width="*" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding ClothesImagesID}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <DataGridTemplateColumn Header="Clothes ID" Width="*" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
+            <DataGridTemplateColumn Header="Product Id" Width="*" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding ClothesId}" VerticalAlignment="Center" HorizontalAlignment="Center"/>

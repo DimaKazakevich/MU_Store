@@ -33,6 +33,9 @@
         background-color: #f1f1f1;
         justify-content: center;
     }
+    .rowContent {
+        justify-content:center;
+    }
 
     .table {
         background-color: white;
@@ -52,7 +55,7 @@
         Total orders – @Model.Order.Where(x => x.UserId == User.Identity.GetUserId()).Count()
     </h4>
     <h4>
-        Total spent – @Model.Order.Where(x => x.UserId == User.Identity.GetUserId()).Select(x => x.TotalCost).Sum()
+        Total spent – @Model.Order.Where(x => x.UserId == User.Identity.GetUserId()).Select(x => x.TotalCost).Sum() $
     </h4>
     <h4>
         Sent Orders – @Model.Order.Where(x => x.UserId == User.Identity.GetUserId() && x.Status == "Sent").Count()
@@ -69,7 +72,7 @@
                         <th>Order Id</th>
                         <th>Date Time</th>
                         <th>Total Cost</th>
-                        <th class="text-right">Status</th>
+                        <th class="text-left">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,24 +85,24 @@
                             <td>
                                 @item.DateTime
                             </td>
-                            <td class="text-left quantity" style="font-size:14px">@item.TotalCost </td>
-                            <td>
+                            <td class="text-left quantity" style="font-size:14px">@item.TotalCost $</td>
+                            <td class="text-left">
                                 @item.Status
                             </td>
-                            <td>
+                            @*<td>
                                 @if (item.Status == "In processing")
                                 {
-                                    using (Html.BeginForm("RemoveOrder", "Account", new { orderId = item.Id }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                    using (Html.BeginForm("RemoveOrder", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                                     {
+                                        <input type="hidden" name="orderId" value="@item.Id" />
                                         <button type="submit" id="confirmOrder" class="btn-danger" style="height:40px">Remove</button>
                                     }
                                 }
-                            </td>
+                            </td>*@
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-    </div>
 </div>
-
+</div>

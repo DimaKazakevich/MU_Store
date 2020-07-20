@@ -27,6 +27,10 @@
                 <div style="padding-left:20px; margin-top:16px;">@Model.Clothes.Count() Products</div>
             </div>
         }
+        else
+        {
+            <div style="display:flex; margin-top:10px;font-size:20px;font-weight:800; align-self:flex-start">Home</div>
+        }
 
         <div class="sortingDropDown" style="display:flex; margin-bottom:40px; align-self:flex-end">
             <select class="drop-down" id="sortOrder" name="sortOrder">
@@ -61,9 +65,6 @@ else
 
         .row.panel {
             justify-content: flex-end;
-        }
-        .rowContent {
-            justify-content: center;
         }
     </style>
     <div style="display:flex">
@@ -117,22 +118,28 @@ else
         });
     });
 
-    function sort(sortOrder) {
+    function sort(id) {
         let content = document.querySelector('#content');
-        let divsToSort = [...document.querySelectorAll('#content > div')];
+        let els = Array.prototype.slice.call(document.querySelectorAll('#content > div'));
         let desc;
+        let cls;
 
-        if (sortOrder === 'desc') {
+        if (id === 'asc') {
+            cls = 'price';
+        } else if (id === 'desc') {
             desc = true;
+            cls = 'price';
         }
 
-        divsToSort.sort(function (a, b) {
-            na = parseInt(a.querySelector('.price').innerText.replace("$", "").trim());
-            nb = parseInt(b.querySelector('.price').innerText.replace("$", "").trim());
+        els.sort(function (a, b) {
+            na = parseInt(a.querySelector('.' + cls).innerText.replace("$", "").trim());
+            nb = parseInt(b.querySelector('.' + cls).innerText.replace("$", "").trim());
             return desc ? (nb - na) : (na - nb);
         });
 
-        divsToSort.forEach(el => content.appendChild(el));
+        els.forEach(function (el) {
+            content.appendChild(el);
+        });
     }
 </script>
 
@@ -153,6 +160,7 @@ else
         background-color: #fff;
     }
 </style>
+
 
 
 

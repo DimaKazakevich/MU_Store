@@ -1,16 +1,11 @@
 ﻿@model Domain.Entities.Product
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="~/Scripts/ChangeQuantityClothes.js"></script>
-
-<div class="clothesViewStyle" style="width:240px; display:flex; flex-direction:column; margin-bottom:15px; margin-right:15px">
-    <div>
+<div class="clothesViewStyle" style="width:240px; display:flex; flex-direction:column; margin-bottom:15px; margin-right:15px; border-bottom: 1px solid lightgray; padding-bottom:10px">
+    <div class="name">
         <p style="font-weight:700; font-size:12px">@Model.Name</p>
     </div>
 
-    <div>
+    <div class="price">
         <span style="color:#b61c1c; padding-bottom:3.600px;align-self:flex-start; position:absolute; margin-top:5px; font-weight:700; font-size:14px">@Model.Price.ToString("# $")</span>
     </div>
 
@@ -30,7 +25,7 @@
         @{
             var str = Model.Images.Where(x => x.Wear.Article == Model.Article).Select(x => x.ImageFile).FirstOrDefault();
             var base64 = Convert.ToBase64String(str);
-            var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+            var imgSrc = String.Format("data:image/webp;base64,{0}", base64);
 
             <a href="@Url.Action("product-details", "Products", new { name = Model.Name })">
                 <img src="@imgSrc" style="max-height:250px; max-width:215px" />

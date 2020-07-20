@@ -97,6 +97,7 @@
     <Compile Include="Concrete\EFDBContext.cs" />
     <Compile Include="Concrete\ProductSizesRepository.cs" />
     <Compile Include="Concrete\ProductUnitOfWork.cs" />
+    <Compile Include="Concrete\ShippingDetailsRepository.cs" />
     <Compile Include="Concrete\UserRepository.cs" />
     <Compile Include="Entities\AspNetRoles.cs" />
     <Compile Include="Entities\AspNetUserRoles.cs" />

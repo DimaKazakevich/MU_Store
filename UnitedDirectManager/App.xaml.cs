@@ -31,6 +31,7 @@ namespace UnitedDirectManager
             _container.Bind(typeof(GenericRepository<>)).To(typeof(ProductImagesRepository)).Named("Images");
             _container.Bind(typeof(GenericRepository<>)).To(typeof(ProductSizesRepository)).Named("Sizes");
             _container.Bind(typeof(GenericRepository<>)).To(typeof(UserRepository)).Named("Users");
+            _container.Bind(typeof(GenericRepository<>)).To(typeof(ShippingDetailsRepository)).Named("Details");
             _container.Bind(typeof(GenericRepository<>)).To(typeof(OrderRepositpry)).Named("Orders");
             _container.Bind(typeof(GenericRepository<>)).To(typeof(OrderDetailsRepository)).Named("OrderDetails");
             _container.Bind(typeof(IOrderProcessor)).To(typeof(EmailOrderProcessor));

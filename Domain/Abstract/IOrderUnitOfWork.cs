@@ -7,5 +7,7 @@ namespace Domain.Abstract
         GenericRepository<Order> Orders { get; }
 
         GenericRepository<OrderDetails> OrderDetails { get; }
+
+        GenericRepository<ShippingDetails> ShippingDetails { get; }
     }
 }

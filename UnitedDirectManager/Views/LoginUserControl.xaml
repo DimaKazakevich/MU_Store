@@ -38,7 +38,7 @@
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="0.4*"></RowDefinition>
             <RowDefinition Height="0.5*"></RowDefinition>
             <RowDefinition Height="0.5*"></RowDefinition>
             <RowDefinition Height=".6*"></RowDefinition>
@@ -101,18 +101,5 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
-
-        <TextBlock FontStyle="Italic" Text="Wrong Login or Password" FontSize="16" Foreground="Red" FontWeight="DemiBold" Name="wrng" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5">
-            <TextBlock.Style>
-                <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Visibility" Value="Hidden" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding WrongLoginOrPswVisibility, UpdateSourceTrigger=PropertyChanged}" Value="True">
-                            <Setter Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
     </Grid>
 </UserControl>

@@ -80,7 +80,7 @@
             <DataGridTemplateColumn Header="Total Cost" Width="0.5*" HeaderStyle="{StaticResource CenterGridHeaderStyle}">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding TotalCost}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding TotalCost, StringFormat={}{0}$}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>

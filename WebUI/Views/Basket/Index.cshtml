@@ -1,10 +1,8 @@
 ﻿@model WebUI.Models.BasketIndexViewModel
-@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Basket";
 }
-<script src="~/Scripts/ChangeQuantityClothes.js"></script>
-<link href="~/Content/style.css" rel="stylesheet" />
+<script src="~/Scripts/CarouselHide.js"></script>
 <style>
     #basketTable td {
         vertical-align: middle;
@@ -22,6 +20,10 @@
         font-weight: 600;
     }
 
+    .sortingDropDown {
+        display: none !important;
+    }
+
     .content {
         background-color: #f1f1f1;
     }
@@ -35,12 +37,22 @@
         background-color: white;
     }
 
+    .rowContent {
+        justify-content: center;
+    }
+
     .total.price {
         font-weight: 700;
         font-size: 16px;
         margin-bottom: 15px;
     }
 </style>
+
+<script>
+    $(document).ready(function () {
+        $("#search").css("visibility", "hidden");
+    });
+</script>
 
 @if (Model.Basket.Lines.Count() > 0)
 {
@@ -50,9 +62,8 @@
                 <thead>
                     <tr>
                         <th>Product Description</th>
+                        <th class="text-center">Quantity</th>
 
-                        <th>Quantity</th>
-                        <th></th>
                         <th class="text-right">Item Cost</th>
                         <th class="text-right">Total cost</th>
                     </tr>
@@ -77,20 +88,28 @@
                                     <br /><span>Size: @line.Size</span>
                                 }
                             </td>
-                            <td class="text-left quantity" style="font-size:14px" data-id="@line.Product.Article" data-content="@line.Size">@line.Quantity </td>
-                            <td>
-                                @if (line.Size != null)
-                                {
-                                    <a href="#" class="btn btn-icon incClothesWithSize" data-id="@line.Product.Article" data-content="@line.Size" style="color:black; font-size:20px; text-decoration:none">+</a> <br />
-                                    <a href="#" class="btn btn-icon decClothesWithSize" data-id="@line.Product.Article" data-content="@line.Size" style="color:black; font-size:20px; padding-left:14.5px; padding-right:14.5px; text-decoration:none">-</a> <br />
-                                    <a href="#" class="removeClothesWithSize" data-id="@line.Product.Article" data-content="@line.Size" style="color:black; text-decoration:none">Remove</a>
-                                }
-                                else
-                                {
-                                    <a href="#" class="btn btn-icon incClothes" data-id="@line.Product.Article" style="color:black; font-size:20px; text-decoration:none">+</a> <br />
-                                    <a href="#" class="btn btn-icon decClothes" data-id="@line.Product.Article" style="color:black; font-size:20px; padding-left:14.5px; padding-right:14.5px; text-decoration:none">-</a> <br />
-                                    <a href="#" class="removeClothesWithoutSize" data-id="@line.Product.Article" style="color:black; text-decoration:none">Remove</a>
-                                }
+                            <td class="quantity" style="font-size:14px" data-id="@line.Product.Article" data-content="@line.Size">
+                                <div class="mancont" style="display:flex; flex-direction:column; align-items:center">
+                                    <span>@line.Quantity</span>
+
+
+                                    @if (line.Size != null)
+                                    {
+                                        <div class="plusAndMinus" style="display:flex;">
+                                            <button class="incClothesWithSize" data-id="@line.Product.Article" data-content="@line.Size" style="margin: 5px; border-radius: 0; height: 30px; width: 30px; border: 1px solid #000; overflow: hidden; color: black; text-decoration: none; background:white">+</button> <br />
+                                            <button class="decClothesWithSize" data-id="@line.Product.Article" data-content="@line.Size" style="margin: 5px; border-radius: 0;  height: 30px; width: 30px; border: 1px solid #000; overflow: hidden; color: black; text-decoration: none; background:white">–</button> <br />
+                                        </div>
+                                        <button class="removeClothesWithSize" data-id="@line.Product.Article" data-content="@line.Size" style="margin: 5px;border-radius: 0;height: 30px;border: 1px solid #000;overflow: hidden;color: black;font-size: 14px;text-decoration: none; background:white">Remove</button>
+                                    }
+                                    else
+                                    {
+                                        <div class="plusAndMinus" style="display:flex;">
+                                            <button class="incClothes" data-id="@line.Product.Article" data-content="@line.Size" style="margin: 5px; border-radius: 0; height: 30px; width: 30px; border: 1px solid #000; overflow: hidden; color: black; text-decoration: none; background:white">+</button> <br />
+                                            <button class="decClothes" data-id="@line.Product.Article" data-content="@line.Size" style="margin: 5px; border-radius: 0;  height: 30px; width: 30px; border: 1px solid #000; overflow: hidden; color: black; text-decoration: none; background:white">–</button> <br />
+                                        </div>
+                                        <button class="removeClothesWithoutSize" data-id="@line.Product.Article" data-content="@line.Size" style="margin: 5px;border-radius: 0;height: 30px;border: 1px solid #000;overflow: hidden;color: black;font-size: 14px;text-decoration: none; background:white">Remove</button>
+                                    }
+                                </div>
                             </td>
                             <td class="text-right" style="font-size:14px">@line.Product.Price.ToString("# $")</td>
                             <td class="text-right cost" data-id="@line.Product.Article" data-content="@line.Size" style="font-size:14px">
@@ -112,7 +131,7 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <div class="payment">
-                                <button type="submit" onclick="location.href = '@Url.Action("Index", "Checkout")'" class="btn btn-success" id="checkOutBtn" style="width:100%; border-radius:0; background-color:#00a92c; width:250px; height:50px; font-size:16px; font-weight:600;">
+                                <button type="submit" onclick="location.href='@Url.Action("confirmation", "checkout")'" class="btn btn-success" id="checkoutBtn" style="width:100%; border-radius:0; background-color:#00a92c; width:250px; height:50px; font-size:16px; font-weight:600;">
                                     CHECKOUT SECURELY
                                 </button>
                             </div>
@@ -120,7 +139,7 @@
                         else
                         {
                             <div class="payment">
-                                <button type="submit" onclick="location.href = '@Url.Action("Login", "Account")'" class="btn btn-success" id="checkOutBtn" style="width:100%; border-radius:0; background-color:#00a92c; width:250px; height:50px; font-size:16px; font-weight:600;">
+                                <button type="submit" onclick="location.href='@Url.Action("Login", "Account", new { returnUrl = Request.Url.PathAndQuery })'" class="btn btn-success" id="checkoutBtn" style="width:100%; border-radius:0; background-color:#00a92c; width:250px; height:50px; font-size:16px; font-weight:600;">
                                     CHECKOUT SECURELY
                                 </button>
                             </div>
@@ -144,10 +163,49 @@ else
     <div class="text-left">
         <a class="btn btn-primary" style="background-color: #b61c1c; border-color: #b61c1c; width: 300px; height: 50px;border-radius: 0;text-align: center;vertical-align: middle;text-transform: uppercase;font-size: 22px;font-weight:600;" href="@Model.ReturnUrl">Continue Shopping</a>
     </div>
-
-    <style>
-        .col-xs-8 {
-            flex-direction: column;
-        }
-    </style>
 }
+
+@*<script>
+    $(function () {
+        $("a.removeClothesWithoutSize").click(function (e) {
+            e.preventDefault();
+
+            let article = $(this).data("id");
+            let url = "/Basket/RemoveFromBasket";
+
+            //$.get(url, { clothesId: article }, function () {
+            //    location.reload();
+            //});
+
+            $.ajax({
+                url: '@Url.Action("RemoveFromBasket", "Basket")',
+                data: { 'clothesId':article } ,
+                success: function () {
+                    location.reload();
+                    $('.overlay').css("display", "none");
+                },
+                beforeSend: function () {
+                    $('.overlay').css("display", "block");
+                },
+            });
+        });
+    });
+</script>*@
+
+<style>
+    .col-xs-8 {
+        flex-direction: column;
+    }
+
+    button.incClothes :hover {
+        background: black;
+        color: white;
+    }
+
+    button.incClothesWithSize {
+        background: black;
+        color: white;
+    }
+</style>
+
+

@@ -1,10 +1,6 @@
 ﻿@model Domain.Entities.Product
 
-@{
-    ViewBag.Title = Model.Name;
-}
-<link href="~/Content/style.css" rel="stylesheet" />
-<script src="~/Scripts/ClothesDatails.js"></script>
+<script src="~/Scripts/CarouselHide.js"></script>
 <style>
     #image {
         border: 1px solid #d9d9d9;
@@ -12,18 +8,27 @@
         width: 550px;
     }
 
-    .row.panel {
-        justify-content:center;
+    .sortingDropDown {
+        display: none !important;
     }
+
+    .row.panel {
+        justify-content: center;
+        flex-direction: row !important;
+    }
+
     .thumb:visited {
         border: 1px solid red;
     }
+
     .addtobasket:focus {
-        outline:none;
+        outline: none;
     }
+
     .col-xs-8 {
         width: max-content;
     }
+
     .controlDescription {
         flex: 0 0 auto;
         width: 150px;
@@ -31,6 +36,7 @@
         font-size: 16px;
         display: block;
     }
+
     .donate-now li {
         display: flex;
         flex-direction: column;
@@ -41,7 +47,7 @@
         height: 40px;
         width: 44px;
         border: 1px solid #000;
-        font-size:14px;
+        font-size: 14px;
     }
 
     #addtobasket {
@@ -54,6 +60,7 @@
         font-size: 28px;
         color: white;
     }
+
     #addToBasketWithoutSize {
         border-radius: 0;
         width: 450px;
@@ -65,6 +72,7 @@
         background-color: #00a92c;
         color: white;
     }
+
     #gotobasket {
         border-radius: 0;
         width: 450px;
@@ -93,35 +101,35 @@
         left: 0;
         right: 0;
         bottom: 0;
-        margin-bottom:0;
-        padding:0;
+        margin-bottom: 0;
+        padding: 0;
     }
 
-    .donate-now input[type="radio"] {
-        opacity: 0.01;
-        z-index: 100;
-    }
+        .donate-now input[type="radio"] {
+            opacity: 0.01;
+            z-index: 100;
+        }
 
-    .donate-now input[type="radio"]:checked + label,
-    .Checked + label {
-        background: black;
-        color:white;
-        border:1px solid white;
-    }
+            .donate-now input[type="radio"]:checked + label,
+            .Checked + label {
+                background: black;
+                color: white;
+                border: 1px solid white;
+            }
 
     .donate-now label {
         cursor: pointer;
         z-index: 90;
     }
 
-    .donate-now label:hover {
-        background: black;
-        color:white;
-    }
+        .donate-now label:hover {
+            background: black;
+            color: white;
+        }
 
     h1 {
-        font-weight:600;
-        text-transform:uppercase;
+        font-weight: 600;
+        text-transform: uppercase;
     }
 </style>
 
@@ -129,10 +137,10 @@
 <div style="display: flex; margin-top: 30px">
 
     <div style="margin-right:20px">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>*@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
 
         <style>
             .fotorama__thumb-border {
@@ -140,17 +148,15 @@
             }
         </style>
         <div class="fotorama" data-width="500"
-                                 data-maxwidth="100%"
-                                 @*data-ratio="16/9"*@
-                                 data-allowfullscreen="true"
-                                 data-nav="thumbs">
+             data-maxwidth="100%"
+             @*data-ratio="16/9"*@
+             data-allowfullscreen="true"
+             data-nav="thumbs">
             @foreach (var item in Model.Images.Where(x => x.ClothesId == Model.Article).Select(x => x.ImageFile))
             {
-
                 var base64 = Convert.ToBase64String(item);
                 var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
-
-                <img src="@imgSrc"/>
+                <img src="@imgSrc" alt="" />
             }
         </div>
     </div>

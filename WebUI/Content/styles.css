@@ -28,7 +28,7 @@ body {
 .footer {
   flex-shrink: 0;
   display:flex; 
-  height:70px; 
+  height:100px; 
   justify-content:space-between; 
   background-color: #333;
 }
@@ -65,12 +65,16 @@ body {
  .topLevelMenu .menuHeader:hover {
   text-decoration: none;
   background-color: white;
-  color:black;
  }
+
+ .topLevelMenu .menuHeader:hover a {
+  color:black;
+}
 
  .topLevelMenu .menuHeader a {
    color: white;
    margin: 0px auto;
+   text-decoration: none;
    height: 32px;
    padding-left: 30px;
    padding-right: 30px;
@@ -111,13 +115,11 @@ li {
 
 .footerTextItem {
   color: white;
-  margin-top: 50px;
 }
 
 .image img {
   width: 60px; 
   height:60px; 
-  margin-top:5px;
 }
 
 #carousel {

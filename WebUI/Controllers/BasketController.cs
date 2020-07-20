@@ -114,7 +114,7 @@ namespace WebUI.Controllers
             else
             {
                 line.Quantity = 0;
-                basket.RemoveLine(line.Product);
+                basket.RemoveLine(line.Product, line.Size);
             }
 
             var result = new { quantity = line.Quantity, price = line.Product.Price };

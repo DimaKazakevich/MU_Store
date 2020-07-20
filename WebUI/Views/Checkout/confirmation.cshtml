@@ -1,0 +1,364 @@
+﻿@model WebUI.Models.CheckoutViewModel
+<script src="~/Scripts/CarouselHide.js"></script>
+<style>
+    .combobox {
+        display: inline-block;
+        position: relative;
+    }
+
+        .combobox select {
+            display: none;
+            position: absolute;
+            overflow-y: auto;
+        }
+
+    .col-xs-8 {
+        width: max-content;
+    }
+
+    .row.panel {
+        justify-content: center;
+    }
+
+    #deliverable-countries {
+        font-size: 14px;
+        color: #000;
+        height: 42px;
+        border: 1px solid #000;
+        border-radius: 0;
+        width: 100%;
+        padding: 5px 10px;
+        box-shadow: none;
+    }
+
+    #orderSummaryContainer {
+        width: 392px;
+        padding: 0 14px 25px 14px;
+        background: #fff;
+        position: relative;
+        margin-bottom: 14px;
+    }
+
+    #orderSummaryHeader {
+        display: flex;
+        margin: 0;
+        align-items: center;
+        height: 53px;
+    }
+
+    .scrollableContentContainer {
+        overflow: hidden;
+        border-top: 1px solid silver;
+        border-bottom: 1px solid silver;
+        margin-bottom: 30px;
+    }
+
+    .scrollableContent {
+        height: 300px;
+        overflow-y: auto;
+    }
+
+    .summaryTotals {
+        display: flex;
+        font-family: montserratsemibold;
+        font-size: 18px;
+        margin-bottom: 7px;
+    }
+
+    .container-fluid {
+        margin-right: auto;
+        margin-left: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+        display: flex;
+    }
+
+    .itemDescription {
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .itemVariationLabel {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    .itemQuantityLabel {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    .showPriceLabel {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    .content {
+        background-color: #f1f1f1;
+    }
+
+    .row.panel {
+        background-color: #f1f1f1;
+    }
+
+    .summaryLineLeft {
+        font-size: 24px;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    #CheckoutProgressSection {
+        padding-top: 14px;
+        padding-bottom: 25px;
+        background: #f1f1f1;
+        position: relative;
+        display: flex;
+    }
+
+    .progress-circle {
+        border: none;
+        background-color: #00a92c;
+        margin: auto;
+        border-top-left-radius: 50% 50%;
+        border-top-right-radius: 50% 50%;
+        border-bottom-left-radius: 50% 50%;
+        border-bottom-right-radius: 50% 50%;
+        width: 51px;
+        height: 51px;
+        border: 1px solid #000;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .steps-timeline {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .line {
+        border-top: 1px solid #55ba4d;
+    }
+
+    #CheckoutProgressSection .line.part1 {
+        right: 50%;
+    }
+
+    #categories {
+        display: none !important;
+    }
+
+    #CheckoutProgressSection .line {
+        border-top: 1px solid #000;
+        left: 17%;
+        right: 17%;
+        top: 39px;
+        z-index: 1;
+    }
+
+    #CheckoutProgressSection .line {
+        border-top: 1px solid #d7d7d7;
+        left: 18%;
+        right: 18%;
+        top: 22px;
+        position: absolute;
+    }
+
+        #CheckoutProgressSection .line.part2 {
+            left: 50%;
+        }
+
+    #CheckoutProgressSection .line {
+        border-top: 1px solid #000;
+        left: 17%;
+        right: 17%;
+        top: 39px;
+        z-index: 1;
+    }
+
+    #CheckoutProgressSection .line {
+        border-top: 1px solid #d7d7d7;
+        left: 18%;
+        right: 18%;
+        top: 22px;
+        position: absolute;
+    }
+
+    .steps.progress-completed {
+        flex: 1 1 0%;
+        z-index: 2;
+    }
+
+    #CheckoutProgressSection {
+        background: white;
+        margin-bottom: 30px;
+        justify-content: space-between;
+    }
+
+    #orderDetails {
+        margin-right: 10px;
+    }
+
+    .render {
+        flex-direction: column;
+    }
+
+    .rowContent {
+        justify-content: center;
+    }
+
+    .form-group {
+        display: grid;
+    }
+
+    .sortingDropDown {
+        display: none !important;
+    }
+    .col-md-2.control-label {
+        white-space: nowrap;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $("#search").css("visibility","hidden");
+    });
+</script>
+
+@using (Html.BeginForm("confirmed", "Checkout", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+<div style="display:flex">
+    <div style="width:250px">
+        @using (Html.BeginForm("confirmation", "Checkout", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Shipping.Country, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.Shipping.Country, new List<SelectListItem> { new SelectListItem { Text = "Belarus" }, new SelectListItem { Text = "Ukraine" }, new SelectListItem { Text = "USA" }, new SelectListItem { Text = "United Kingdom" } }, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Shipping.FirstName, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Shipping.FirstName, new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(m => m.Shipping.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Shipping.LastName, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Shipping.LastName, new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(m => m.Shipping.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Shipping.Town, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Shipping.Town, new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(m => m.Shipping.Town, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Shipping.AddresLine, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Shipping.AddresLine, new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(m => m.Shipping.AddresLine, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Shipping.Postcode, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Shipping.Postcode, new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(m => m.Shipping.Postcode, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success" id="checkoutBtn" style="width:100%; border-radius:0; background-color:#00a92c; width:200px; height:50px; font-size:16px; font-weight:600; border-radius:4px">
+                CONFIRM ORDER
+            </button>
+        }
+    </div>
+   
+
+    <aside id="checkoutSidePanel" style="position: relative; margin-left:10px">
+        <section id="orderSummaryContainer">
+            <div id="orderSummaryHeader">
+                <h3 class="summaryLineLeft">Order Summary</h3>
+            </div>
+            <section class="scrollableContentContainer">
+                <div class="scrollableContent">
+                    <div class="orderPart">
+                        <div class="copy" style="font-size:12px">Delivery Estimate: 6 - 7 Business Days</div>
+                        <br>
+                        @foreach (var line in Model.Basket.Lines)
+                        {
+                            <div>
+                                <div>
+                                    <div class="container-fluid">
+                                        <order-summary-item item="item">
+                                            <div class="itemInfo" style="display:flex">
+                                                <div class="itemImage">
+                                                    @{
+                                                        var str = line.Product.Images.Where(x => x.Wear.Article == line.Product.Article).Select(x => x.ImageFile).FirstOrDefault();
+                                                        var base64 = Convert.ToBase64String(str);
+                                                        var imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+                                                    }
+                                                    <img src="@imgSrc" alt="@line.Product.Name" style="height:70px; width:70px" />
+                                                </div>
+                                                <div class="aboutItem" style="margin-left:10px">
+                                                    <div class="itemDetails">
+                                                        <div class="itemDescription">@line.Product.Name</div>
+                                                        @if (line.Size != null)
+                                                        {
+                                                            <div class="itemSize">
+                                                                <label class="itemVariationLabel">Size:</label>
+                                                                <span style="font-size:12px">@line.Size</span>
+                                                            </div>
+                                                        }
+                                                        <div class="itemQuantity">
+                                                            <label class="itemQuantityLabel">Qty: </label>
+                                                            <span style="font-size:12px">@line.Quantity</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="itemPricing">
+                                                        <div class="nowPrice">
+                                                            <span class="showPriceLabel">Price:</span>
+                                                            <span style="font-size:12px">@((line.Quantity * line.Product.Price).ToString("# $"))</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </order-summary-item>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <hr>
+                    </div>
+                </div>
+            </section>
+            <p class="summaryTotals" style="display:flex; justify-content:space-between">
+                <span class="summaryLineLeft" style="text-transform: uppercase; font-family: Arial, Helvetica, sans-serif">Total:</span>
+                <span class="summaryLineRight" style="font-size:24px; font-weight:600">@Model.Basket.ComputeTotalValue().ToString("# $")</span>
+            </p>
+        </section>
+    </aside>
+</div>
+}
+

@@ -1,19 +1,13 @@
 ﻿@model IEnumerable<string>
 
-<li class="menuHeader">
-@Html.ActionLink("Home", "List", "Products", null,
-	new { @class = "navItem" })
-</li>
-
 @foreach (var link in Model)
 {
 	<li class="menuHeader">
 		@Html.RouteLink(link, new
 		{
-
 			controller = "Products",
 			action = "List",
-			category = link,
+			category = link.Replace("&", "-"),
 			page = 1
 		}, new
 		{

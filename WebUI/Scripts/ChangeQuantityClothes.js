@@ -1,13 +1,13 @@
 ﻿$(function () {
 
-    $("a.incClothes").click(function (e) {
+    $("button.incClothes").click(function (e) {
         e.preventDefault();
 
         let Article = $(this).data("id");
         let url = "/Basket/IncrementClothes";
 
         $.getJSON(url, { clothesId: Article }, function (data) {
-            $("td.quantity[data-id=" + Article + "]").html(data.quantity);
+            $("td.quantity[data-id=" + Article + "] span").html(data.quantity);
  
             let price = data.quantity * data.price;
             let priceHtml = price + " $";
@@ -30,7 +30,7 @@
 });
 
 $(function () {
-    $("a.decClothes").click(function (e) {
+    $("button.decClothes").click(function (e) {
         e.preventDefault();
 
         let $this = $(this);
@@ -45,7 +45,7 @@ $(function () {
                 });
             }
             else {
-                $("td.quantity[data-id=" + Article + "]").html(data.quantity);
+                $("td.quantity[data-id=" + Article + "] span").html(data.quantity);
 
                 let price = data.quantity * data.price;
                 let priceHtml = price + " $";
@@ -69,7 +69,7 @@ $(function () {
 });
 
 $(function () {
-    $("a.removeClothesWithSize").click(function (e) {
+    $("button.removeClothesWithSize").click(function (e) {
         e.preventDefault();
 
         let article = $(this).data("id");
@@ -83,7 +83,7 @@ $(function () {
 });
 
 $(function () {
-    $("a.removeClothesWithoutSize").click(function (e) {
+    $("button.removeClothesWithoutSize").click(function (e) {
         e.preventDefault();
 
         let article = $(this).data("id");
@@ -92,12 +92,23 @@ $(function () {
         $.get(url, { clothesId: article }, function () {
             location.reload();
         });
+
+        $.get({
+            url: "/Basket/RemoveFromBasket",
+            data: { clothesId:article } ,
+            success: function () {
+                location.reload();
+            },
+            beforeSend: function () {
+                $('.overlay').css("display", "block");
+            },
+        });
     });
 });
 
 $(function () {
 
-    $("a.incClothesWithSize").click(function (e) {
+    $("button.incClothesWithSize").click(function (e) {
         e.preventDefault();
 
         let Article = $(this).data("id");
@@ -105,7 +116,7 @@ $(function () {
         let url = "/Basket/IncrementClothesWithSize";
 
         $.getJSON(url, { clothesId: Article, size }, function (data) {
-            $("td.quantity[data-id=" + Article + "][data-content=" + size + "]").html(data.quantity);
+            $("td.quantity[data-id=" + Article + "][data-content=" + size + "] span").html(data.quantity);
 
             let price = data.quantity * data.price;
             let priceHtml = price + " $";
@@ -128,7 +139,7 @@ $(function () {
 });
 
 $(function () {
-    $("a.decClothesWithSize").click(function (e) {
+    $("button.decClothesWithSize").click(function (e) {
         e.preventDefault();
 
         let $this = $(this);
@@ -144,7 +155,7 @@ $(function () {
                 });
             }
             else {
-                $("td.quantity[data-id=" + Article + "][data-content=" + size + "]").html(data.quantity);
+                $("td.quantity[data-id=" + Article + "][data-content=" + size + "] span").html(data.quantity);
 
                 let price = data.quantity * data.price;
                 let priceHtml = price + " $";

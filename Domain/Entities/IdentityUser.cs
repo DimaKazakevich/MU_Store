@@ -43,5 +43,6 @@ namespace Domain.Entities
 
         public virtual bool TwoFactorEnabled { get; set; }
 
+        public virtual ICollection<ShippingDetails> ShippingDetails { get; set; }
     }
 }

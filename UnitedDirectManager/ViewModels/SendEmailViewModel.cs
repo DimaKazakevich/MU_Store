@@ -57,14 +57,12 @@ namespace UnitedDirectManager.ViewModels
             var email = _users.Where(x => x.UserId == _orderViemModel.SelectedItem.UserId).Select(p => p.Email).First();
             var orderDetails = _orderDetails.Where(x => x.OrderId == _orderViemModel.SelectedItem.Id);
             _orderProcessor.ProcessOrder(email, orderDetails);
-            var temp = _orders.Where(x => x.Id == _orderViemModel.SelectedItem.Id).First().Status = "Sent";
-            var item = _orders.Where(x => x.Id == _orderViemModel.SelectedItem.Id).First();
-            item.Status = "Sent";
-            _reposiroty.Orders.Edit(item);
+            var order = _orders.Where(x => x.Id == _orderViemModel.SelectedItem.Id).First();
+            order.Status = "Sent";
+            _reposiroty.Orders.Edit(order);
             _reposiroty.Orders.Save();
-            var item1 = OrdersObservableCollection.GetInstance().Orders.Where(x => x.Id == _orderViemModel.SelectedItem.Id).First();
-            item1.Status = "Sent";
+            var observableOrder = OrdersObservableCollection.GetInstance().Orders.Where(x => x.Id == _orderViemModel.SelectedItem.Id).First();
+            observableOrder.Status = "Sent";
         }
-
     }
 }
