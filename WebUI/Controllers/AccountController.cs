@@ -48,13 +48,17 @@ namespace WebUI.Controllers
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action(
                        "ConfirmEmail", "Account",
-                       new { userId = user.Id, code = code },
+                       new { userId = user.Id, code },
                        protocol: Request.Url.Scheme);
-
+                    string message = "Hi, " + user.UserName + "! Please confirm your account by clicking this <a href=\""
+                                                       + callbackUrl + "\">link.</a>";
+                    if (message.Contains("amp;"))
+                    {
+                        _ = message.Replace("amp;", "");
+                    }
                     await UserManager.SendEmailAsync(user.Id,
                        "Confirm your account",
-                       "Hi, " + user.UserName + "! Please confirm your account by clicking this <a href=\""
-                                                       + callbackUrl + "\">link.</a>");
+                       message);
                     // ViewBag.Link = callbackUrl;   // Used only for initial demo.
                     return View("_Register");
                 }

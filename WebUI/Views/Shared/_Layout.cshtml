@@ -15,7 +15,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/Scripts/ChangeQuantityClothes.js"></script>
     <script src="~/Scripts/ClothesDatails.js"></script>
-    <link rel="icon" type="image/png" href="@Url.Content("~/Images/manutdlogo.png")">
+    <link rel="icon" type="image/png" href="@Url.Content("~/Content/Images/manutdlogo.png")">
     <style>
         #logoutForm {
             height: 16px;
@@ -67,7 +67,7 @@
 
                     <ul style="display:flex; justify-content: center; margin: 0px 0px 0px 0px; height:20px; padding-left:0">
                         <li style="margin-right:15px">
-                            <img src="@Url.Content("~/Images/user.png")" style="width:15px; height:15px;" />
+                            <img src="@Url.Content("~/Content/Images/user.png")" style="width:15px; height:15px;" />
                             @Html.ActionLink(User.Identity.GetUserName(), "Account", "Account", routeValues: null, htmlAttributes: new { id = "helloLink" })
                         </li>
                         <li style="background-color: black;padding-left: 10px;padding-right: 10px">
@@ -96,12 +96,12 @@
 
         <div class="headerContent" style="display:flex; background:#b61c1c">
             <div class="image">
-                <a href="https://www.adidas.com/us" target="_blank"><img src=@Url.Content("~/Images/adidasLogo.png") alt="" /></a>
+                <a href="https://www.adidas.com/us" target="_blank"><img src=@Url.Content("~/Content/Images/adidasLogo.png") alt="" /></a>
             </div>
 
             <div class="caption">
                 <a href="@Url.Action("List", "Products")">
-                    <img src="@Url.Content("~/Images/ud_logo.png")">
+                    <img src="@Url.Content("~/Content/Images/ud_logo.png")">
                 </a>
             </div>
 
@@ -109,7 +109,7 @@
                 @using (Html.BeginForm("Search", "Navigation", FormMethod.Post, new { id = "searchForm" }))
                 {
                     <input id="searchString" name="searchString" type="text" placeholder="Search" style="outline:none; width:250px; height:31px">
-                    <button id="searchBtn" type="submit" style="background-image: url('/Images/white.png'); width:31px; height:31px; outline:none; border:none; background-repeat:no-repeat; background-size:100%; transform:scale(-1,1)" />
+                    <button id="searchBtn" type="submit" style="background-image: url('@Url.Content("~/Content/Images/white.png")'); width:31px; height:31px; outline:none; border:none; background-repeat:no-repeat; background-size:100%; transform:scale(-1,1)" />
                 }
                 <style>
                     #searchForm {
@@ -118,7 +118,7 @@
                 </style>
             </div>
             <div class="image">
-                <a href="https://www.aon.com/home/index.html" target="_blank"><img src=@Url.Content("~/Images/aonLogo.png") alt="" /></a>
+                <a href="https://www.aon.com/home/index.html" target="_blank"><img src=@Url.Content("~/Content/Images/aonLogo.png") alt="" /></a>
             </div>
         </div>
     </header>
@@ -133,17 +133,17 @@
         <div id="carousel" class="carousel slide" data-ride="carousel" data-interval="5000">
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="@Url.Content("~/Images/carousel_kitR.jpg")">
+                    <img src="@Url.Content("~/Content/Images/carousel_kitR.jpg")">
                 </div>
                 <div class="item">
-                    <img src="@Url.Content("~/Images/d_carousel_31241a.jpg")">
+                    <img src="@Url.Content("~/Content/Images/d_carousel_31241a.jpg")">
                 </div>
 
                 <div class="item">
-                    <img src="@Url.Content("~/Images/D_carousel_kitsale.jpg")" />
+                    <img src="@Url.Content("~/Content/Images/D_carousel_kitsale.jpg")" />
                 </div>
                 <div class="item">
-                    <img src="@Url.Content("~/Images/d_carousel_1920x400_BLM_Printing_V2.jpg")" />
+                    <img src="@Url.Content("~/Content/Images/d_carousel_1920x400_BLM_Printing_V2.jpg")" />
                 </div>
             </div>
 
@@ -159,7 +159,7 @@
             <div class="pl-clickable-image">
                 <a href="@Url.Action("new-training", "Products", new { name = "Manchester United Old Trafford Lego Stadium" })">
                     <div class="responsive-image">
-                        <img src="@Url.Content("~/Images/a_spot_training_en.jpg")" alt="Gifts &amp; Accessories. Shop Now." class="" loading="auto" style="width:100%">
+                        <img src="@Url.Content("~/Content/Images/a_spot_training_en.jpg")" alt="Gifts &amp; Accessories. Shop Now." class="" loading="auto" style="width:100%">
                     </div>
                 </a>
             </div>
@@ -169,7 +169,7 @@
             <div class="pl-clickable-image">
                 <a href="@Url.Action("home-kit", "Products", new { name = "Manchester United Old Trafford Lego Stadium" })">
                     <div class="responsive-image">
-                        <img src="@Url.Content("~/Images/a_spot_home_kit_uk.jpg")" alt="Gifts &amp; Accessories. Shop Now." class="" loading="auto" style="width:100%">
+                        <img src="@Url.Content("~/Content/Images/a_spot_home_kit_uk.jpg")" alt="Gifts &amp; Accessories. Shop Now." class="" loading="auto" style="width:100%">
                     </div>
                 </a>
             </div>
@@ -180,7 +180,7 @@
                 <div class="pl-clickable-image">
                     <a href="@Url.Action("new-arrivals", "Products")">
                         <div class="responsive-image">
-                            <img src="@Url.Content("~/Images/b_spot_summer_fashion_uk.jpg")" alt="Summer Fashion. Shop Now." class="" loading="auto" style="margin-bottom: .5em;max-width: 100%;height: auto;-ms-interpolation-mode: bicubic;display: inline-block;vertical-align: middle;">
+                            <img src="@Url.Content("~/Content/Images/b_spot_summer_fashion_uk.jpg")" alt="Summer Fashion. Shop Now." class="" loading="auto" style="margin-bottom: .5em;max-width: 100%;height: auto;-ms-interpolation-mode: bicubic;display: inline-block;vertical-align: middle;">
                         </div>
                     </a>
                 </div>
@@ -189,7 +189,7 @@
                 <div class="pl-clickable-image">
                     <a href="@Url.Action("heroes", "Products")">
                         <div class="responsive-image">
-                            <img src="@Url.Content("~/Images/b_spot_5_uk.jpg")" alt="United for Heroes T-Shirts. Shop Now." class="" loading="auto" style="margin-bottom: .5em;max-width: 100%;height: auto;-ms-interpolation-mode: bicubic;display: inline-block;vertical-align: middle;">
+                            <img src="@Url.Content("~/Content/Images/b_spot_5_uk.jpg")" alt="United for Heroes T-Shirts. Shop Now." class="" loading="auto" style="margin-bottom: .5em;max-width: 100%;height: auto;-ms-interpolation-mode: bicubic;display: inline-block;vertical-align: middle;">
                         </div>
                     </a>
                 </div>
@@ -200,7 +200,7 @@
             <div class="pl-clickable-image">
                 <a href="@Url.Action("product-details", "Products", new { name = "Manchester United Old Trafford Lego Stadium" })">
                     <div class="responsive-image">
-                        <img src="@Url.Content("~/Images/a_spot_gifts_&_accs_uk.jpg")" alt="Gifts &amp; Accessories. Shop Now." class="" loading="auto" style="width:100%">
+                        <img src="@Url.Content("~/Content/Images/a_spot_gifts_&_accs_uk.jpg")" alt="Gifts &amp; Accessories. Shop Now." class="" loading="auto" style="width:100%">
                     </div>
                 </a>
             </div>
@@ -240,15 +240,15 @@
         </div>
 
         <div class="image" style="align-self:center">
-            <img src=@Url.Content("~/Images/ManU-fanatics.png") alt="" style="width:83px; height:83px" />
+            <img src=@Url.Content("~/Content/Images/ManU-fanatics.png") alt="" style="width:83px; height:83px" />
         </div>
 
         <div class="social" style="align-self:flex-end; margin-bottom:7px">
-            <a href="https://www.twitter.com/ManUtd/" target="_blank"><img src=@Url.Content("~/Images/twitter-24.png") alt="" /></a>
-            <a href="https://www.instagram.com/manchesterunited/" target="_blank"><img src=@Url.Content("~/Images/instagram-logo.png") alt="" style="height:24px; width:24px" /></a>
-            <a href="https://www.facebook.com/manchesterunited" target="_blank"><img src=@Url.Content("~/Images/facebook-24.png") alt="" /></a>
-            <a href="https://www.youtube.com/manutd" target="_blank"><img src=@Url.Content("~/Images/youtube.png") alt="" style="width:24px; height:24px" /></a>
-            <a href="https://www.pinterest.com/manutd/" target="_blank"><img src=@Url.Content("~/Images/pinterest-24.png") alt="" /></a>
+            <a href="https://www.twitter.com/ManUtd/" target="_blank"><img src=@Url.Content("~/Content/Images/twitter-24.png") alt="" /></a>
+            <a href="https://www.instagram.com/manchesterunited/" target="_blank"><img src=@Url.Content("~/Content/Images/instagram-logo.png") alt="" style="height:24px; width:24px" /></a>
+            <a href="https://www.facebook.com/manchesterunited" target="_blank"><img src=@Url.Content("~/Content/Images/facebook-24.png") alt="" /></a>
+            <a href="https://www.youtube.com/manutd" target="_blank"><img src=@Url.Content("~/Content/Images/youtube.png") alt="" style="width:24px; height:24px" /></a>
+            <a href="https://www.pinterest.com/manutd/" target="_blank"><img src=@Url.Content("~/Content/Images/pinterest-24.png") alt="" /></a>
         </div>
     </footer>
 </body>

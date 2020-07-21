@@ -34,7 +34,7 @@
 
     <Grid ShowGridLines="False">
         <Grid.Background>
-            <ImageBrush ImageSource="D:\Dima\.NET\MU_Store\WebUI\Images\United-Direct-Logo.png" Stretch="Uniform" AlignmentY="Top"></ImageBrush>
+            <ImageBrush ImageSource="D:\Dima\.NET\MU_Store\WebUI\Content\Images\United-Direct-Logo.png" Stretch="Uniform" AlignmentY="Top"></ImageBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
