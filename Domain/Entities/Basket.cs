@@ -10,10 +10,10 @@ namespace Domain.Entities
         public void AddItem(Product wear, int quantity, string size)
         {
             BasketLine line = lineCollection
-                .Where(item => item.Product.Article == wear.Article)
+                .Where(item => item.Product.Article == wear.Article && item.Size == size)
                 .FirstOrDefault();
 
-            if (line == null )
+            if (line == null)
             {
                 lineCollection.Add(new BasketLine
                 {
@@ -24,19 +24,7 @@ namespace Domain.Entities
             }
             else
             {
-                if (lineCollection.Where(x=>x.Product.Article == wear.Article).Select(x=>x.Size).Contains(size))
-                {
                     line.Quantity += quantity;
-                }
-                else
-                {
-                    lineCollection.Add(new BasketLine
-                    {
-                        Product = wear,
-                        Quantity = quantity,
-                        Size = size
-                    });
-                }
             }
         }
 

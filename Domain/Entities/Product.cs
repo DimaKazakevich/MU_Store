@@ -15,5 +15,16 @@ namespace Domain.Entities
         public decimal Price { get; set; }
         public virtual ICollection<Image> Images { get; set; }
         public virtual ICollection<Size> Sizes { get; set; }
+
+        public string Size(IEnumerable<Size> products)
+        {
+            string str = string.Empty;
+            foreach (var item in products)
+            {
+                str += $"'{item.SizeName}'" + ", ";
+            }
+
+            return str;
+        }
     }
 }

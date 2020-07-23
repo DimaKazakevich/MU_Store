@@ -16,42 +16,6 @@
     <script src="/Scripts/ChangeQuantityClothes.js"></script>
     <script src="~/Scripts/ClothesDatails.js"></script>
     <link rel="icon" type="image/png" href="@Url.Content("~/Content/Images/manutdlogo.png")">
-    <style>
-        #logoutForm {
-            height: 16px;
-        }
-
-        .sortingDropDown {
-            flex: 0 0 auto;
-            margin: auto 0;
-            font-weight: 700;
-        }
-
-        .drop-down {
-            height: 35px;
-            font-size: 14px;
-            color: #000;
-            height: 42px;
-            border: 1px solid #000;
-            border-radius: 0;
-            width: 100%;
-            padding: 5px 10px;
-            box-shadow: none;
-            font-family: Arial,Helvetica,sans-serif;
-        }
-
-        .layout-row > * {
-            flex: 1 1;
-            min-width: 0;
-        }
-        .layout-row {
-            display: flex;
-            flex-wrap: wrap;
-            max-width: 100em;
-            margin: 0 auto;
-        }
-    </style>
-
     <title>@ViewBag.Title</title>
 </head>
 
@@ -84,7 +48,7 @@
             {
                 <ul style="display: flex; justify-content: center; margin: 0px 0px 0px 0px; height: 20px; padding-left: 0">
                     <li style="padding-right:10px;padding-left:10px">@Html.ActionLink("Register", "Register", "Account", new { returnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "registerLink" })</li>
-                    <li style="color:white">/</li>
+                    <li style="color: white ">/</li>
                     <li style="padding-left:10px; padding-right:10px">@Html.ActionLink("Log in", "Login", "Account", new { returnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "loginLink" })</li>
                     <il class="checkout" style="display:flex;">
                         @Html.Action("Summary", "Basket")
@@ -99,13 +63,13 @@
                 <a href="https://www.adidas.com/us" target="_blank"><img src=@Url.Content("~/Content/Images/adidasLogo.png") alt="" /></a>
             </div>
 
-            <div class="caption">
+            <div class="caption" style="align-self:center">
                 <a href="@Url.Action("List", "Products")">
                     <img src="@Url.Content("~/Content/Images/ud_logo.png")">
                 </a>
             </div>
 
-            <div id="search" style="margin-top:20px; height:31px; display:flex">
+            <div id="search" style="margin-top:20px; height:31px; display:flex; align-self:center">
                 @using (Html.BeginForm("Search", "Navigation", FormMethod.Post, new { id = "searchForm" }))
                 {
                     <input id="searchString" name="searchString" type="text" placeholder="Search" style="outline:none; width:250px; height:31px">
@@ -220,8 +184,54 @@
             <div class="row panel" style="margin-left:0; margin-right:0; display:flex; margin-top:40px; flex-direction:column">
                 <div class="rowContent" style="display:flex">
                     <div id="categories" class="col-xs-3">
-                        <h3>Content will be added</h3>
-                    </div>
+                        @if (HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "Products" && Request.Path != "/Souvenirs")
+                        {
+                            <div class="filterblock wbsize show filter-active" id="filterSizes">
+                                <div class="filter-title">
+                                    <span class="filter-title-text">Size</span>
+                                    <span class="reset" data-type="size">Reset</span>
+                                </div>
+                                <div class="i-scrollbar-in-filter">
+                                    <div class="scroll-wrapper selectorsblock custom-scroll scrollbar-inner" style="position: relative;">
+                                        <div class="selectorsblock custom-scroll scrollbar-inner scroll-content" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 200px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                            <div class="filterblock price show filter-active">
+                                <div class="filter-title">
+                                    <span class="filter-title-text">Price</span>
+
+                                    <span class="reset" data-type="price">Reset</span>
+
+                                </div>
+                                <div class="selectorsblock range">
+                                    <div class="range-text">
+                                        <div class="start-n">
+                                            <span class="start-text">From</span>
+                                            <div style="font-family: system,-apple-system,BlinkMacSystemFont,'Segoe UI','Segoe WP',Roboto,Ubuntu,Oxygen,Cantarell,'Fira Sans','Helvetica Neue',Helvetica,'Lucida Grande','Droid Sans',Tahoma,'Microsoft Sans Serif',sans-serif;font-size: 0;outline: 0;margin: 0;padding: 0;">
+                                                <input type="number" min="" value="" name="startN" class="c-input-base-sm">
+                                            </div>
+                                        </div>
+                                        <div class="end-n">
+                                            <span class="end-text">To</span>
+                                            <div style="font-family: system,-apple-system,BlinkMacSystemFont,'Segoe UI','Segoe WP',Roboto,Ubuntu,Oxygen,Cantarell,'Fira Sans','Helvetica Neue',Helvetica,'Lucida Grande','Droid Sans',Tahoma,'Microsoft Sans Serif',sans-serif;font-size: 0;outline: 0;margin: 0;padding: 0;">
+                                                <input type="number" value="" max="" name="endN" class="c-input-base-sm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slider-container">
+                                        <div class="slider-bar" style="margin-left: 0px; margin-right: 0px;">
+                                            <b></b>
+                                            <span class="range-pointer start"></span>
+                                            <span class="range-pointer end"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <div class="render" style="display:flex; flex-direction:column">
                         @RenderBody()
                     </div>
@@ -253,3 +263,42 @@
     </footer>
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        $("input[name='check']").click(function () {
+            $("input[name='check']").each(function () {
+                if ($(this).is(":checked")) {
+                    for (let item of divsToSort) {
+                        if ($(item).attr('data-sizes').includes($(this).val())) {
+                            $(item).show();
+                        }
+                        else {
+                            $(item).hide();
+                        }
+                    }
+                }
+            })
+
+            if (!$('input[name="check"]:checked').length) {
+                for (let item of divsToSort) {
+                    $(item).show();
+                    $('span.reset[data-type="size"]').hide();
+                }
+            } else {
+                $('span.reset[data-type="size"]').show();
+            }
+        })
+
+        $('span.reset[data-type="size"]').click(function () {
+            for (let item of divsToSort) {
+                $(item).show();
+                $('span.reset[data-type="size"]').hide();
+            }
+
+            $('input[name="check"]:checked').each(function () {
+                $(this).removeAttr('checked');
+            })
+        })
+    })
+</script>

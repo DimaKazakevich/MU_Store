@@ -1,24 +1,24 @@
 ﻿@model Domain.Entities.Product
 
-<div class="clothesViewStyle" style="width:240px; display:flex; flex-direction:column; margin-bottom:15px; margin-right:15px; border-bottom: 1px solid lightgray; padding-bottom:10px">
-    <div class="name">
+<div class="clothesViewStyle" data-sizes="[@Model.Size(Model.Sizes)]" style="width:240px; display:flex; padding-left:25px; flex-direction:column; margin-bottom:15px; margin-right:15px; border-bottom: 1px solid lightgray; padding-bottom:10px">
+    <div class="name" style="margin-left:-25px">
         <p style="font-weight:700; font-size:12px">@Model.Name</p>
     </div>
 
-    <div class="price">
-        <span style="color:#b61c1c; padding-bottom:3.600px;align-self:flex-start; position:absolute; margin-top:5px; font-weight:700; font-size:14px">@Model.Price.ToString("# $")</span>
+    <div class="price" style="margin-left:-25px">
+        <span style="color:#b61c1c; padding-bottom:3.600px;align-self:flex-start; position:absolute; margin-top:5px; font-weight:700; font-size:14px">@Model.Price.ToString("#$")</span>
     </div>
 
     <div style="max-height:250px; max-width:215px">
         @if (Model.Sizes.Any(x => x.ClothesId == Model.Article))
         {
-            <div data-toggle="tooltip" title="Add to basket" data-placement="bottom" class="addtobasket" style="display:flex; flex-direction:column; margin-top:25px; position:absolute">
+            <div data-toggle="tooltip" title="Add to basket" data-placement="bottom" class="addtobasket" style="display:flex; flex-direction:column; margin-top:25px; position:absolute; margin-left:-25px">
                 <img class="addtobasket" data-id="@Model.Article" data-targeturl="@Url.Action("SizeDetails", "Basket", new { id = Model.Article })" src=@Url.Content("~/Content/Images/shoppingBasket.png") width="24" height="24" style="outline:none;margin-top:5px; cursor:pointer" />
             </div>
         }
         else
         {
-            <div data-toggle="tooltip" title="Add to basket" data-placement="bottom" style="display:flex; flex-direction:column; margin-top:25px; position:absolute">
+            <div data-toggle="tooltip" title="Add to basket" data-placement="bottom" style="display:flex; flex-direction:column; margin-top:25px; position:absolute; margin-left:-25px">
                 <img class="addToBasketWithoutSize" data-id="@Model.Article" src=@Url.Content("~/Content/Images/shoppingBasket.png") width="24" height="24" style="outline:none;margin-top:5px; cursor:pointer" />
             </div>
         }

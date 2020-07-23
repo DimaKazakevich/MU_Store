@@ -7,11 +7,20 @@
     ViewBag.Title = "MU Store";
 }
 
-<style>
-    .pull-right a {
-        margin: 8px;
-    }
-</style>
+@if (HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() == "Products" && Request.Path != "/Souvenirs")
+{
+    <fieldset class="j-list" id="wbsize_list_left" data-keypath="filters.4" style="display:none">
+        @foreach (var item in Model.GetAllSizes(Model.Clothes.Select(y => y.Sizes)))
+        {
+            <label class="container">
+                @item
+                <input type="checkbox" name="check" value="@item">
+                <span class="checkmark"></span>
+            </label>
+        }
+    </fieldset>
+}
+
 
 @if (Model.Clothes.Count() > 0)
 {
@@ -28,7 +37,7 @@
             </div>
         }
 
-        <div class="sortingDropDown" style="display:flex; margin-bottom:40px; align-self:flex-end">
+        <div class="sortingDropDown" style=" margin-bottom:40px; align-self:flex-end">
             <select class="drop-down" id="sortOrder" name="sortOrder">
                 <option>Sort By</option>
                 <option value="DESC">Price High to Low</option>
@@ -36,7 +45,7 @@
             </select>
         </div>
     </div>
-    <div id="content" style="display:flex; flex-wrap:wrap; justify-content:end; max-width:1020px; border-top: 1px solid lightgray; padding-top:10px">
+    <div id="content" style="display:flex; flex-wrap:wrap; justify-content:end; width:1020px; border-top: 1px solid lightgray; padding-top:10px">
         @foreach (var item in Model.Clothes)
         {
             if (item.Images.Any(x => x.ClothesId == item.Article))
@@ -45,12 +54,77 @@
             }
         }
     </div>
-    if (@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString() != "Navigation")
-    {
-        <div class="btn-group pull-right" style="align-self:flex-end; display:flex">
-            @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", "Products", new { page = x, category = Model.CurrentCategory }))
-        </div>
-    }
+    <script>
+        let startRangeOfPrice = 'input[name="startN"]';
+        let endRangeOfPrice = 'input[name="endN"]';
+        let minCategoryPrice = @Model.Clothes.Select(x => x.Price).Min();
+        let maxCategoryPrice = @Model.Clothes.Select(x => x.Price).Max();
+
+        $(startRangeOfPrice).attr("min", minCategoryPrice);
+        $(startRangeOfPrice).attr("max", maxCategoryPrice);
+        $(startRangeOfPrice).attr("value", minCategoryPrice);
+
+        $(endRangeOfPrice).attr("max", maxCategoryPrice);
+        $(endRangeOfPrice).attr("min", minCategoryPrice);
+        $(endRangeOfPrice).attr("value", maxCategoryPrice);
+
+        let divsToSort = [...document.querySelectorAll('#content > div')];
+
+        $('#wbsize_list_left').insertAfter($('div.selectorsblock.custom-scroll.scrollbar-inner.scroll-content'));
+        $('#wbsize_list_left').show();
+
+
+        $(document).ready(function () {
+            $('input[type="number"]').on('focusout', function () {
+                v = parseInt($(this).val());
+                min = parseInt($(this).attr('min'));
+                max = parseInt($(this).attr('max'));
+
+                if (v < min) {
+                    $(this).val(min);
+                } else if (v > max) {
+                    $(this).val(max);
+                }
+
+                if (+$(startRangeOfPrice).val() > +$(endRangeOfPrice).val()) {
+                    $(endRangeOfPrice).val($(startRangeOfPrice).val());
+                }
+
+                if (+$(startRangeOfPrice).val() !== +minCategoryPrice ||
+                    +$(endRangeOfPrice).val() !== +maxCategoryPrice) {
+                    $('span.reset[data-type="price"]').show()
+                }
+
+                if (+$(startRangeOfPrice).val() === +minCategoryPrice &&
+                    +$(endRangeOfPrice).val() === +maxCategoryPrice) {
+                    $('span.reset[data-type="price"]').hide();
+                }
+
+            })
+
+            $('span.reset[data-type="price"]').on('click', function () {
+                $(startRangeOfPrice).val(minCategoryPrice);
+                $(endRangeOfPrice).val(maxCategoryPrice);
+                $("div.selectorsblock.range").focusout();
+                $(this).hide();
+            })
+
+
+            $("div.selectorsblock.range").focusout(function () {
+                let minPrice = +$(startRangeOfPrice).val();
+                let maxPrice = +$(endRangeOfPrice).val();
+                for (let item of divsToSort) {
+                    let price = parseInt(item.querySelector('.price').innerText.replace("$", "").trim());
+                    if (price > +maxPrice || price < +minPrice) {
+                        $(item).hide();
+                    }
+                    else {
+                        $(item).show();
+                    }
+                }
+            });
+        })
+    </script>
 }
 else
 {
@@ -62,6 +136,7 @@ else
         .row.panel {
             justify-content: flex-end;
         }
+
         .rowContent {
             justify-content: center;
         }
