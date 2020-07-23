@@ -52,7 +52,7 @@ namespace WebUI.Controllers
 
             Order order = new Order()
             {
-                DateTime = DateTime.Now,
+                DateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("Belarus Standard Time")),
                 TotalCost = basket.ComputeTotalValue(),
                 Status = "In processing",
                 UserId = User.Identity.GetUserId()
